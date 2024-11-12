@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>w33zl</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Open Power Tools Menu" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Quick Save" />
+        <text name="flightMode" text="Flight mode" />
+        <text name="enabled" text="Enabled" />
+        <text name="disabled" text="Disabled" />
+        <text name="flightModeUsage" text="Use key J to toggle flight, keys Q and E change the altitude" />
+        <text name="changeMoneyMode" text="Add/remove money" />
+        <text name="exitMode" text="Exit to menu" />
+        <text name="chooseAction" text="Choose action" />
+        <text name="powerTools" text="Power Tools" />
+        <text name="changeMoneyUsage" text="Examples: \\n'1000' to add €1.000 to your account \\n'-1000' to subtract €1.000 from your account\\n'=1000' to set your account to €1.000" />
+        <text name="errorNotNumeric" text="Not a valid numeric value: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Cancel" />
+        <text name="noHudMode" text="Toggle HUD on/off" />
+        <text name="superStrengthMode" text="Toggle Super Strength" />
+        <text name="superStrength" text="Super Strength" />
+        <text name="filltypeNone" text="None (empty)" />
+        <text name="chooseFillUnit" text="Choose storage space (fill unit)" />
+        <text name="chooseFillUnitDetailed" text="Which storage (fillunit) do you want to fill?" />
+        <text name="fillVehicle" text="Fill vehicle" />
+        <text name="selectFillType" text="Select the filltype to add (or 'none' to empty)" />
+        <text name="errorNoValidFilltypes" text="No valid filltypes for this vehicle" />
+        <text name="errorNoValidFillUnits" text="No valid fillunits available" />
+        <text name="tipOnGround" text="Tip on ground" />
+        <text name="confirmExit" text="Do you REALLY want to exit?" />
+        <text name="exitRestartWarning" text="CAUTION! Exit without saving will cause loss of your progress!" />
+        <text name="saveGame" text="Save game" />
+        <text name="spawnObjectsActionTitle" text="Spawn objects/materials" />
+        <text name="spawnObjectsActionText" text="Choose which type of object/material to add" />
+        <text name="actionClearTipArea" text="Clear tip area" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Repeat last action" />
+        <text name="restartMode" text="Restart savegame" />
+        <text name="forcedRestartMode" text="Restart savegame (hard reset)" />
+        <text name="forcedExitMode" text="Exit to menu (hard reset)" />
+
+    </texts>
+</l10n>

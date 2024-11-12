@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Luan Tavares</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Abrir menu do Power Tools" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Salvamento rapido" />
+        <text name="flightMode" text="Modo de voo" />
+        <text name="enabled" text="Ativado" />
+        <text name="disabled" text="Desativado" />
+        <text name="flightModeUsage" text="Use a tecla J para começar ou parar de voar, as teclas Q e E mudam a altitude" />
+        <text name="changeMoneyMode" text="Adicionar/remover dinheiro" />
+        <text name="exitMode" text="Sair do menu" />
+        <text name="chooseAction" text="Escolher ação" />
+        <text name="powerTools" text="Power Tools" />
+        <text name="changeMoneyUsage" text="Examplos: \\n'1000' para adicionar $1.000 na sua conta \\n'-1000' para subtrair $1.000 da sua conta\\n'=1000' para ter exatamente $1.000 na sua conta" />
+        <text name="errorNotNumeric" text="Não é um valor numérico válido: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Cancelar" />
+        <text name="noHudMode" text="Ativar/desativar HUD" />
+        <text name="superStrengthMode" text="Ativar/desativar super força" />
+        <text name="superStrength" text="Super força" />
+        <text name="filltypeNone" text="Nenhum (vazio)" />
+        <text name="chooseFillUnit" text="Escolha o espaço de armazenamento (unidade de preenchimento)" />
+        <text name="chooseFillUnitDetailed" text="Qual armazenamento (unidade de preenchimento) você deseja preencher?" />
+        <text name="fillVehicle" text="Preencher o veículo" />
+        <text name="selectFillType" text="Selecione o tipo de preenchimento para adicionar (ou 'nenhum' para esvaziar)" />
+        <text name="errorNoValidFilltypes" text="Nenhum tipo de preenchimento válido para este veículo" />
+        <text name="errorNoValidFillUnits" text="Sem fillunits válidos disponíveis" />
+        <text name="tipOnGround" text="Tip no chão" />
+        <text name="confirmExit" text="Você REALMENTE quer sair?" />
+        <text name="exitRestartWarning" text="CUIDADO! Sair sem salvar causará perda de progresso!" />
+        <text name="saveGame" text="Salvar jogo" />
+        <text name="spawnObjectsActionTitle" text="Objetos/materiais de reprodução" />
+        <text name="spawnObjectsActionText" text="Escolha o tipo de objeto/material a acrescentar" />
+        <text name="actionClearTipArea" text="Área livre da ponta" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Repetir a última ação" />
+        <text name="restartMode" text="Reiniciar o jogo salvo" />
+        <text name="forcedRestartMode" text="Reiniciar o jogo salvo (reinicialização forçada)" />
+        <text name="forcedExitMode" text="Sair do menu (reinicialização forçada)" />
+
+    </texts>
+</l10n>

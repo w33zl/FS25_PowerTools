@@ -1,0 +1,263 @@
+<?xml version="1.0" standalone="no"?>
+<modDesc descVersion="91">
+    <author>w33zl</author>
+    <version>2.0.0.0-beta</version>
+    <title>
+        <en>Power Tools</en>
+    </title>
+    <contributors>Translations: Lactic, nagor</contributors>
+    <description>
+<en><![CDATA[
+With the Power Tools you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or do mod reviews.
+
+Using a single key/button (configurable, default F12) you activate the Power Tools menu. From there you can quikly navigate to the different functions without the need for a mouse or navigating through multiple menus.
+
+MAIN FEATURES:
+- Add/remove money to your farm
+- Fill vehicle - supports vehicles with multiple tanks/storage units and accepts any filltype supported by the vehicle *
+- Spawn any type of pallet (including production materials like sugar and clothes) *
+- Spawn any type of bale - supports round/square, all sizes and all types (straw, silage, cotton etc) *
+- Spawn tree logs - currently only supports birch, spruce and pine (in a limited number of lengths) *
+- Quickly save the current game, ether via hotkey or the menu *
+- Quickly exit current game and go to the main menu (or restart the savegame, see below)
+- Toggle "Flight mode" (then use J to activate flight mode and Q/E to ascend/descend in the air)
+- Toggle HUD/interface on/off
+- Toggle "Super strength" mode
+- Repeat last command
+
+IMPORTANT: Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
+
+NOTES:
+- To reset your money (or set to a specific amount) use '=' as a prefix, e.g. '=100' would set your bank account to 100
+- If you choose the "Exit to menu" option when also have started the game with the '-restart -autoStartSavegameId 1' startup flags, the game will automagically restart your savegame
+- Now PowerTools properly distinguish between exit to menu and restart, even if the game is started with either the '-restart' and/or the '-autoStartSavegameId N' flags
+- You also have the console command 'ee' to exit the game (to main menu) and the 'rr' command to restart the current savegame. Both commands will do a clean restart of the game client (the exit and restart commands in the menu will do a soft reset).
+- Many of the features requires that you have admin access (to prevent cheating in multiplayer) - in single player everyone is admin though :)
+- Filling vehicles, saving the game and spawning bales/pallets/trees currently only work if you are the host of the game (i.e. single player or self-hosted multiplayer) and does not work on dedicated servers
+- To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings
+
+CHANGELOG:
+v1.3:
+- NEW: Last command can be repeated via hotkey (experimental feature)
+- NEW: Added "Restart savegame" command (different from exit to menu)
+- NEW: Added new console commands (see notes)
+- FIX: Tweaked the exit/restart feature for faster restarts
+
+v1.2:
+- NEW: Added option to spawn logs
+- FIX: Should now be possible to use 'Fill Vehicle' on vehicles with hidden fill units (e.g. truck with liquid tank)
+- FIX: Fill type names is now properly translated when filling vehicle
+
+v1.1.1:
+- FIX: Fixed the game crash on leave/restart game caused by the v1.2 patch
+- FIX: Fixed the multiplayer issues on dedicated servers
+
+v1.1.0:
+- FIX: Add/remove money should now work properly in multiplayer
+- FIX: The game should no longer crash when exiting/restarting via the console command 'ee'
+- NEW: Added option to save the game via the menu or a 'quick save' hotkey
+- NEW: Can spawn any type of pallet (tied to filltypes, i.e. not the ones in the store)
+- NEW: Can spawn any type of bale! Round or square, all sizes and all types (straw, silage, cotton etc).
+- NEW: Added Turkish translation
+- NEW: Added Portuguese translation
+
+v1.0.1:
+- FIX: French translation now working properly
+- MOD: Now you need to confirm before exit so you don't loose any progress
+- NEW: Russian translation
+]]></en>
+
+<de><![CDATA[
+Mit den Power Tools haben Sie schnellen und einfachen Zugriff auf einige "Quality of Life"-Funktionen. Besonders nützlich, wenn Sie ein Modder sind oder Mod-Reviews schreiben.
+
+Mit einer einzigen Taste (konfigurierbar, standardmäßig F12) aktivieren Sie das Menü "Power Tools". Von dort aus können Sie schnell zu den verschiedenen Funktionen navigieren, ohne dass Sie eine Maus benötigen oder sich durch mehrere Menüs bewegen müssen.
+
+HAUPTFUNKTIONEN:
+- Hinzufügen/Entfernen von Geld zu Ihrer Farm
+- Fahrzeug befüllen - unterstützt Fahrzeuge mit mehreren Tanks/Lagereinheiten und akzeptiert jeden vom Fahrzeug unterstützten Fülltyp *
+- Jede Art von Palette erzeugen (einschließlich Produktionsmaterialien wie Zucker und Kleidung) *
+- Jede Art von Ballen erzeugen - unterstützt rund/quadratisch, alle Größen und alle Arten (Stroh, Silage, Baumwolle usw.) *
+- Baumstämme erzeugen - derzeit werden nur Birke, Fichte und Kiefer (in einer begrenzten Anzahl von Längen) unterstützt *
+- Schnelles Speichern des aktuellen Spiels, entweder per Hotkey oder über das Menü *
+- Schnelles Beenden des aktuellen Spiels und Wechsel zum Hauptmenü (oder Neustart des Spielstands, siehe unten)
+- Umschalten des "Flugmodus" (dann mit J den Flugmodus aktivieren und mit Q/E in der Luft auf- und absteigen)
+- HUD/Interface ein-/ausschalten
+- Modus "Superstärke" einschalten
+
+WICHTIG: Die mit einem Sternchen (*) gekennzeichneten Funktionen sind nicht auf dedizierten Servern verfügbar, sondern nur im Einzelspielermodus und im selbst gehosteten Mehrspielermodus.
+
+HINWEISE:
+- Um Ihr Geld zurückzusetzen (oder auf einen bestimmten Betrag zu setzen), verwenden Sie '=' als Präfix, z.B. würde '=100' Ihr Bankkonto auf 100 setzen
+- Wenn Sie die Option "Exit to menu" wählen, während Sie das Spiel mit der Startoption '-restart -autoStartSavegameId 1' gestartet haben, startet das Spiel automatisch Ihr Spiel neu.
+- PowerTools unterscheidet nun korrekt zwischen dem Verlassen des Menüs und dem Neustart, auch wenn das Spiel mit den Flags '-restart' und/oder '-autoStartSavegameId N' gestartet wurde
+- Außerdem gibt es den Konsolenbefehl 'ee' zum Verlassen des Spiels (zum Hauptmenü) und den Befehl 'rr' zum Neustart des aktuellen Spielstands. Beide Befehle führen einen sauberen Neustart des Spielclients durch (die Befehle 'exit' und 'restart' im Menü bewirken einen Soft-Reset).
+- Viele der Funktionen erfordern einen Admin-Zugang (um Cheating im Multiplayer zu verhindern) - im Einzelspieler ist jedoch jeder Admin :)
+- Das Füllen von Fahrzeugen, das Speichern des Spiels und das Spawnen von Ballen/Paletten/Bäumen funktioniert derzeit nur, wenn man der Host des Spiels ist (d.h. Einzelspieler oder selbst gehosteter Multiplayer) und funktioniert nicht auf dedizierten Servern
+- Um die Funktion "Letzte Aktion wiederholen" nutzen zu können, muss ein Hotkey in den Einstellungen für die Eingabebindung festgelegt werden
+
+CHANGELOG:
+v1.3:
+- NEU: Letzter Befehl kann per Hotkey wiederholt werden (experimentelle Funktion)
+- NEW: Befehl "Restart savegame" hinzugefügt (anders als exit to menu)
+- NEW: Neue Konsolenbefehle hinzugefügt (siehe Hinweise)
+- FIX: Exit/Restart-Funktion für schnellere Neustarts überarbeitet
+
+v1.2:
+- NEW: Option zum Spawnen von Logs hinzugefügt
+- FIX: Es sollte jetzt möglich sein, 'Fill Vehicle' bei Fahrzeugen mit versteckten Fülleinheiten zu verwenden (z.B. LKW mit Flüssigkeitstank)
+- FIX: Die Namen der Fülltypen werden jetzt beim Befüllen von Fahrzeugen korrekt übersetzt
+
+v1.1.1:
+- FIX: Der Absturz beim Verlassen/Neustart des Spiels, der durch den Patch v1.2 verursacht wurde, wurde behoben.
+- FIX: Die Multiplayer-Probleme auf dedizierten Servern wurden behoben.
+
+v1.1.0:
+- FIX: Das Hinzufügen/Entfernen von Geld sollte jetzt im Multiplayer korrekt funktionieren
+- FIX: Das Spiel sollte nicht mehr abstürzen, wenn es mit dem Konsolenbefehl 'ee' beendet oder neu gestartet wird
+- NEU: Option zum Speichern des Spiels über das Menü oder einen 'Schnellspeicher'-Hotkey hinzugefügt
+- NEU: Es können nun beliebige Paletten gespawnt werden (gebunden an Fülltypen, d.h. nicht an die im Store)
+- NEU: Es kann jede Art von Ballen erzeugt werden! Rund oder quadratisch, alle Größen und alle Typen (Stroh, Silage, Baumwolle usw.).
+- NEU: Türkische Übersetzung hinzugefügt
+- NEW: Portugiesische Übersetzung hinzugefügt
+
+v1.0.1:
+- FIX: Die französische Übersetzung funktioniert jetzt richtig
+- MOD: Jetzt muss man vor dem Beenden bestätigen, damit man keinen Fortschritt verliert
+- NEW: Russische Übersetzung
+
+
+]]></de>
+
+<fr><![CDATA[
+Avec les Power Tools, vous avez un accès rapide et facile à certaines fonctions de "qualité de vie". Particulièrement utile si vous êtes un moddeur ou si vous faites des critiques de mods.
+
+En utilisant une seule touche/bouton (configurable, par défaut F12) vous activez le menu Power Tools. De là, vous pouvez naviguer rapidement vers les différentes fonctions sans avoir besoin d'une souris ou de naviguer dans plusieurs menus.
+
+FONCTIONS PRINCIPALES :
+- Ajoutez/supprimez de l'argent à votre ferme
+- Remplir le véhicule - supporte les véhicules avec plusieurs réservoirs/unités de stockage et accepte tout type de remplissage supporté par le véhicule *.
+- Créez n'importe quel type de palette (y compris les matériaux de production comme le sucre et les vêtements) *
+- Fabriquez n'importe quel type de balle : ronde ou carrée, de toutes tailles et de tous types (paille, ensilage, coton, etc.).
+- Création de troncs d'arbres - actuellement, seuls le bouleau, l'épicéa et le pin sont pris en charge (dans un nombre limité de longueurs).
+- Sauvegarde rapide de la partie en cours, via le raccourci clavier ou le menu *
+- Quittez rapidement la partie en cours et allez au menu principal (ou redémarrez la sauvegarde, voir ci-dessous).
+- Basculer le "mode vol" (utilisez J pour activer le mode vol et Q/E pour monter/descendre dans les airs)
+- Activer/désactiver le HUD/interface.
+- Activer le mode "Super force".
+
+IMPORTANT : les fonctionnalités marquées d'un astérisque (*) ne sont pas disponibles sur les serveurs dédiés, mais uniquement en mode solo et en mode multijoueur autonome.
+
+NOTES :
+- Pour réinitialiser votre argent (ou fixer un montant spécifique), utilisez '=' comme préfixe, par exemple '=100' pour fixer votre compte bancaire à 100.
+- Si vous choisissez l'option "Quitter le menu" alors que vous avez démarré le jeu avec l'option '-restart -autoStartSavegameId 1', le jeu redémarrera automatiquement votre sauvegarde.
+- Désormais, PowerTools fait correctement la distinction entre la sortie du menu et le redémarrage, même si le jeu est lancé avec les options '-restart' et/ou '-autoStartSavegameId N'.
+- Vous disposez également de la commande de console 'ee' pour quitter le jeu (vers le menu principal) et de la commande 'rr' pour redémarrer la sauvegarde en cours. Ces deux commandes redémarrent proprement le client du jeu (les commandes 'exit' et 'restart' dans le menu font une réinitialisation en douceur).
+- De nombreuses fonctionnalités requièrent un accès administrateur (pour éviter la triche en multijoueur) - en solo, tout le monde est administrateur :)
+- Le remplissage des véhicules, la sauvegarde du jeu et la création de balles/palettes/arbres ne fonctionnent actuellement que si vous êtes l'hôte du jeu (c'est-à-dire en solo ou en multijoueur auto-hébergé) et ne fonctionnent pas sur les serveurs dédiés.
+- Pour pouvoir utiliser la fonction "Répéter la dernière action", vous devez lier un raccourci clavier dans les paramètres de liaison d'entrée.
+
+CHANGELOG :
+v1.3 :
+- NOUVEAU : La dernière commande peut être répétée via le raccourci clavier (fonction expérimentale)
+- NOUVEAU : Ajout de la commande "Restart savegame" (différente de "exit to menu")
+- NOUVEAU : Ajout de nouvelles commandes dans la console (voir notes)
+- CORRECTIF : Amélioration de la fonction sortie/redémarrage pour un redémarrage plus rapide.
+
+v1.2 :
+- NOUVEAU : Ajout d'une option pour le spawn des logs
+- CORRECTIF : Il devrait maintenant être possible d'utiliser 'Remplir le véhicule' sur les véhicules avec des unités de remplissage cachées (par exemple, un camion avec un réservoir de liquide).
+- CORRECTIF : Les noms des types de remplissage sont maintenant correctement traduits lors du remplissage d'un véhicule.
+
+v1.1.1 :
+- CORRECTIF : Correction du crash du jeu lors de la sortie ou du redémarrage du jeu causé par le patch v1.2.
+- FIX : Correction des problèmes multijoueurs sur les serveurs dédiés.
+
+v1.1.0 :
+- FIX : Ajouter/supprimer de l'argent devrait maintenant fonctionner correctement en multijoueur
+- CORRECTIF : Le jeu ne devrait plus planter en quittant/redémarrant via la commande console 'ee'.
+- NOUVEAU : Ajout d'une option pour sauvegarder le jeu via le menu ou une touche de raccourci 'sauvegarde rapide'.
+- NOUVEAU : Peut créer n'importe quel type de palette (lié aux types de remplissage, c'est-à-dire pas ceux du magasin).
+- NOUVEAU : Possibilité de créer n'importe quel type de balle ! Rondes ou carrées, toutes les tailles et tous les types (paille, ensilage, coton, etc.).
+- NOUVEAU : Ajout d'une traduction turque
+- NOUVEAU : Ajout d'une traduction en portugais
+
+v1.0.1 :
+- FIX : La traduction française fonctionne maintenant correctement
+- MOD : Vous devez maintenant confirmer avant de quitter afin de ne pas perdre votre progression.
+- NOUVEAU : Traduction en russe
+   
+]]></fr>
+<tr><![CDATA[
+Elektrikli El Aletleri ile bazı "yaşam kalitesi" özelliklerine hızlı ve kolay erişebilirsiniz. Özellikle modcuysanız veya mod incelemeleri yapıyorsanız kullanışlıdır.
+
+Tek bir tuş/düğme (yapılandırılabilir, varsayılan F12) kullanarak Elektrikli Aletler menüsünü etkinleştirirsiniz. Buradan, fareye ihtiyaç duymadan veya birden fazla menüde gezinmeden farklı işlevler arasında hızlı bir şekilde gezinebilirsiniz.
+
+ANA ÖZELLİKLER:
+- Çiftliğine para ekle/kaldır
+- Doldurma aracı - birden fazla tanka/depolama ünitesine sahip araçları destekler ve araç tarafından desteklenen herhangi bir doldurma türünü kabul eder *
+- Her türlü paleti (şeker ve giysi gibi üretim malzemeleri dahil) yumurtlayın *
+- Her tür balyayı yumurtlar - yuvarlak/kare, her boyutta ve her türde (saman, silaj, pamuk vb.) destekler *
+- Ağaç kütükleri oluşturur - şu anda yalnızca huş, ladin ve çamı destekler (sınırlı sayıda uzunlukta) *
+- Mevcut oyunu, eter'i kısayol tuşu veya menü aracılığıyla hızlı bir şekilde kaydedin *
+- Mevcut oyundan hızla çıkın ve ana menüye gidin (veya kayıtlı oyunu yeniden başlatın, aşağıya bakın)
+- "Uçuş modu"nu değiştirin (daha sonra uçuş modunu etkinleştirmek için J'yi ve havada yükselmek/inmek için Q/E'yi kullanın)
+- HUD/arayüz aç/kapat
+- "Süper güç" modunu değiştir
+
+ÖNEMLİ: Yıldız (*) ile işaretlenen özellikler, özel sunucularda bulunmaz, yalnızca tek oyunculu ve kendi kendine barındırılan çok oyunculu oyunlarda mevcuttur.
+
+NOTLAR:
+- Paranızı sıfırlamak (veya belirli bir miktara ayarlamak) için önek olarak '=' kullanın, ör. '=100' banka hesabınızı 100 olarak ayarlar
+- Oyunu '-restart -autoStartSavegameId 1' başlangıç ​​bayraklarıyla başlattığınızda "menüden çık" seçeneğini seçerseniz, oyun otomatik olarak kayıtlı oyununuzu yeniden başlatacaktır.
+- Ayrıca oyundan çıkmak için (ana menüye) konsol komutu 'ee'ye sahipsiniz.
+- Özelliklerin çoğu, yönetici erişimine sahip olmanızı gerektirir (çok oyunculu modda hile yapmayı önlemek için) - tek oyunculu modda herkes yönetici olsa da :)
+- Araçları doldurmak, oyunu kaydetmek ve balyaları/paletleri/ağaçları yumurtlamak şu anda yalnızca oyunun sahibiyseniz (yani tek oyunculu veya kendi kendine barındırılan çok oyunculu) çalışır ve özel sunucularda çalışmaz.
+
+DEĞİŞİM GÜNLÜĞÜ:
+v1.2:
+- YENİ: Günlükleri oluşturma seçeneği eklendi
+- DÜZELTME: 'Doldur Aracı' artık gizli dolum üniteleri olan araçlarda (ör. sıvı depolu kamyon) kullanılabilir olmalıdır
+- DÜZELTME: Doldurma türü adları artık araç doldurulurken düzgün bir şekilde çevriliyor
+
+v1.1.1:
+- DÜZELTME: Oyundan ayrılma/yeniden başlatma sırasında v1.2 yamasının neden olduğu oyun çökmesi düzeltildi
+- DÜZELTME: Özel sunuculardaki çok oyunculu sorunlar düzeltildi
+
+v1.1.0:
+- DÜZELTME: Para ekle/kaldır artık çok oyunculu modda düzgün çalışmalı
+- DÜZELTME: Konsol komutu 'ee' ile çıkarken/yeniden başlatırken oyun artık çökmemelidir
+- YENİ: Oyunu menü veya 'hızlı kaydetme' kısayol tuşu aracılığıyla kaydetme seçeneği eklendi
+- YENİ: Her tür paleti üretebilir (dolgu türlerine bağlı, yani mağazadakilere değil)
+- YENİ: Her türden balya üretebilir! Yuvarlak veya kare, her boy ve her çeşit (saman, silaj, pamuk vb.)
+- YENİ: Türkçe çeviri eklendi
+- YENİ: Portekizce çeviri eklendi
+
+v1.0.1:
+- DÜZELTME: Fransızca çeviri artık düzgün çalışıyor
+- MOD: Artık herhangi bir ilerlemeyi kaybetmemek için çıkmadan önce onaylamanız gerekiyor
+- YENİ: Rusça çeviri
+]]></tr>
+
+    </description>
+    <iconFilename>icon_PowerTools.dds</iconFilename>
+    <multiplayer supported="true" />
+    <l10n filenamePrefix="language" />
+    <extraSourceFiles>
+        <sourceFile filename="lib/LogHelper.lua" />
+        <sourceFile filename="lib/ModHelper.lua" />
+        <sourceFile filename="PowerTools.lua" />
+    </extraSourceFiles>
+
+    <inputBinding>
+		<actionBinding action="POWERTOOLSMENU">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_f12"/>
+		</actionBinding>
+    </inputBinding>
+
+    <actions>
+        <action name="POWERTOOLSMENU" />
+        <action name="POWERTOOLS_QUICKSAVE" />
+        <action name="POWERTOOLS_REPEAT_ACTION" />
+	</actions>
+
+</modDesc>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Lang_Alpayx</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Gelişmiş Ayarlar Menüsü" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Hızlı kaydet" />    
+        <text name="flightMode" text="Uçuş modu" />
+        <text name="enabled" text="Başlat" />
+        <text name="disabled" text="Durdur" />
+        <text name="flightModeUsage" text="Uçuşu değiştirmek için J tuşunu kullanın, Q ve E tuşları irtifayı değiştirin" />
+        <text name="changeMoneyMode" text="Para ekle/Sil" />
+        <text name="exitMode" text="Çıkış Yap" />
+        <text name="chooseAction" text="Eylem seçin" />
+        <text name="powerTools" text="Yeni Duzen" />
+        <text name="changeMoneyUsage" text="Örnekler: \\n'1000' hesabınıza 1.000 € eklemek için \\n'-1000' hesabınızdan 1.000 € çıkarmak için\\n'=1000' hesabınızı 1.000 € olarak ayarlamak için" />
+        <text name="errorNotNumeric" text="Geçerli bir sayısal değer değil: " />
+        <text name="buttonOk" text="Tamam" />
+        <text name="buttonCancel" text="Iptal" />
+        <text name="noHudMode" text="HUD'yi aç/kapat" />
+        <text name="superStrengthMode" text="Süper Gücü Aç/Kapat" />
+        <text name="superStrength" text="Süper güç" />
+        <text name="filltypeNone" text="Yok (boş)" />
+        <text name="chooseFillUnit" text="Depolama alanı seçin (dolgu birimi)" />
+        <text name="chooseFillUnitDetailed" text="Hangi depoyu (doldurma birimi) doldurmak istiyorsunuz?" />
+        <text name="fillVehicle" text="Doldurulacak arac" />
+        <text name="selectFillType" text="Eklenecek dolgu türünü seçin (veya boşaltmak için 'hiçbiri')" />
+        <text name="errorNoValidFilltypes" text="Bu araç için geçerli dolgu türü yok" />
+        <text name="errorNoValidFillUnits" text="Geçerli doldurma birimi yok" />
+        <text name="tipOnGround" text="İpucu zemin üzerinde" />
+        <text name="confirmExit" text="Gerçekten çıkmak istiyor musun?" />
+        <text name="exitRestartWarning" text="DİKKAT! Kaydetmeden çıkmak, ilerlemenizi kaybetmenize neden olur!" />
+        <text name="saveGame" text="Oyunu kaydet" />
+        <text name="spawnObjectsActionTitle" text="Nesneleri/materyalleri ortaya çıkar" />
+        <text name="spawnObjectsActionText" text="Eklenecek nesne/malzeme türünü seçin" />
+        <text name="actionClearTipArea" text="Uç alanını temizle" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Son eylemi tekrarla" />
+        <text name="restartMode" text="Savegame'i yeniden başlat" />
+        <text name="forcedRestartMode" text="Savegame'i yeniden başlat (hard reset)" />
+        <text name="forcedExitMode" text="Menüden çık (sert sıfırlama)" />
+
+    </texts>
+</l10n>

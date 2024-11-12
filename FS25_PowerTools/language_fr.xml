@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>w33zl</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Ouvrir le menu Power Tools" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Sauvegarde rapide" />
+        <text name="flightMode" text="Mode lévitation" />
+        <text name="enabled" text="Activé" />
+        <text name="disabled" text="Désactivé" />
+        <text name="flightModeUsage" text="Utilisez la touche J pour changer le mode de vol, les touches Q et E pour changer l'altitude." />
+        <text name="changeMoneyMode" text="Ajouter/retirer de l'argent" />
+        <text name="exitMode" text="Quitter le jeu" />
+        <text name="chooseAction" text="Choisir une action" />
+        <text name="powerTools" text="Outils avancés" />
+        <text name="changeMoneyUsage" text="Indiquez votre montant et la nature de votre opération. Exemple : \\n1000 ajoutera 1000 €, \\n-1000 retirera 1000 €, \\n=1000 fixera le montant à 1000 €" />
+        <text name="errorNotNumeric" text="Ce n'est pas une valeur numérique valide : " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Annuler" />
+        <text name="noHudMode" text="Activer/désactiver l'ATH" />
+        <text name="superStrengthMode" text="Mode super force" />
+        <text name="superStrength" text="Mode Super force" />
+        <text name="filltypeNone" text="Aucun (vide)" />
+        <text name="chooseFillUnit" text="Choisissez un contenant (unité de remplissage)" />
+        <text name="chooseFillUnitDetailed" text="Quel contenant (unité de remplissage) voulez-vous remplir ?" />
+        <text name="fillVehicle" text="Remplir le véhicule" />
+        <text name="selectFillType" text="Sélectionnez la matière à ajouter (ou 'aucun' pour vider)." />
+        <text name="errorNoValidFilltypes" text="Aucune matière valide pour ce véhicule" />
+        <text name="errorNoValidFillUnits" text="Aucun contenant valide n'est disponible" />
+        <text name="tipOnGround" text="Déverser sur le sol" />
+        <text name="confirmExit" text="Souhaitez-vous VRAIMENT quitter ?" />
+        <text name="exitRestartWarning" text="ATTENTION ! Quitter sans sauvegarder entraînera la perte de votre progression !" />
+        <text name="saveGame" text="Sauvegarder le jeu" />
+        <text name="spawnObjectsActionTitle" text="Créer des objets/matériaux" />
+        <text name="spawnObjectsActionText" text="Choisir le type d'objet/matériau à ajouter" />
+        <text name="actionClearTipArea" text="Nettoyer la zone devant soi" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Répéter la dernière action" />
+        <text name="restartMode" text="Redémarrer la sauvegarde" />
+        <text name="forcedRestartMode" text="Redémarrer la sauvegarde (hard reset)" />
+        <text name="forcedExitMode" text="Quitter le menu (hard reset)" />
+
+    </texts>
+</l10n>
