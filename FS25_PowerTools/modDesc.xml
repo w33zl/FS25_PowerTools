@@ -8,9 +8,11 @@
     <contributors>Translations: Lactic, nagor</contributors>
     <description>
 <en><![CDATA[
-With the PowerTools (a.k.a. "the F12 mod") you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or do mod reviews.
+With the PowerTools you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or do mod reviews.
 
 Using a single key/button (configurable, default F12) you activate the PowerTools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
+
+Why a "Lite" version? This is because of (hopefully temporary) limitations in the new game engine that forced me to remove some features that was in the FS22 version. If/when these capabilities are restored these features will be added back.
 
 MAIN FEATURES:
 - Add/remove money to your farm
