@@ -31,17 +31,33 @@ USAGE:
 
 YourModName = Mod:init()
 
-YourModName:enableDebugMode() -- To enable debug mode
+-- Logging and debugging (don't forget to add 'scripts/ModLib/LogHelper.lua' to <extraSourceFiles>)
+--* debug(), var() and trace() will only print anything in the log if the file 'scripts/ModLib/DebugHelper.lua' is in your mod folder/zip archive
+Log:debug("This is a debug message")
+Log:var("name", "value")
+Log:trace("This is a trace message")
+Log:info("This is an info message")
+Log:warning("This is a warning message")
+Log:error("This is an error message")
 
 -- Events
 function YourModName:beforeLoadMap() end -- Super early event, caution!
-function YourModName:loadMapFinished() end -- Directly after the map has finished loading
-function YourModName:loadMap(filename) end -- Actually "load mod"
+function YourModName:loadMap(filename) end -- Executed when the map has finished loading, a good place to begin your mod initialization
 function YourModName:beforeStartMission() end -- When user selects "Start" (but as early as possible in that event chain)
 function YourModName:startMission() end -- When user selects "Start"
-function YourModName:update(dt) end -- Looped as long game is running
+function YourModName:update(dt) end -- Looped as long game is running (CAUTION! Can severely impact performance if not used properly)
 
 ]]
+
+local deprecatedMessages = {}
+local function deprecated(functionName, replacementMessage, justOnce)
+    justOnce = justOnce or false
+    if justOnce and deprecatedMessages[functionName] then
+        return
+    end
+    printWarning(string.format("WARNING: [DEPRECATED] Function '%s' is marked as deprecated, please use %s instead", functionName, replacementMessage))
+    deprecatedMessages[functionName] = true
+end
 
 -- This will create the "Mod" base class (and effectively reset any previous references to other mods) 
 Mod = {
@@ -59,12 +75,15 @@ Mod = {
     end,
 
     printDebug = function(self, message, ...)
+        deprecated("Mod:printDebug()", "Log:debug()", true)
+        printCallstack()
         if self.debugMode == true then
             self:printInternal("DEBUG", message, ...)
         end
     end,
 
     printDebugVar = function(self, name, variable)
+        deprecated("Mod:printDebugVar()", "Log:var()", true)
         if self.debugMode ~= true then
             return
         end
@@ -81,10 +100,12 @@ Mod = {
     end,
     
     printWarning = function(self, message, ...)
+        deprecated("Mod:printWarning()", "Log:warning()", true)
         self:printInternal("Warning", message, ...)
     end,
 
     printError = function(self, message, ...)
+        deprecated("Mod:printError()", "Log:error()", true)
         self:printInternal("Error", message, ...)
     end,
 
@@ -114,6 +135,8 @@ local function getTrueGlobalG()
     return getmetatable(_G).__index
 end
 
+
+
 -- Set initial values for the global Mod object/"class"
 Mod.dir = g_currentModDirectory
 Mod.settingsDir = g_currentModSettingsDirectory
@@ -122,6 +145,13 @@ Mod.mod = g_modManager:getModByName(Mod.name)
 Mod.env = getfenv()
 Mod.__g = getTrueGlobalG() --getfenv(0)  --NOTE: WARNING: USE WITH CAUTION!!
 Mod.globalEnv = Mod.__g
+
+-- Wrapper to copy the global (but temporary) g_current* vars into the mod's environment
+Mod.env.g_currentModSettingsDirectory = Mod.settingsDir
+Mod.env.g_currentModName = Mod.name
+Mod.env.g_currentModDirectory = Mod.dir
+
+
 
 local modDescXML = loadXMLFile("modDesc", Mod.dir .. "modDesc.xml");
 Mod.title = getXMLString(modDescXML, "modDesc.title.en");
@@ -132,6 +162,8 @@ Mod.version = getXMLString(modDescXML, "modDesc.version");
 delete(modDescXML);
 
 function Mod:printInfo(message, ...)
+    deprecated("Mod:printInfo()", "Log:info()", true)
+
     self:printInternal("", message, ...)
 end
 
@@ -352,6 +384,8 @@ function Mod:init()
 end--function
 
 function Mod:enableDebugMode()
+    deprecated("enableDebugMode()", "Log class")
+
     self.debugMode = true
 
     self:printDebug("Debug mode enabled")
@@ -406,6 +440,13 @@ function Mod:new()
     --     end
     -- end)
 
+    FSBaseMission.load = Utils.appendedFunction(FSBaseMission.load, function(baseMission, ...) 
+        if newMod.load ~= nil and type(newMod.load) == "function" then
+            newMod:load(baseMission, ...)
+        end
+    end)
+
+
     FSBaseMission.initialize = Utils.appendedFunction(FSBaseMission.initialize, function(baseMission, ...) 
         if newMod.initMission ~= nil and type(newMod.initMission) == "function" then
             newMod:initMission(baseMission, ...)
@@ -437,27 +478,23 @@ function Mod:new()
         end
     end)
 
-    -- newMod:enableDebugMode()
-    
+    FSBaseMission.onMinuteChanged = Utils.appendedFunction(FSBaseMission.onMinuteChanged, function(baseMission, ...)
+        if newMod.onMinuteChanged ~= nil and type(newMod.onMinuteChanged) == "function" then
+            newMod:onMinuteChanged(baseMission, ...)
+        end
+    end)
 
-    -- newMod:trySource("lib/DebugHelper.lua")
+    FSBaseMission.onHourChanged = Utils.appendedFunction(FSBaseMission.onHourChanged, function(baseMission, ...)
+        if newMod.onHourChanged ~= nil and type(newMod.onHourChanged) == "function" then
+            newMod:onHourChanged(baseMission, ...)
+        end
+    end)
 
-    -- printDebugVar("DebugHelper", DebugHelper)
-
-    -- newMod:printInfo(tostring(DebugHelper))
-
-    -- if DebugHelper ~= nil then
-    --     newMod:printInfo("Okej")
-    --     newMod:enableDebugMode()
-    --     -- newMod.__debugHelper = DebugHelper:init(newMod.name, newMod.dir)
-    --     DebugHelper:enableDebugMode(newMod.title)
-    -- end
-
-    -- FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, function(baseMission, ...) 
-    --     if newMod.unloadMod ~= nil and type(newMod.unloadMod) == "function" then
-    --         newMod:unloadMod(baseMission, ...)
-    --     end
-    -- end)
+    FSBaseMission.onDayChanged = Utils.appendedFunction(FSBaseMission.onDayChanged, function(baseMission, ...)
+        if newMod.onDayChanged ~= nil and type(newMod.onDayChanged) == "function" then
+            newMod:onDayChanged(baseMission, ...)
+        end
+    end)
 
     return newMod;
 end--function
@@ -477,13 +514,10 @@ function Mod:newSubModule(table)
 end
 
 
-
 --- Check if the third party mod is loaded
 ---@param modName string The name of the mod/zip-file
 ---@param envName string (Optional)The environment name to check for
 function Mod:getIsModActive(modName, envName)
-    -- local andersonDlc = getfenv(0)["pdlc_andersonPack"]
-    -- if andersonDlc ~= nil and g_modIsLoaded["pdlc_andersonPack"] then
 
     if modName == nil and envName == nil then
         return false
@@ -494,7 +528,6 @@ function Mod:getIsModActive(modName, envName)
         return false
     end
 
-    -- local isModMissing = true -- Do an inverted check
     local modNameCheck = false
     local envCheck = false
 
@@ -504,37 +537,14 @@ function Mod:getIsModActive(modName, envName)
 
     return modNameCheck and envCheck
 
-    -- if modName ~= nil then
-    --     modNameCheck = g_modIsLoaded[modName]
-
-    --     isModMissing = isModMissing and (modNameCheck == false)
-    -- end
-
-    -- if envName ~= nil then
-    --     envCheck = getfenv(0)[envName] ~= nil
-
-    --     wasModFound = wasModFound or envCheck
-    --     isModMissing = isModMissing and (modNameCheck == false)
-    -- end
-
-    -- return not isModMissing
 end
 
-function Mod:getIsSeasonsActive()
-    --TODO: fix check basegame option
-    return false -- Mod:getIsModActive(nil, "g_seasons")
-end
-
--- _G.ModHelper = _G.ModHelper or {}
--- local ModHelper = _G.ModHelper
+-- function Mod:getIsSeasonsActive()
+--     --TODO: fix check basegame option
+--     return false -- Mod:getIsModActive(nil, "g_seasons")
+-- end
 
 ModHelper = {}
-
--- local function getFixedModName(shortModName)
---     name = name:gsub("FS19_", ""):gsub("FS22_", ""):gsub("fs19_", ""):gsub("fs22_", "")
---     -- return getfenv(0)["FS19_" .. name] or getfenv(0)["FS22_" .. name]
---     --TODO: fix
--- end
 
 function ModHelper.isModInstalled(name)
     return g_modManager:getModByName(name) ~= nil
@@ -553,7 +563,6 @@ function ModHelper.getModEnvironment(name)
 end
 
 function ModHelper.getIsMaizePlusActive()
-    -- return Mod:getIsModActive(nil, "??")FS19_MaizePlus  FS19_MaizePlus_forageExtension
     return ModHelper.isModActive("FS22_MaizePlus")
 end
 
@@ -561,13 +570,8 @@ function ModHelper.isMaizePlusForageActive()
     return ModHelper.isModActive("FS22_MaizePlus_forageExtension")
 end
 
--- function Mod:getIsMaizePlusForageActive()
---     return Mod:getIsModActive("FS19_MaizePlus_forageExtension")
--- end
-
 function ModHelper.isMaizePlusAnimalFoodAdditionsActive()
     return ModHelper.isModActive("FS22_maizePlus_animalFoodAdditions")
-    -- return g_modManager:getModByName("FS19_maizePlus_animalFoodAdditions") ~= nil and g_modIsLoaded["FS19_maizePlus_animalFoodAdditions"]
 end
 
 ---comment

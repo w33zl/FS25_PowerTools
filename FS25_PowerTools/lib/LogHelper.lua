@@ -17,13 +17,14 @@ format for noncommercial purposes only, and only so long as attribution is given
 If you remix, adapt, or build upon the material, you must license the modified material under identical terms. 
 
 ]]
-
+local deprecatedMessages = {}
+local function dummy() end
 local function createLog(modName, modDirectory)
     local modDescXML = loadXMLFile("modDesc", modDirectory .. "modDesc.xml");
     local title = getXMLString(modDescXML, "modDesc.title.en");
     delete(modDescXML);
 
-    local function dummy(...) end
+    
         
     local newLog = {
         modName = modName,
@@ -38,6 +39,7 @@ local function createLog(modName, modDirectory)
             print(string.format("[%s]%s %s", self.title, category, tostring(message)))
         end,
         debug = function(self, message, ...) self:print("DEBUG", message, ...) end,
+        debugIf = function(self, condition, message, ...) if condition then self:debug(message, ...) end end,
         var = function(self, name, variable)
             local valType = type(variable)
             
@@ -54,6 +56,18 @@ local function createLog(modName, modDirectory)
         info = function(self, message, ...) self:print("", message, ...) end,
         warning = function(self, message, ...) self:print("Warning", message, ...) end,
         error = function(self, message, ...) self:print("Error", message, ...) end,
+
+        deprecated = function(self, functionName, replacementMessage, justOnce)
+            justOnce = justOnce or false
+            if justOnce and deprecatedMessages[functionName] then
+                return
+            end
+        
+            self:print("Warning", "[DEPRECATED] %s is deprecated, please use %s instead.", functionName, replacementMessage) 
+
+            deprecatedMessages[functionName] = true
+        end,
+        
         newLog = function(self, name, includeModName)
             if name ~= nil then
                 if includeModName then
@@ -63,6 +77,7 @@ local function createLog(modName, modDirectory)
                 name = title
             end
             return {
+                
                 title = name,
                 parent = self,
                 print = self.print,
@@ -79,6 +94,10 @@ local function createLog(modName, modDirectory)
     }
 
     local debugHelperFilename = modDirectory .. "lib/DebugHelper.lua"
+
+    if not fileExists(debugHelperFilename) then
+        debugHelperFilename = modDirectory .. "scripts/ModLib/DebugHelper.lua"
+    end
     if fileExists(debugHelperFilename) then
         newLog:info("Debug mode enabled!")
         source(debugHelperFilename)
@@ -98,6 +117,7 @@ local function createLog(modName, modDirectory)
     else
         
         newLog.debug = dummy
+        newLog.debugIf = dummy
         newLog.var = dummy
         newLog.trace = dummy
     end
@@ -106,3 +126,64 @@ local function createLog(modName, modDirectory)
 end
 
 Log = createLog(g_currentModName, g_currentModDirectory)
+
+
+
+LogHelper = LogHelper or {}
+
+--- Starts a execution timer with the given format string.
+---@param formatString string "Format string to print the execution time (you need to add '%f' to the string)"
+---@return table "Execution timer object with the stop function (call ':stop(true)' to supress automatic print of the results)"
+---@remark The results will be printed to the console when the timer is stopped (see ':stop()') unless the 'noPrint' parameter is set to true (e.g. ':stop(true)').
+function LogHelper:measureStart(formatString, ignoreDebugStatus)
+    if ignoreDebugStatus or DebugHelper ~= nil then
+        return { -- Enabled
+            text = formatString,
+            startTime = getTimeSec(),
+            stop = function(self, noPrint)
+                self.endTime = getTimeSec()
+                self.diff = self.endTime - self.startTime
+                self.results = string.format(formatString, self.diff)
+                if not noPrint then
+                    print(self.results)
+                end
+                return self.results
+            end,
+        }
+    else -- Disabled
+        return {
+            text = "",
+            startTime = dummy,
+            stop = dummy,
+        }
+    end
+end
+
+
+--- Starts a execution timer with the given format string.
+---@param formatString string "Format string to print the execution time (you need to add '%f' to the string)"
+---@return table "Execution timer object with the stop function (call ':stop(true)' to supress automatic print of the results)"
+---@remark The results will be printed to the console when the timer is stopped (see ':stop()') unless the 'noPrint' parameter is set to true (e.g. ':stop(true)').
+function LogHelper:startMemoryProfiling(formatString, ignoreDebugStatus)
+    if ignoreDebugStatus or DebugHelper ~= nil then
+        return { -- Enabled
+            text = formatString,
+            startMemUsage = gcinfo(),
+            stop = function(self, noPrint)
+                self.endMemUsage = gcinfo()
+                self.diff = (self.endMemUsage - self.startMemUsage) / 1024
+                self.results = string.format(formatString, self.diff)
+                if not noPrint then
+                    print(self.results)
+                end
+                return self.results
+            end,
+        }
+    else -- Disabled
+        return {
+            text = "",
+            startTime = dummy,
+            stop = dummy,
+        }
+    end
+end
