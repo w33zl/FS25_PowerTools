@@ -2,8 +2,8 @@
 Power Tools for FS22
 
 Author:     w33zl / WZL Modding (github.com/w33zl)
-Version:    2.0.0b
-Modified:   2024-11-12
+Version:    1.4.0
+Modified:   2024-06-20
 
 Changelog:
 ]]
@@ -35,6 +35,11 @@ FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.regist
     local triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings = false, true, false, true, nil, true
     local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+
+    local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU_ALTERNATIVE, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
+    g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+    g_inputBinding:setActionEventTextVisibility(actionEventId, false) -- INFO: change "false" to "true" to show keybinding in help window
+
     local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLS_QUICKSAVE, PowerTools, PowerTools.saveGame, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
     g_inputBinding:setActionEventTextVisibility(actionEventId, false) -- INFO: change "false" to "true" to show keybinding in help window
@@ -53,39 +58,62 @@ FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, function()
     end
 end)
 
+local function getOrInitGlobalMod(name)
+    g_globalMods[name] = g_globalMods[name] or {}
+    return g_globalMods[name]
+end
 
-function PowerTools:showMenu()
+_G.g_powerTools = getOrInitGlobalMod("FS22_PowerTools")
+
+function PowerTools:showSecondaryMenu(a)
+    print("Second menu")
+    self:showMenu(true)
+end
+
+function PowerTools:showMenu(actionName)
     self.lastAction = nil
 
-    local useAltMode = Utils.getNoNil(Input.isKeyPressed(Input.KEY_rctrl), false)
+    local useAltMode = actionName == InputAction.POWERTOOLSMENU_ALTERNATIVE
+    local isPaused = g_currentMission.paused
+    local isInMainMenu = g_gui.currentGui ~= nil
     local isInVehicle = g_currentMission.controlledVehicle ~= nil
+
+    Log:var("useAltMode", useAltMode)
+    Log:var("isPaused", isPaused)
 
     local actionFillVehicle = { g_i18n:getText("fillVehicle"), self.fillVehicle }
     local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround }
     local actionSpawnBale = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects }
 
-    local actionRestart = { g_i18n:getText("restartMode"), self.menuActionRestartGame }
-    local actionExit = { g_i18n:getText("exitMode"), self.menuActionExitSavegame }
+    local actionSoftRestart = { g_i18n:getText("restartMode"), self.menuActionRestartGame }
+    local actionSoftExit = { g_i18n:getText("exitMode"), self.menuActionExitSavegame }
+    local actionForceRestart = { g_i18n:getText("forcedRestartMode"), self.menuActionForceRestartGame }
+    local actionForceExit = { g_i18n:getText("forcedExitMode"), self.menuActionForceExitSavegame }
+    local actionRestart = actionSoftRestart
+    local actionExit = actionSoftExit
 
     if useAltMode then
-        actionRestart = { g_i18n:getText("forcedRestartMode"), self.menuActionForceRestartGame }
-        actionExit = { g_i18n:getText("forcedExitMode"), self.menuActionForceExitSavegame }
+        actionRestart = actionForceRestart
+        actionExit = actionForceExit
     end
 
+    local actionSaveGame = { g_i18n:getText("saveGame"), self.saveGame }
+    local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects }
+    local actionClearTipArea = { g_i18n:getText("actionClearTipArea"), self.clearTipArea }
+    local actionAddRemoveMoney = { g_i18n:getText("changeMoneyMode"), self.addRemoveMoney }
+    local actionToggleHUDMode = { g_i18n:getText("noHudMode"), self.toggleHUDMode }
+    local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength }
+    local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode }
+    
     local actions = {
-        -- (isInVehicle == true and actionFillVehicle) or actionTipOnGround,
-        { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength },
-        { g_i18n:getText("flightMode"), self.toggleFlightMode },
-        { g_i18n:getText("noHudMode"), self.toggleHUDMode },
-        { g_i18n:getText("changeMoneyMode"), self.addRemoveMoney },
-        { g_i18n:getText("saveGame"), self.saveGame },
+        actionToggleSuperStrength,
+        actionToggleFlightMode,
+        actionToggleHUDMode,
+        actionAddRemoveMoney,
+        actionSaveGame,
         actionExit,
         actionRestart,
     }
-
-    if self:getIsMultiplayer() then
-        Log:info("Running in multiplayer mode, some features will be disabled [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
-    end
 
     --TODO: replace when TipOnGround works
     if self:getIsServer() then --NOTE: only allowed on the server host for now, maybe change in the future
@@ -95,6 +123,16 @@ function PowerTools:showMenu()
             table.insert( actions, 1, actionSpawnBale )
         end
     end
+
+    if isPaused or isInMainMenu then
+        actions = {
+            actionSoftRestart,
+            actionSoftExit,
+            actionSaveGame,
+            actionForceExit,
+            actionForceRestart,
+        }
+    end  
 
     local options = {}
     for index, value in ipairs(actions) do
@@ -290,7 +328,7 @@ end
 
 function PowerTools:consoleCommandPrintTable(tableName, depth)
     local function printUsage()
-        PowerTools:printInfo("USAGE: ptTable tableName [depth]")
+        Log:info("USAGE: ptTable tableName [depth]")
     end
     if tableName == nil or type(tableName) ~= "string" then
         PowerTools:printError("Parameter tableName can not be empty!\n")
@@ -384,15 +422,15 @@ function PowerTools:fillFillUnit(selectedFillUnit)
         args = { },
         callback = function(target, selectedOption, a)
 
-            PowerTools:printDebugVar("selectedOption", selectedOption)
+            -- PowerTools:printDebugVar("selectedOption", selectedOption)
             if selectedOption > 0 then
 
                 local selectedFillUnitIndex = selectedFillUnit.fillUnitIndex
                 local selectedFillTypeIndex = optionToFilltypeIndex[selectedOption]
                 local amount = selectedFillUnit.capacity or 1000
 
-                PowerTools:printDebugVar("selectedFillUnit.capacity", selectedFillUnit.capacity)
-                PowerTools:printDebugVar("selectedFillTypeIndex", selectedFillTypeIndex)
+                -- PowerTools:printDebugVar("selectedFillUnit.capacity", selectedFillUnit.capacity)
+                -- PowerTools:printDebugVar("selectedFillTypeIndex", selectedFillTypeIndex)
 
                 -- Clean first...
                 local currentFillTypeIndex = selectedFillUnit.fillType or selectedFillUnit.supportedFillTypes[1]
@@ -400,8 +438,8 @@ function PowerTools:fillFillUnit(selectedFillUnit)
 
                 if selectedFillTypeIndex > 0 then
                     local selectedFillTypeName = g_fillTypeManager:getFillTypeNameByIndex(selectedFillTypeIndex)
-                    PowerTools:printDebugVar("selectedFillTypeName", selectedFillTypeName)
-                    PowerTools:printDebugVar("amount", amount)
+                    -- PowerTools:printDebugVar("selectedFillTypeName", selectedFillTypeName)
+                    -- PowerTools:printDebugVar("amount", amount)
 
                     FSBaseMission.consoleCommandFillUnitAdd(g_currentMission, selectedFillUnitIndex, selectedFillTypeName, amount)
                 end
@@ -782,6 +820,39 @@ function PowerTools:spawnObjects()
 
 end
 
+local function clearLogFile()
+    --! No longer works in v1.12
+
+    local profilePath = getUserProfileAppPath()
+    if profilePath == nil or profilePath == "" then
+        return
+    end
+
+    local fileName = profilePath .. "log.txt"
+    if fileExists(fileName) then
+        copyFile(fileName, fileName .. ".bak", true)
+
+        local success = pcall(function()
+            os.remove(fileName)
+        end)
+
+        if not success then
+            Logging.warning("Failed to clear log file (backup method)")
+        end
+
+        local success = pcall(function()
+            local logFile = io.open(fileName, "w")
+            logFile:write("** Log cleared and backed up by PowerTools **")
+            logFile:close()
+        end)
+
+        if not success then
+            Logging.warning("Failed to clear log file (main method)")
+        end
+
+    end
+end
+
 local function quitGame(restart, hardReset)
     restart = restart or false
     hardReset = hardReset or false
@@ -789,8 +860,10 @@ local function quitGame(restart, hardReset)
     local success = pcall(function()
         if not hardReset and g_currentMission ~= nil then
             OnInGameMenuMenu()
-            RestartManager:setStartScreen(RestartManager.START_SCREEN_MAIN)
+            
         end
+
+        RestartManager:setStartScreen(RestartManager.START_SCREEN_MAIN)
 
         local gameID = ""
         if restart and g_careerScreen ~= nil and g_careerScreen.currentSavegame ~= nil then
@@ -798,6 +871,7 @@ local function quitGame(restart, hardReset)
         end
 
         doRestart(hardReset, "-autoStartSavegameId " .. gameID)
+        
     end)
 
     if not success then
@@ -806,7 +880,7 @@ local function quitGame(restart, hardReset)
 end
 
 local function exitToMenu(force)
-    PowerTools:printInfo("Exiting to menu")
+    Log:info("Exiting to menu")
     
     quitGame(false, force)
 end
@@ -820,58 +894,11 @@ local function restartGame(force)
         saveGameIndex = g_careerScreen.currentSavegame.savegameIndex
     end)
 
-    PowerTools:printInfo("Restarting current savegame '%s' [%d]", savegameName, saveGameIndex)
+    Log:info("Restarting current savegame '%s' [%d]", savegameName, saveGameIndex)
     quitGame(true, force)
 end
 
 
-
-
-local function doExitRestartGame(shouldRestart)
-    local useHardReset = false -- NOTE: Change to 'true' to force application restart
-
-    -- PowerTools:printInfo("Exiting to main menu/restarting current game")
-
-    if shouldRestart then
-        restartGame(useHardReset)
-    else
-        exitToMenu(useHardReset)
-    end
-
-    -- if useHardReset then
-    --     PowerTools:printInfo("Using hard reset mode to exit/restart game")
-
-    --     -- RestartManager:setStartScreen(RestartManager.START_SCREEN_MAIN)
-    --     doRestart(true, "-autoStartSavegameId 0")
-    -- else
-    --     -- SystemConsoleCommands:softRestart()
-
-    --     -- StartParams.getIsSet("restart")
-    --     -- g_careerScreen.savegameList:setSelectedIndex(tonumber(1), true)
-    --     -- g_careerScreen.currentSavegame = savegame
-
-    --     -- 2023-08-06 20:56 g_careerScreen.currentSavegame:: savegameIndex :: 1
-
-    --     -- Log:table("g_currentMission", g_currentMission)
-    --     -- Log:table("g_careerScreen.currentSavegame", g_careerScreen.currentSavegame)
-	-- 	if g_currentMission ~= nil then
-	-- 		OnInGameMenuMenu()
-    --         Log:debug("OnInGameMenuMenu()")
-    --         RestartManager:setStartScreen(RestartManager.START_SCREEN_MAIN)
-    --         doRestart(false, "-autoStartSavegameId 1")
-            
-
-	-- 		return
-	-- 	end
-
-    --     -- g_currentMission = nil
-
-	-- 	-- RestartManager:setStartScreen(RestartManager.START_SCREEN_MAIN)
-	-- 	doRestart(false, "")
-
-    -- end
-    
-end
 
 function PowerTools:confirmExitRestartGame(confirmCallback, ...)
     local callbackArgs = { ... }
@@ -879,7 +906,7 @@ function PowerTools:confirmExitRestartGame(confirmCallback, ...)
         title = g_i18n:getText("confirmExit"),
         text = g_i18n:getText("exitRestartWarning"),
         callback =  function(self, yes)
-            PowerTools:printDebugVar("doExit?", yes)
+            -- PowerTools:printDebugVar("doExit?", yes)
             if yes == true then
                 confirmCallback(unpack(callbackArgs))
             end
@@ -911,29 +938,10 @@ function PowerTools:menuActionForceExitSavegame()
         exitToMenu(true)
     end)
 
-    -- g_gui:showYesNoDialog({
-    --     title = g_i18n:getText("confirmExit"),
-    --     text = g_i18n:getText("exitRestartWarning"),
-    --     callback =  function(self, yes)
-    --         PowerTools:printDebugVar("doExit?", yes)
-    --         if yes == true then
-    --             doExitRestartGame(false)
-    --         end
-    --     end,
-    --     target = self
-    -- })
 end
 
--- function PowerTools:consoleCommandExitSavegame()
---     -- self.shouldEnforceExitRestart = true
--- end
 
 function PowerTools:update(dt)
-    -- if self.shouldEnforceExitRestart then
-    --     self.shouldEnforceExitRestart = nil
-    --     exitToMenu(false)
-    -- end
-
     if self.pendingRestartMode == RESTART_MODE.EXIT then
         exitToMenu(false)
     elseif self.pendingRestartMode == RESTART_MODE.EXIT_FORCED then
@@ -949,24 +957,95 @@ function PowerTools:commandQuitGame()
     doExit()
 end
 
-function PowerTools:consoleCommandRestartGame()
-    self.pendingRestartMode = RESTART_MODE.RESTART_FORCED
+function PowerTools:consoleCommandRestartGame(softRestart)
+    restartGame(not (softRestart or false))
 end
 
-function PowerTools:consoleCommandExitGame()
-    self.pendingRestartMode = RESTART_MODE.EXIT_FORCED
+function PowerTools:consoleCommandExitGame(softExit)
+    exitToMenu(not (softExit or false))
 end
 
+function PowerTools:consoleCommandClearLog()
+    clearLogFile()
+end
 
-function PowerTools:initMission()
+function PowerTools:keyEvent(unicode, sym, modifier, isDown)
+    if not self.settings.allowRestartWhenPaused and not self.settings.allowRestartInMenus then
+        return -- No need to check the below if we won't show the menu anyway
+    end
+    
+    local inputActionName = InputAction.POWERTOOLSMENU --InputAction.POWERTOOLSMENU -- InputAction.POWERTOOLS_REPEAT_ACTION
+    local actionName = g_inputBinding.nameActions[inputActionName]
+    local firstBinding = actionName.activeBindings ~= nil and actionName.activeBindings[1] or nil
+    local unmodifiedAxis = firstBinding ~= nil and firstBinding.unmodifiedAxis or nil
+    local inputKey = unmodifiedAxis ~= nil and Input[unmodifiedAxis] or nil
+    local isKeyPressed = not isDown and sym == inputKey
+    local modifierAxisSet = firstBinding ~= nil and firstBinding.modifierAxisSet
+
+    local allModKeysDown = true
+    if modifierAxisSet ~= nil then
+        for _, modifierAxis in pairs(modifierAxisSet) do
+            local modKey = Input[modifierAxis]
+            local modKeyDown = Utils.getNoNil(Input.isKeyPressed(modKey), false)
+            -- local modKeyData = {
+            --     axis = modifierAxis,
+            --     key = modKey, 
+            --     keyDown = modKeyDown,
+            -- }
+
+            allModKeysDown = allModKeysDown and modKeyDown
+        end
+    else
+        allModKeysDown = (modifier == 0)
+    end
+
+    if isKeyPressed and allModKeysDown then
+        local isGuiVisible = g_gui:getIsGuiVisible()
+        -- local noDialogsIsOpen = g_gui.currentGui == nil and not g_gui:getIsDialogVisible()
+        -- local isOnlyMenuOpen = g_gui.currentGui ~= nil and not g_gui:getIsDialogVisible()
+        local numOpenDialogs = (g_gui.dialogs ~= nil and #g_gui.dialogs) or 0
+        local isMainMenuOpen = isGuiVisible and (g_gui.currentGuiName == "InGameMenu")
+        local isOtherMenuOpen = isGuiVisible and not isMainMenuOpen --(g_gui.currentGuiName ~= "" and g_gui.currentGuiName ~= "InGameMenu")
+        local isPaused = g_currentMission.paused == true
+        local isMenuAllowed = (isPaused and self.settings.allowRestartWhenPaused) or not isPaused -- We only allow in non-paused mode or when explictly allowed
+
+        isMenuAllowed = isMenuAllowed and self.settings.allowRestartInMenus
+        isMenuAllowed = isMenuAllowed and not isOtherMenuOpen and (numOpenDialogs == 0)
+
+        -- Log:var("isPaused", isPaused)
+        -- Log:var("isMenuAllowed", isMenuAllowed)
+        -- Log:var("isMainMenuOpen", isMainMenuOpen)
+        -- Log:var("isOtherMenuOpen", isOtherMenuOpen)
+
+        if isMenuAllowed then
+            self:showMenu()
+        end
+    end
+end
+
+function PowerTools:loadMap()
+    if self:getIsMultiplayer() then
+        Log:info("Running in multiplayer mode, some features will be disabled [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
+    end
+end
+
+function PowerTools:load()
+    --TODO should use addSafe version from DevTools
     addConsoleCommand("ee", "Exit to the menu", "consoleCommandExitGame", self)
     addConsoleCommand("rr", "Force restart savegame", "consoleCommandRestartGame", self)
     addConsoleCommand("qq", "Quit the game", "commandQuitGame", self)
     addConsoleCommand("ptTable", "Print table", "consoleCommandPrintTable", self)
+    addConsoleCommand("ptClearLog", "Clear log file", "consoleCommandClearLog", self)
+
+    --TODO should be read from config
+    self.settings = {}
+    self.settings.allowRestartInMenus = true
+    self.settings.allowRestartWhenPaused = true
+    self.settings.defaultToForceCommands = false
 end
 
 function PowerTools:delete()
-    self:printDebug("Unloading mod Power Tools")
+    -- self:printDebug("Unloading mod Power Tools")
     removeConsoleCommand("ee")
     removeConsoleCommand("rr")
     removeConsoleCommand("qq")

@@ -1,56 +1,210 @@
 <?xml version="1.0" standalone="no"?>
-<modDesc descVersion="92">
+<modDesc descVersion="80">
     <author>w33zl</author>
-    <version>2.0.0.2-beta</version>
+    <version>1.4.1.0</version>
     <title>
-        <en>PowerTools</en>
+        <en>Power Tools</en>
     </title>
     <contributors>Translations: Lactic, nagor</contributors>
     <description>
 <en><![CDATA[
-With the PowerTools you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or do mod reviews.
+With the Power Tools menu you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or content creator.
 
-Using a single key/button (configurable, default F12) you activate the PowerTools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
-
-Why a "Lite" version? This is because of (hopefully temporary) limitations in the new game engine that forced me to remove some features that was in the FS22 version. If/when these capabilities are restored these features will be added back.
+Using a single key/button (default F12) you activate the Power Tools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
 
 MAIN FEATURES:
 - Add/remove money to your farm
-- Fill vehicle - supports vehicles with multiple tanks/storage units and accepts any filltype supported by the vehicle !
-- Spawn any type of pallet (including production materials like sugar and clothes) !
-- Spawn any type of bale - supports round/square, all sizes and all types (straw, silage, cotton etc) !
-- Spawn tree logs - currently only supports birch, spruce and pine (in a limited number of lengths) !
-- [DISABLED*] Quickly save the current game, ether via hotkey or the menu !
-- [DISABLED*] Quickly exit current game and go to the main menu (or restart the savegame, see below)
-- [DISABLED*] Toggle "Flight mode" (then use J to activate flight mode and Q/E to ascend/descend in the air)
-- [DISABLED*] Toggle HUD/interface on/off
-- [DISABLED*] Toggle "Super strength" mode
+- Fill vehicle - supports vehicles with multiple tanks/storage units and accepts any filltype supported by the vehicle *
+- Spawn any type of pallet (including production materials like sugar and clothes) *
+- Spawn any type of bale - supports round/square, all sizes and all types (straw, silage, cotton etc) *
+- Spawn tree logs - currently only supports birch, spruce and pine (in a limited number of lengths) *
+- Quickly save the current game, ether via hotkey or the menu *
+- Quickly exit current game and go to the main menu (or restart the savegame, see below)
+- Toggle "Flight mode" (then use J to activate flight mode and Q/E to ascend/descend in the air)
+- Toggle HUD/interface on/off
+- Toggle "Super strength" mode
 - Repeat last command
+- Open PowerTools menu in alternate mode (restart and exit to menu uses the "hard reset" method instead of "soft reset")
+- A limited PowerTools menu can now be opened when main menu is open as well as when the game is paused
 
-Please note:
-1. Features marked with an asterisk (*) are currently disabled due to breaking changes in FS25. If/when Giants re-enable the underlying support for these features, they will be re-enabled in the mod.
-2. Features marked with an asterisk (!) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
+IMPORTANT: Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
 
 NOTES:
 - To reset your money (or set to a specific amount) use '=' as a prefix, e.g. '=100' would set your bank account to 100
+- If you choose the "Exit to menu" option when also have started the game with the '-restart -autoStartSavegameId 1' startup flags, the game will automagically restart your savegame
+- Now PowerTools properly distinguish between exit to menu and restart, even if the game is started with either the '-restart' and/or the '-autoStartSavegameId N' flags
+- You also have the console command 'ee' to exit the game (to main menu) and the 'rr' command to restart the current savegame. Both commands will do a clean restart of the game client (the exit and restart commands in the menu will do a soft reset).
 - Many of the features requires that you have admin access (to prevent cheating in multiplayer) - in single player everyone is admin though :)
 - Filling vehicles, saving the game and spawning bales/pallets/trees currently only work if you are the host of the game (i.e. single player or self-hosted multiplayer) and does not work on dedicated servers
-- To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings (i.e. this feature has no default key binding)
+- To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings
+- The new alternate mode for the menu uses a separate hotkey (default Right Ctrl + F12)
 
 CHANGELOG:
-v2.0:
-- NEW: FS25 support
+
+v1.4:
+- NEW: Alternate menu added (trigger via new hotkey)
+- NEW: PowerTools dialog can now be opened when the main menu is open (fewer functions are available)
+- NEW: PowerTools dialog can now also be opened when the game is paused (fewer functions are available)
+
+v1.3.1:
+- FIX: Fixed minor issue with the restart command
+
+v1.3:
+- NEW: Last command can be repeated via hotkey (experimental feature)
+- NEW: Added "Restart savegame" command (different from exit to menu)
+- NEW: Added new console commands (see notes)
+- FIX: Tweaked the exit/restart feature for faster restarts
+
 ]]></en>
 
 <de><![CDATA[
+Mit dem Menü "Power Tools" haben Sie schnellen und einfachen Zugriff auf einige "Lebensqualitäts"-Funktionen. Dies ist besonders nützlich, wenn Sie Modder oder Inhaltsersteller sind.
+
+Mit einer einzigen Taste (standardmäßig F12) aktivieren Sie das Menü "Power Tools". Von dort aus können Sie schnell zu den verschiedenen Funktionen navigieren, ohne dass Sie eine Maus benötigen oder sich durch mehrere Menüs bewegen müssen.
+
+HAUPTFUNKTIONEN:
+- Hinzufügen/Entfernen von Geld zu Ihrer Farm
+- Fahrzeug befüllen - unterstützt Fahrzeuge mit mehreren Tanks/Lagereinheiten und akzeptiert jeden vom Fahrzeug unterstützten Fülltyp *
+- Jede Art von Palette erzeugen (einschließlich Produktionsmaterialien wie Zucker und Kleidung) *
+- Jede Art von Ballen erzeugen - unterstützt rund/quadratisch, alle Größen und alle Arten (Stroh, Silage, Baumwolle usw.) *
+- Baumstämme erzeugen - derzeit werden nur Birke, Fichte und Kiefer (in einer begrenzten Anzahl von Längen) unterstützt *
+- Schnelles Speichern des aktuellen Spiels, entweder per Hotkey oder über das Menü *
+- Schnelles Beenden des aktuellen Spiels und Wechsel zum Hauptmenü (oder Neustart des Spielstands, siehe unten)
+- Umschalten des "Flugmodus" (dann mit J den Flugmodus aktivieren und mit Q/E in der Luft auf- und absteigen)
+- HUD/Interface ein-/ausschalten
+- Modus "Superstärke" einschalten
+- Wiederholen Sie den letzten Befehl
+- Öffnen des PowerTools-Menüs im alternativen Modus (Neustart und Verlassen des Menüs mit der "Hard Reset"-Methode)
+- Ein eingeschränktes PowerTools-Menü kann jetzt geöffnet werden, wenn das Hauptmenü geöffnet ist und wenn das Spiel pausiert ist
+
+WICHTIG: Die mit einem Sternchen (*) gekennzeichneten Funktionen sind nicht auf dedizierten Servern verfügbar, sondern nur im Einzelspielermodus und im selbst gehosteten Mehrspielermodus.
+
+HINWEISE:
+- Um Ihr Geld zurückzusetzen (oder auf einen bestimmten Betrag zu setzen), verwenden Sie '=' als Präfix, z.B. würde '=100' Ihr Bankkonto auf 100 setzen
+- Wenn Sie die Option "Exit to menu" wählen, während Sie das Spiel mit der Startoption '-restart -autoStartSavegameId 1' gestartet haben, startet das Spiel automatisch Ihr Spiel neu.
+- PowerTools unterscheidet nun korrekt zwischen dem Verlassen des Menüs und dem Neustart, auch wenn das Spiel mit den Flags '-restart' und/oder '-autoStartSavegameId N' gestartet wurde
+- Außerdem gibt es den Konsolenbefehl 'ee' zum Verlassen des Spiels (zum Hauptmenü) und den Befehl 'rr' zum Neustart des aktuellen Spielstands. Beide Befehle führen einen sauberen Neustart des Spielclients durch (die Befehle 'exit' und 'restart' im Menü bewirken einen Soft-Reset).
+- Viele der Funktionen erfordern einen Admin-Zugang (um Cheating im Multiplayer zu verhindern) - im Einzelspieler ist jedoch jeder Admin :)
+- Das Füllen von Fahrzeugen, das Speichern des Spiels und das Spawnen von Ballen/Paletten/Bäumen funktioniert derzeit nur, wenn man der Host des Spiels ist (d.h. Einzelspieler oder selbst gehosteter Multiplayer) und funktioniert nicht auf dedizierten Servern
+- Um die Funktion "Letzte Aktion wiederholen" nutzen zu können, muss ein Hotkey in den Einstellungen für die Eingabebindung festgelegt werden
+
+CHANGELOG:
+
+v1.4:
+- NEU: Alternatives Menü hinzugefügt (Auslösung über neuen Hotkey)
+- NEU: PowerTools-Dialog kann jetzt auch geöffnet werden, wenn das Hauptmenü geöffnet ist (weniger Funktionen sind verfügbar)
+- NEU: PowerTools-Dialog kann jetzt auch bei pausiertem Spiel geöffnet werden (weniger Funktionen verfügbar)
+
+v1.3.1:
+- FIX: Kleines Problem mit dem Neustart-Befehl behoben
+
+v1.3:
+- NEU: Letzter Befehl kann per Hotkey wiederholt werden (experimentelle Funktion)
+- NEW: Befehl "Restart savegame" hinzugefügt (anders als exit to menu)
+- NEW: Neue Konsolenbefehle hinzugefügt (siehe Hinweise)
+- FIX: Exit/Restart-Funktion für schnellere Neustarts überarbeitet
 
 
 ]]></de>
 
 <fr><![CDATA[
+Le menu Outils vous permet d'accéder rapidement et facilement à certaines fonctions de "qualité de vie". C'est particulièrement utile si vous êtes un moddeur ou un créateur de contenu.
 
-   
+Une seule touche/bouton (par défaut F12) vous permet d'activer le menu Power Tools. À partir de là, vous pouvez naviguer rapidement vers les différentes fonctions sans avoir besoin d'une souris ou de naviguer dans plusieurs menus.
+
+FONCTIONS PRINCIPALES :
+- Ajoutez/supprimez de l'argent à votre ferme
+- Remplir le véhicule - supporte les véhicules avec plusieurs réservoirs/unités de stockage et accepte tout type de remplissage supporté par le véhicule *.
+- Créez n'importe quel type de palette (y compris les matériaux de production comme le sucre et les vêtements) *
+- Fabriquez n'importe quel type de balle : ronde ou carrée, de toutes tailles et de tous types (paille, ensilage, coton, etc.).
+- Création de troncs d'arbres - actuellement, seuls le bouleau, l'épicéa et le pin sont pris en charge (dans un nombre limité de longueurs).
+- Sauvegarde rapide de la partie en cours, via le raccourci clavier ou le menu *
+- Quittez rapidement la partie en cours et allez au menu principal (ou redémarrez la sauvegarde, voir ci-dessous).
+- Basculer le "mode vol" (utilisez J pour activer le mode vol et Q/E pour monter/descendre dans les airs)
+- Activer/désactiver le HUD/interface.
+- Activer le mode "Super force".
+- Répéter la dernière commande
+- Ouvrir le menu PowerTools en mode alternatif (redémarrer et quitter le menu en utilisant la méthode "hard reset")
+- Un menu PowerTools limité peut désormais être ouvert lorsque le menu principal est ouvert ainsi que lorsque le jeu est en pause.
+
+IMPORTANT : les fonctionnalités marquées d'un astérisque (*) ne sont pas disponibles sur les serveurs dédiés, mais uniquement en mode solo et en mode multijoueur autonome.
+
+NOTES :
+- Pour réinitialiser votre argent (ou fixer un montant spécifique), utilisez '=' comme préfixe, par exemple '=100' pour fixer votre compte bancaire à 100.
+- Si vous choisissez l'option "Quitter le menu" alors que vous avez démarré le jeu avec l'option '-restart -autoStartSavegameId 1', le jeu redémarrera automatiquement votre sauvegarde.
+- Désormais, PowerTools fait correctement la distinction entre la sortie du menu et le redémarrage, même si le jeu est lancé avec les options '-restart' et/ou '-autoStartSavegameId N'.
+- Vous disposez également de la commande de console 'ee' pour quitter le jeu (vers le menu principal) et de la commande 'rr' pour redémarrer la sauvegarde en cours. Ces deux commandes redémarrent proprement le client du jeu (les commandes 'exit' et 'restart' dans le menu font une réinitialisation en douceur).
+- De nombreuses fonctionnalités requièrent un accès administrateur (pour éviter la triche en multijoueur) - en solo, tout le monde est administrateur :)
+- Le remplissage des véhicules, la sauvegarde du jeu et la création de balles/palettes/arbres ne fonctionnent actuellement que si vous êtes l'hôte du jeu (c'est-à-dire en solo ou en multijoueur auto-hébergé) et ne fonctionnent pas sur les serveurs dédiés.
+- Pour pouvoir utiliser la fonction "Répéter la dernière action", vous devez lier un raccourci clavier dans les paramètres de liaison d'entrée.
+
+CHANGELOG :
+
+v1.4 :
+- NOUVEAU : Ajout d'un menu alternatif (déclenché par un nouveau raccourci clavier)
+- NOUVEAU : La boîte de dialogue PowerTools peut maintenant être ouverte lorsque le menu principal est ouvert (moins de fonctions sont disponibles)
+- NOUVEAU : La boîte de dialogue PowerTools peut maintenant être ouverte lorsque le jeu est en pause (moins de fonctions sont disponibles).
+
+v1.3.1 :
+- CORRECTIF : Correction d'un problème mineur avec la commande de redémarrage.
+
+v1.3 :
+- NOUVEAU : La dernière commande peut être répétée via le raccourci clavier (fonction expérimentale)
+- NOUVEAU : Ajout de la commande "Restart savegame" (différente de "exit to menu")
+- NOUVEAU : Ajout de nouvelles commandes dans la console (voir notes)
+- CORRECTIF : Amélioration de la fonction sortie/redémarrage pour un redémarrage plus rapide.
+
 ]]></fr>
+<tr><![CDATA[
+Elektrikli El Aletleri ile bazı "yaşam kalitesi" özelliklerine hızlı ve kolay erişebilirsiniz. Özellikle modcuysanız veya mod incelemeleri yapıyorsanız kullanışlıdır.
+
+Tek bir tuş/düğme (yapılandırılabilir, varsayılan F12) kullanarak Elektrikli Aletler menüsünü etkinleştirirsiniz. Buradan, fareye ihtiyaç duymadan veya birden fazla menüde gezinmeden farklı işlevler arasında hızlı bir şekilde gezinebilirsiniz.
+
+ANA ÖZELLİKLER:
+- Çiftliğine para ekle/kaldır
+- Doldurma aracı - birden fazla tanka/depolama ünitesine sahip araçları destekler ve araç tarafından desteklenen herhangi bir doldurma türünü kabul eder *
+- Her türlü paleti (şeker ve giysi gibi üretim malzemeleri dahil) yumurtlayın *
+- Her tür balyayı yumurtlar - yuvarlak/kare, her boyutta ve her türde (saman, silaj, pamuk vb.) destekler *
+- Ağaç kütükleri oluşturur - şu anda yalnızca huş, ladin ve çamı destekler (sınırlı sayıda uzunlukta) *
+- Mevcut oyunu, eter'i kısayol tuşu veya menü aracılığıyla hızlı bir şekilde kaydedin *
+- Mevcut oyundan hızla çıkın ve ana menüye gidin (veya kayıtlı oyunu yeniden başlatın, aşağıya bakın)
+- "Uçuş modu"nu değiştirin (daha sonra uçuş modunu etkinleştirmek için J'yi ve havada yükselmek/inmek için Q/E'yi kullanın)
+- HUD/arayüz aç/kapat
+- "Süper güç" modunu değiştir
+
+ÖNEMLİ: Yıldız (*) ile işaretlenen özellikler, özel sunucularda bulunmaz, yalnızca tek oyunculu ve kendi kendine barındırılan çok oyunculu oyunlarda mevcuttur.
+
+NOTLAR:
+- Paranızı sıfırlamak (veya belirli bir miktara ayarlamak) için önek olarak '=' kullanın, ör. '=100' banka hesabınızı 100 olarak ayarlar
+- Oyunu '-restart -autoStartSavegameId 1' başlangıç ​​bayraklarıyla başlattığınızda "menüden çık" seçeneğini seçerseniz, oyun otomatik olarak kayıtlı oyununuzu yeniden başlatacaktır.
+- Ayrıca oyundan çıkmak için (ana menüye) konsol komutu 'ee'ye sahipsiniz.
+- Özelliklerin çoğu, yönetici erişimine sahip olmanızı gerektirir (çok oyunculu modda hile yapmayı önlemek için) - tek oyunculu modda herkes yönetici olsa da :)
+- Araçları doldurmak, oyunu kaydetmek ve balyaları/paletleri/ağaçları yumurtlamak şu anda yalnızca oyunun sahibiyseniz (yani tek oyunculu veya kendi kendine barındırılan çok oyunculu) çalışır ve özel sunucularda çalışmaz.
+
+DEĞİŞİM GÜNLÜĞÜ:
+v1.2:
+- YENİ: Günlükleri oluşturma seçeneği eklendi
+- DÜZELTME: 'Doldur Aracı' artık gizli dolum üniteleri olan araçlarda (ör. sıvı depolu kamyon) kullanılabilir olmalıdır
+- DÜZELTME: Doldurma türü adları artık araç doldurulurken düzgün bir şekilde çevriliyor
+
+v1.1.1:
+- DÜZELTME: Oyundan ayrılma/yeniden başlatma sırasında v1.2 yamasının neden olduğu oyun çökmesi düzeltildi
+- DÜZELTME: Özel sunuculardaki çok oyunculu sorunlar düzeltildi
+
+v1.1.0:
+- DÜZELTME: Para ekle/kaldır artık çok oyunculu modda düzgün çalışmalı
+- DÜZELTME: Konsol komutu 'ee' ile çıkarken/yeniden başlatırken oyun artık çökmemelidir
+- YENİ: Oyunu menü veya 'hızlı kaydetme' kısayol tuşu aracılığıyla kaydetme seçeneği eklendi
+- YENİ: Her tür paleti üretebilir (dolgu türlerine bağlı, yani mağazadakilere değil)
+- YENİ: Her türden balya üretebilir! Yuvarlak veya kare, her boy ve her çeşit (saman, silaj, pamuk vb.)
+- YENİ: Türkçe çeviri eklendi
+- YENİ: Portekizce çeviri eklendi
+
+v1.0.1:
+- DÜZELTME: Fransızca çeviri artık düzgün çalışıyor
+- MOD: Artık herhangi bir ilerlemeyi kaybetmemek için çıkmadan önce onaylamanız gerekiyor
+- YENİ: Rusça çeviri
+]]></tr>
 
     </description>
     <iconFilename>icon_PowerTools.dds</iconFilename>
@@ -66,10 +220,14 @@ v2.0:
 		<actionBinding action="POWERTOOLSMENU">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_f12"/>
 		</actionBinding>
+        <actionBinding action="POWERTOOLSMENU_ALTERNATIVE">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_f12"/>
+		</actionBinding>        
     </inputBinding>
 
     <actions>
         <action name="POWERTOOLSMENU" />
+        <action name="POWERTOOLSMENU_ALTERNATIVE" />
         <action name="POWERTOOLS_QUICKSAVE" />
         <action name="POWERTOOLS_REPEAT_ACTION" />
 	</actions>

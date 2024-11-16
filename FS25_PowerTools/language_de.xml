@@ -3,6 +3,7 @@
     <translationContributors>w33zl</translationContributors>
     <texts>
         <text name="input_POWERTOOLSMENU" text="Menü Power Tools öffnen" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Öffnen Sie das sekundäre Menü Power Tools" />
         <text name="input_POWERTOOLS_QUICKSAVE" text="Schnellspeichern" />
         <text name="flightMode" text="Flugmodus" />
         <text name="enabled" text="Aktiviert" />
