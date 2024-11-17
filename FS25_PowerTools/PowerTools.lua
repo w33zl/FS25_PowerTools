@@ -92,12 +92,14 @@ function PowerTools:showMenu(actionName)
     local isInMainMenu = g_gui.currentGui ~= nil
     local isInVehicle = g_localPlayer:getCurrentVehicle() ~= nil
 
-    Log:var("useAltMode", useAltMode)
-    Log:var("isPaused", isPaused)
+    -- Log:var("useAltMode", useAltMode)
+    -- Log:var("isPaused", isPaused)
 
-    local actionFillVehicle = { g_i18n:getText("fillVehicle"), self.fillVehicle }
-    local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround }
-    local actionSpawnBale = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects }
+    local actionFillVehicle = { g_i18n:getText("fillVehicle"), self.fillVehicle, (not isInVehicle) }
+    local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround, (isInVehicle) }
+    local actionSpawnPallets = { g_i18n:getText("infohud_pallet"), self.spawnPallets, (isInVehicle) } --TODO: fix l10n
+    local actionSpawnBale = { g_i18n:getText("bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
+    local actionSpawnTreeTrunk = { g_i18n:getText("fillType_wood"), self.spawnLogs, (isInVehicle) } --TODO: fix l10n
 
     local actionSoftRestart = { g_i18n:getText("restartMode"), self.menuActionRestartGame }
     local actionSoftExit = { g_i18n:getText("exitMode"), self.menuActionExitSavegame }
@@ -112,14 +114,26 @@ function PowerTools:showMenu(actionName)
     end
 
     local actionSaveGame = { g_i18n:getText("saveGame"), self.saveGame }
-    local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects }
-    local actionClearTipArea = { g_i18n:getText("actionClearTipArea"), self.clearTipArea }
+    local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects, (isInVehicle) }
+    local actionClearTipArea = { g_i18n:getText("actionClearTipArea"), self.clearTipArea, true }
     local actionAddRemoveMoney = { g_i18n:getText("changeMoneyMode"), self.addRemoveMoney }
     local actionToggleHUDMode = { g_i18n:getText("noHudMode"), self.toggleHUDMode }
-    local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength }
-    local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode }
+    local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength, true }
+    local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode, true }
     
+    -- -- Conditionally disable options
+    -- if isInVehicle == true then
+    --     actionSpawnBale = nil
+    -- else
+    --     actionFillVehicle = nil
+    -- end
+
     local actions = {
+        actionFillVehicle,
+        actionSpawnObjects,
+        -- actionSpawnPallets,
+        -- actionSpawnBale,
+        -- actionSpawnTreeTrunk,
         actionToggleSuperStrength,
         actionToggleFlightMode,
         actionToggleHUDMode,
@@ -129,14 +143,22 @@ function PowerTools:showMenu(actionName)
         actionRestart,
     }
 
-    --TODO: replace when TipOnGround works
-    if self:getIsServer() then --NOTE: only allowed on the server host for now, maybe change in the future
-        if isInVehicle == true then
-            table.insert( actions, 1, actionFillVehicle )
-        else
-            table.insert( actions, 1, actionSpawnBale )
+
+    -- Remove disabled actions
+    for i = #actions, 1, -1 do
+        if actions[i] == nil or actions[i][3] then
+            table.remove(actions, i)
         end
     end
+
+    -- --TODO: replace when TipOnGround works
+    -- if self:getIsServer() then --NOTE: only allowed on the server host for now, maybe change in the future
+    --     if isInVehicle == true then
+    --         table.insert( actions, 1, actionFillVehicle )
+    --     else
+    --         table.insert( actions, 1, actionSpawnBale )
+    --     end
+    -- end
 
     if isPaused or isInMainMenu then
         actions = {
@@ -152,6 +174,14 @@ function PowerTools:showMenu(actionName)
     for index, value in ipairs(actions) do
         options[#options + 1] = index .. ") " .. value[1]
     end
+    -- local options = {}
+    -- local menuIndex = 0
+    -- for index, value in ipairs(actions) do
+    --     if not value[3] then -- Is hidden?
+    --         menuIndex = menuIndex + 1
+    --         options[#options + 1] = menuIndex .. ") " .. value[1]
+    --     end 
+    -- end
 
     local dialogArguments = {
         text = g_i18n:getText("chooseAction"),
