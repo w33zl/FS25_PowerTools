@@ -73,7 +73,7 @@ local function getOrInitGlobalMod(name)
     return g_globalMods[name]
 end
 
-_G.g_powerTools = getOrInitGlobalMod("FS22_PowerTools")
+_G.g_powerTools = getOrInitGlobalMod("FS25_PowerTools")
 
 function PowerTools:showSecondaryMenu(a)
     print("Second menu")
