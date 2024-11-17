@@ -967,7 +967,7 @@ end
 
 function PowerTools:confirmExitRestartGame(confirmCallback, ...)
     local callbackArgs = { ... }
-    g_gui:showYesNoDialog({
+    DialogHelper.showYesNoDialog({
         title = g_i18n:getText("confirmExit"),
         text = g_i18n:getText("exitRestartWarning"),
         callback =  function(self, yes)
