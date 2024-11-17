@@ -386,7 +386,7 @@ end
 
 
 --TODO: FIX DIALOG
-function PowerTools:showOptionDialog(text, title, options, callback, noReset)
+function PowerTools:showOptionDialog(text, title, options, callback, noReset, previousOption)
     --TODO: hack to reset the "remembered" option (i.e. solve a bug in the game engine)
     local dialog = g_gui.guis["OptionDialog"]
     if dialog ~= nil and not noReset then
@@ -400,7 +400,7 @@ function PowerTools:showOptionDialog(text, title, options, callback, noReset)
         title = title,
         defaultText = "",
         options = options,
-        defaultOption = 1,
+        defaultOption = previousOption or 1,
         target = self,
         args = { },
         callback = callback,
