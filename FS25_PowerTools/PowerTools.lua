@@ -23,6 +23,7 @@ local ACTION = {
     TIP_TO_GROUND = 6,
     FLIGHT_MODE = 7,
     CHANGE_MONEY = 8,
+    FILL_UNIT_ADD = 9,
 }
 
 local RESTART_MODE = {
@@ -88,7 +89,7 @@ function PowerTools:showMenu(actionName)
     local useAltMode = actionName == InputAction.POWERTOOLSMENU_ALTERNATIVE
     local isPaused = g_currentMission.paused
     local isInMainMenu = g_gui.currentGui ~= nil
-    local isInVehicle = g_currentMission.controlledVehicle ~= nil
+    local isInVehicle = g_localPlayer:getCurrentVehicle() ~= nil
 
     Log:var("useAltMode", useAltMode)
     Log:var("isPaused", isPaused)
@@ -445,6 +446,7 @@ function PowerTools:fillFillUnit(selectedFillUnit)
         -- okTexr = "Spara",
         options = options,
         target = self,
+        yesButtonText = g_i18n:getText("fill"),
         args = { },
         callback = function(target, selectedOption, a)
 
@@ -454,34 +456,55 @@ function PowerTools:fillFillUnit(selectedFillUnit)
                 local selectedFillUnitIndex = selectedFillUnit.fillUnitIndex
                 local selectedFillTypeIndex = optionToFilltypeIndex[selectedOption]
                 local amount = selectedFillUnit.capacity or 1000
+                
+                local fillTypeName = g_fillTypeManager:getFillTypeNameByIndex(selectedFillTypeIndex)
 
-                -- PowerTools:printDebugVar("selectedFillUnit.capacity", selectedFillUnit.capacity)
-                -- PowerTools:printDebugVar("selectedFillTypeIndex", selectedFillTypeIndex)
+                local function setFillUnitFillLevel(fillUnitIndex, fillType, amount)
+                    g_currentMission.vehicleSystem:consoleCommandFillUnitAdd(fillUnitIndex, fillType, amount)
+                end
 
-                -- Clean first...
-                local currentFillTypeIndex = selectedFillUnit.fillType or selectedFillUnit.supportedFillTypes[1]
-                FSBaseMission.consoleCommandFillUnitAdd(g_currentMission, selectedFillUnitIndex, g_fillTypeManager:getFillTypeNameByIndex(currentFillTypeIndex), 0)
+                local controlledVehicle = g_localPlayer:getCurrentVehicle()
+                local selectedVehicle = controlledVehicle ~= nil and controlledVehicle:getSelectedVehicle()
+                local currentVehicle = selectedVehicle or controlledVehicle
+                local spec_fillUnit = currentVehicle ~= nil and currentVehicle.spec_fillUnit
 
+                if spec_fillUnit == nil then
+                    return
+                end
+
+                local currentFillType = currentVehicle:getFillUnitFillType(selectedFillUnitIndex)
+                local currentFillLevel = currentVehicle:getFillUnitFillLevel(selectedFillUnitIndex)
+                local maxCapacity = currentVehicle:getFillUnitCapacity(selectedFillUnitIndex)
+
+                Log:var("FillTypeName", fillTypeName)
+                Log:var("selectedFillUnitIndex", selectedFillUnitIndex)
+                Log:var("selectedFillTypeIndex", selectedFillTypeIndex)
+                Log:var("selectedOption", selectedOption)
+                Log:var("amount", amount)
+                Log:var("currentFillType", currentFillType)
+                Log:var("currentFillLevel", currentFillLevel)
+                Log:var("maxCapacity", maxCapacity)
+                Log:debug("clean")
+
+                setFillUnitFillLevel(selectedFillUnitIndex, g_fillTypeManager:getFillTypeNameByIndex(currentFillType), -currentFillLevel)
+                
                 if selectedFillTypeIndex > 0 then
-                    local selectedFillTypeName = g_fillTypeManager:getFillTypeNameByIndex(selectedFillTypeIndex)
-                    -- PowerTools:printDebugVar("selectedFillTypeName", selectedFillTypeName)
-                    -- PowerTools:printDebugVar("amount", amount)
-
-                    FSBaseMission.consoleCommandFillUnitAdd(g_currentMission, selectedFillUnitIndex, selectedFillTypeName, amount)
+                    Log:debug("add")
+                    setFillUnitFillLevel(selectedFillUnitIndex, fillTypeName, amount)
                 end
 
             end
         end,
     }
 
-    --TODO: FIX DIALOG
     DialogHelper.showOptionDialog(dialogArguments)
-
 end
+
+
 
 function PowerTools:fillVehicle()
 
-    local controlledVehicle = g_currentMission.controlledVehicle
+    local controlledVehicle = g_localPlayer:getCurrentVehicle()
     local selectedVehicle = controlledVehicle ~= nil and controlledVehicle:getSelectedVehicle()
     local currentVehicle = selectedVehicle or controlledVehicle
     local spec_fillUnit = currentVehicle ~= nil and currentVehicle.spec_fillUnit
@@ -641,13 +664,26 @@ function PowerTools:spawnBales(baleType)
 
 end
 
+-- _G.executeConsoleCommand = Utils.overwrittenFunction(_G.executeConsoleCommand, function(self, superFunc, consoleCommand, arguments)
+--     Log:var("consoleCommand", consoleCommand)
+--     Log:var("arguments", arguments)
+--     return superFunc(self, consoleCommand, arguments)
+-- end)
+
 function PowerTools:executeConsoleAction(actionType, consoleCommand, arguments, saveAction)
     arguments = arguments or ""
     if type(arguments) == "table" then
-        arguments = table.concat(arguments, " ")
-    end
+        local newArguments = ""
+        for index, value in ipairs(arguments) do
+            newArguments = newArguments .. tostring(value) .. " "
+        end
+        -- arguments = table.concat(arguments, " ")
+        arguments = newArguments
 
-    self:executeAction(actionType, _G, "executeConsoleCommand", { consoleCommand .. " " .. arguments }, saveAction)
+    end
+    local newCommand = consoleCommand .. " " .. arguments
+    Log:var("newCommand", newCommand)
+    self:executeAction(actionType, _G, "executeConsoleCommand", { _G, newCommand }, saveAction)
 end
 
 function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction)
