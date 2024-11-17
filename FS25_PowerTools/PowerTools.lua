@@ -713,7 +713,7 @@ function PowerTools:executeConsoleAction(actionType, consoleCommand, arguments, 
     end
     local newCommand = consoleCommand .. " " .. arguments
     Log:var("newCommand", newCommand)
-    self:executeAction(actionType, _G, "executeConsoleCommand", { _G, newCommand }, saveAction)
+    self:executeAction(actionType, _G, "executeConsoleCommand", { newCommand }, saveAction)
 end
 
 function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction)
