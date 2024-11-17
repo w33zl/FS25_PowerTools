@@ -637,6 +637,26 @@ function PowerTools:spawnBales(baleType)
 
 end
 
+function PowerTools:executeConsoleAction(actionType, consoleCommand, arguments, saveAction)
+    arguments = arguments or ""
+    if type(arguments) == "table" then
+        arguments = table.concat(arguments, " ")
+    end
+
+    self:executeAction(actionType, _G, "executeConsoleCommand", { consoleCommand .. " " .. arguments }, saveAction)
+end
+
+function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction)
+    local callback = targetObject[targetCommand]
+    
+    callback(unpack(payload))
+
+    if saveAction then
+        self:saveAction(actionType, targetObject, targetCommand, payload)
+    end
+end
+
+
 function PowerTools:spawnPallets()
     local palletTypes = {}
     for index, fillType in ipairs(g_fillTypeManager.fillTypes) do
