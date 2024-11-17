@@ -31,10 +31,18 @@ local RESTART_MODE = {
     QUIT_TO_DESKTOP = 5,
 }
 
-FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, function()
+PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(PlayerInputComponent.registerGlobalPlayerActionEvents, function()
     local triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings = false, true, false, true, nil, true
-    local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
-    g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+    local success, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
+
+    if success then
+        PowerTools.actionEventId = actionEventId
+        g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_HIGH)
+    else
+        Log:warning("Failed to register main key for PowerTools")
+        Log:var("state", success)
+        Log:var("actionId", actionEventId)
+    end    
 
     local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU_ALTERNATIVE, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
