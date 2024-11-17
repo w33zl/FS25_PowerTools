@@ -766,26 +766,30 @@ function PowerTools:spawnLogs()
 
 
     local logTypes = {}
-    local function addLogType(type, length)
-        logTypes[#logTypes + 1] = { type.index, type.name, g_i18n:getText(type.nameI18N) .. " [" .. length .. "m]", #type.treeFilenames, length }
+    local function addLogType(treeType, length)
+        logTypes[#logTypes + 1] = { treeType.index, treeType.name, treeType.title .. " [" .. length .. "m]", length }
     end
     for name, treeType in pairs(g_treePlantManager.nameToTreeType) do
-        if name == "SPRUCE1" or name == "BIRCH" or name == "PINE" then
-            local maxLength = (name == "PINE" and 8) or 6
-            addLogType(treeType, 1)
-            for i = 2, maxLength, 2 do
-                addLogType(treeType, i)
+        -- if name == "SPRUCE1" or name == "BIRCH" or name == "PINE" then
+            local maxLength = (name == "PINE" and 8) or 8
+            -- addLogType(treeType, 1)
+            for i = 3, maxLength, 1 do
+                -- check modulo
+                -- if i % 2 == 0 or i == 7 then
+                    addLogType(treeType, i)
+                -- end
+                -- addLogType(treeType, i)
             end
             -- logTypes[#logTypes + 1] = { treeType.index, treeType.name, g_i18n:getText(treeType.nameI18N), #treeType.treeFilenames, maxLength }
-        end
+        -- end
     end
-
+    
     local options = {}
     for index, value in ipairs(logTypes) do
         options[#options + 1] = value[3]
     end
 
-    local function showLogOptions(preventReset)
+    local function showLogOptions(preventReset, previousOption)
         --TODO: FIX DIALOG
         self:showOptionDialog(
             g_i18n:getText("spawnObjectsActionText"),
@@ -794,14 +798,22 @@ function PowerTools:spawnLogs()
             function(target, selectedOption)
                 if selectedOption > 0 then
                     local selectedLogType = logTypes[selectedOption]
-                    g_currentMission:consoleCommandLoadTree(selectedLogType[5], selectedLogType[2], selectedLogType[4])
-                    -- g_currentMission:consoleCommandLoadTree(MathUtil.clamp(6, 1, 8), "SPRUCE1", 6)
-                    self:saveAction(ACTION.SPAWN_LOG, g_currentMission, g_currentMission.consoleCommandLoadTree, { selectedLogType[5], selectedLogType[2], selectedLogType[4] })
+                    -- g_currentMission:consoleCommandLoadTree(selectedLogType[5], selectedLogType[2], selectedLogType[4])
+                    -- g_treePlantManager:consoleCommandLoadTree(selectedLogType[5], selectedLogType[2], selectedLogType[4])
 
-                    showLogOptions(true)
+                    local treeLength = selectedLogType[4]
+                    local treeType = selectedLogType[2]
+                    -- local cmd = string.format( "gsTreeAdd %d %s 24 true", treeLength, treeType )
+                    -- executeConsoleCommand(cmd)                  
+                    g_treePlantManager:consoleCommandLoadTree(treeLength, treeType, 24)
+                    
+                    self:saveAction(ACTION.SPAWN_LOG, g_treePlantManager, g_treePlantManager.consoleCommandLoadTree, { treeLength, treeType, 24 })
+
+                    showLogOptions(true, selectedOption)
                 end
             end,
-            preventReset
+            preventReset,
+            previousOption or 1
         )
             
     end
