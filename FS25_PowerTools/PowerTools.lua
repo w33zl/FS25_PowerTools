@@ -22,6 +22,7 @@ local ACTION = {
     SUPERMAN_MODE = 5,
     TIP_TO_GROUND = 6,
     FLIGHT_MODE = 7,
+    CHANGE_MONEY = 8,
 }
 
 local RESTART_MODE = {
@@ -279,17 +280,17 @@ function PowerTools:toggleFlightMode()
 end
 
 function PowerTools:addRemoveMoney()
-    if not self:validateMPFarmAdmin() then return end
+    if not self:validateIsFarmFinanceManager() then return end
 
     local dialogArguments = {
         text = g_i18n:getText("changeMoneyMode"):upper() .. ":\n\n" .. g_i18n:getText("changeMoneyUsage"):gsub("\\\\n", "\n"),
         target = self, 
         defaultText = "", 
-        maxCharacters = 10, 
-        args = {}, 
-        disableFilter = true,
-        confirmText = g_i18n:getText("changeMoneyMode"),
-        backText = g_i18n:getText("buttonCancel"),
+        maxCharacters = 10,
+        args = {},
+        disableFilter = false,
+        okButtonText = g_i18n:getText("changeMoneyMode"),
+        cancelButtonText = g_i18n:getText("buttonCancel"),
     }
 
     dialogArguments.callback = function(target, value, arguments)
@@ -299,12 +300,13 @@ function PowerTools:addRemoveMoney()
             local moneyChange = amount
 
             if isAbsolute then
-                local farm = g_farmManager:getFarmById(g_currentMission.player.farmId)
+                local farm = g_farmManager:getFarmById(self:getCurrentPlayer().farmId)
                 local refMoney = farm.money
                 moneyChange = amount - refMoney
             end
 
-            g_currentMission:consoleCommandCheatMoney(moneyChange);
+            self:executeAction(ACTION.CHANGE_MONEY, g_currentMission, "consoleCommandCheatMoney", { g_currentMission, moneyChange }, true)
+            -- g_currentMission:consoleCommandCheatMoney(moneyChange);
 
         end
 
@@ -324,7 +326,7 @@ function PowerTools:addRemoveMoney()
         end
     end
 
-    g_gui:showTextInputDialog(dialogArguments)
+    DialogHelper.showTextInputDialog(dialogArguments)
 end
 
 
@@ -809,6 +811,14 @@ function PowerTools:showWarningIfNoAccess(hasAccess)
     return hasAccess
 end
 
+function PowerTools:canTransferMoney()
+    return g_currentMission:getHasPlayerPermission(Farm.PERMISSION.TRANSFER_MONEY)
+end
+
+function PowerTools:validateIsFarmFinanceManager()
+    return PowerTools:showWarningIfNoAccess(self:canTransferMoney())
+end
+
 function PowerTools:validateMPFarmAdmin()
     return PowerTools:showWarningIfNoAccess(self:getIsValidFarmManager())
 end
@@ -1079,6 +1089,8 @@ end
 function PowerTools:loadMap()
     if self:getIsMultiplayer() then
         Log:info("Running in multiplayer mode, some features will be disabled [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
+    else
+        Log:debug("PowerTools is running in singleplayer mode [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
     end
 end
 
