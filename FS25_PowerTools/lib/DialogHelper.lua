@@ -25,69 +25,65 @@ function DialogHelper.showOptionDialog(parameters)
 end
 
 function DialogHelper.showYesNoDialog(parameters)
-    local optionDialog = OptionDialog.new()
+    local yesNoDialog = YesNoDialog.new()
 
-    -- optionDialog.onClose = function()
-    -- end
+    g_gui:loadGui("dataS/gui/dialogs/YesNoDialog.xml", "YesNoDialog", yesNoDialog)
 
-    optionDialog.onClickOk = function()
-        optionDialog:close()
-        if parameters.callback and (type(parameters.callback)) == "function" then
-            parameters.callback(parameters.target, optionDialog.optionElement.state, unpack(parameters.args))
-        end
-        
+    if parameters.callback and (type(parameters.callback)) == "function" then
+        yesNoDialog:setCallback(parameters.callback, parameters.target, parameters.args)
     end
 
-    optionDialog.onClickBack = function()
-        optionDialog:close()
-        if parameters.cancelCallback and (type(parameters.cancelCallback)) == "function" then
-            parameters.cancelCallback()
-        end
-        
+    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+        yesNoDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
     end
 
-    g_gui:loadGui("dataS/gui/dialogs/OptionDialog.xml", "OptionDialog", optionDialog)
+    yesNoDialog:setTitle(parameters.title or "")
 
-    optionDialog:setTitle(parameters.title or "")
-    optionDialog:setOptions( parameters.options)
-
-    local defaultOption = parameters.defaultOption or 1
-
-    optionDialog.optionElement:setState( defaultOption)
-
-    optionDialog:show()
-
+    yesNoDialog:show()
 end
 
+function DialogHelper.showSiloDialog(parameters)
+    --FIXME: not working
+    local siloDialog = SiloDialog.new()
+
+    g_gui:loadGui("dataS/gui/dialogs/SiloDialog.xml", "SiloDialog", siloDialog)
+
+    if parameters.callback and (type(parameters.callback)) == "function" then
+        siloDialog:setCallback(parameters.callback, parameters.target, parameters.args)
+    end
+
+    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+        siloDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
+    end
+
+    siloDialog:setTitle(parameters.title or "")
+
+    siloDialog:show()
+end
+
+
 function DialogHelper.showTextInputDialog(parameters)
-    local optionDialog = OptionDialog.new()
+    local textInputDialog = TextInputDialog.new()
+    local imePrompt = nil
 
-    -- optionDialog.onClose = function()
-    -- end
-
-    optionDialog.onClickOk = function()
-        if parameters.callback and (type(parameters.callback)) == "function" then
-            parameters.callback(parameters.target, optionDialog.optionElement.state, unpack(parameters.args))
-        end
-        optionDialog:close()
+    if parameters.isPasswordDialog then
+        g_gui:loadGui("dataS/gui/dialogs/PasswordDialog.xml", "TextInputDialog", textInputDialog)
+    else
+        g_gui:loadGui("dataS/gui/dialogs/TextInputDialog.xml", "TextInputDialog", textInputDialog)
     end
 
-    optionDialog.onClickBack = function()
-        if parameters.cancelCallback and (type(parameters.cancelCallback)) == "function" then
-            parameters.cancelCallback()
-        end
-        optionDialog:close()
+    if parameters.callback and (type(parameters.callback)) == "function" then
+        textInputDialog:setCallback(parameters.callback, parameters.target, parameters.defaultText, parameters.text, imePrompt, parameters.maxCharacters, parameters.args, parameters.isPasswordDialog, parameters.disableFilter)
     end
 
-    g_gui:loadGui("dataS/gui/dialogs/OptionDialog.xml", "OptionDialog", optionDialog)
+    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+        textInputDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
+    end
 
-    optionDialog:setTitle(parameters.title or "")
-    optionDialog:setOptions( parameters.options)
+    textInputDialog:setTitle(parameters.title or "") --NOTE: title is not used yet
 
-    local defaultOption = parameters.defaultOption or 1
+    local textHeight, _ = textInputDialog.dialogTextElement:getTextHeight()
+    textInputDialog:resizeDialog(textHeight)    
 
-    optionDialog.optionElement:setState( defaultOption)
-
-    optionDialog:show()
-
+    textInputDialog:show()
 end
