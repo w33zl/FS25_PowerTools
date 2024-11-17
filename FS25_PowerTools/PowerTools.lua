@@ -259,6 +259,8 @@ function PowerTools:toggleHUDMode()
 end
 
 function PowerTools:toggleFlightMode()
+    if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+
     g_currentMission.player:consoleCommandToggleFlightMode()
 
     if g_flightModeEnabled then
