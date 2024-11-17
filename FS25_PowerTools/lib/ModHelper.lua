@@ -383,6 +383,18 @@ function Mod:init()
     return newMod;
 end--function
 
+function Mod:isServerAdmin()
+    return (g_currentMission:getIsServer() or g_currentMission.isMasterUser) and g_currentMission:getIsClient()
+end
+
+function Mod:isFarmAdmin()
+    return (g_currentMission:getIsServer() or g_currentMission.isMasterUser) and g_currentMission:getIsClient()
+end
+
+function Mod:getCurrentPlayer()
+    return g_currentMission.playerSystem.playersByUserId[g_currentMission.playerUserId]
+end
+
 function Mod:enableDebugMode()
     deprecated("enableDebugMode()", "Log class")
 
