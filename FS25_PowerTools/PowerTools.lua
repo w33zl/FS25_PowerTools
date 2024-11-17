@@ -1,11 +1,12 @@
 --[[
-Power Tools for FS22
+Power Tools for FS25
 
 Author:     w33zl / WZL Modding (github.com/w33zl)
-Version:    1.4.0
-Modified:   2024-06-20
+Version:    2.0.0
+Modified:   2024-11-17
 
 Changelog:
+    2.0.0       FS25 version
 ]]
 
 PowerTools = Mod:init()
