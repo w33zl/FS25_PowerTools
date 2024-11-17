@@ -229,8 +229,15 @@ function PowerTools:tipToGround()
 
 end
 
+function PowerTools:notImplemented()
+    g_currentMission:showBlinkingWarning("Not implemented yet", 2000)
+end
+
+local NOT_IMPLEMENTED = true
 
 function PowerTools:toggleSuperStrength()
+    if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+
     g_currentMission.player:consoleCommandToggleSuperStrongMode()
 
     if g_currentMission.player.superStrengthEnabled then
