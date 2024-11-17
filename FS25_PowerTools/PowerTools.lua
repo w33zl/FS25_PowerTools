@@ -444,14 +444,12 @@ function PowerTools:fillFillUnit(selectedFillUnit)
     local dialogArguments = {
         text = g_i18n:getText("selectFillType"),
         title = g_i18n:getText("fillVehicle"),
-        -- okTexr = "Spara",
         options = options,
         target = self,
-        yesButtonText = g_i18n:getText("fill"),
+        -- yesButtonText = g_i18n:getText("fill"),
         args = { },
         callback = function(target, selectedOption, a)
 
-            -- PowerTools:printDebugVar("selectedOption", selectedOption)
             if selectedOption > 0 then
 
                 local selectedFillUnitIndex = selectedFillUnit.fillUnitIndex
@@ -477,20 +475,21 @@ function PowerTools:fillFillUnit(selectedFillUnit)
                 local currentFillLevel = currentVehicle:getFillUnitFillLevel(selectedFillUnitIndex)
                 local maxCapacity = currentVehicle:getFillUnitCapacity(selectedFillUnitIndex)
 
-                Log:var("FillTypeName", fillTypeName)
-                Log:var("selectedFillUnitIndex", selectedFillUnitIndex)
-                Log:var("selectedFillTypeIndex", selectedFillTypeIndex)
-                Log:var("selectedOption", selectedOption)
-                Log:var("amount", amount)
-                Log:var("currentFillType", currentFillType)
-                Log:var("currentFillLevel", currentFillLevel)
-                Log:var("maxCapacity", maxCapacity)
-                Log:debug("clean")
+                -- Log:var("FillTypeName", fillTypeName)
+                -- Log:var("selectedFillUnitIndex", selectedFillUnitIndex)
+                -- Log:var("selectedFillTypeIndex", selectedFillTypeIndex)
+                -- Log:var("selectedOption", selectedOption)
+                -- Log:var("amount", amount)
+                -- Log:var("currentFillType", currentFillType)
+                -- Log:var("currentFillLevel", currentFillLevel)
+                -- Log:var("maxCapacity", maxCapacity)
+                -- Log:debug("clean")
 
+                -- Need to clean first... othwerwise we cannot fill with a new type
                 setFillUnitFillLevel(selectedFillUnitIndex, g_fillTypeManager:getFillTypeNameByIndex(currentFillType), -currentFillLevel)
                 
                 if selectedFillTypeIndex > 0 then
-                    Log:debug("add")
+                    -- Log:debug("add")
                     setFillUnitFillLevel(selectedFillUnitIndex, fillTypeName, amount)
                 end
 
