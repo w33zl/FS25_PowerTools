@@ -3,24 +3,15 @@ DialogHelper = {}
 function DialogHelper.showOptionDialog(parameters)
     local optionDialog = OptionDialog.new()
 
-    -- optionDialog.onClose = function()
-    -- end
-
-    optionDialog.onClickOk = function()
-        if parameters.callback and (type(parameters.callback)) == "function" then
-            parameters.callback(parameters.target, optionDialog.optionElement.state, unpack(parameters.args))
-        end
-        optionDialog:close()
-    end
-
-    optionDialog.onClickBack = function()
-        if parameters.cancelCallback and (type(parameters.cancelCallback)) == "function" then
-            parameters.cancelCallback()
-        end
-        optionDialog:close()
-    end
-
     g_gui:loadGui("dataS/gui/dialogs/OptionDialog.xml", "OptionDialog", optionDialog)
+
+    if parameters.callback and (type(parameters.callback)) == "function" then
+        optionDialog:setCallback(parameters.callback, parameters.target, parameters.args)
+    end
+
+    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+        optionDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
+    end
 
     optionDialog:setTitle(parameters.title or "")
     optionDialog:setOptions( parameters.options)
@@ -40,17 +31,19 @@ function DialogHelper.showYesNoDialog(parameters)
     -- end
 
     optionDialog.onClickOk = function()
+        optionDialog:close()
         if parameters.callback and (type(parameters.callback)) == "function" then
             parameters.callback(parameters.target, optionDialog.optionElement.state, unpack(parameters.args))
         end
-        optionDialog:close()
+        
     end
 
     optionDialog.onClickBack = function()
+        optionDialog:close()
         if parameters.cancelCallback and (type(parameters.cancelCallback)) == "function" then
             parameters.cancelCallback()
         end
-        optionDialog:close()
+        
     end
 
     g_gui:loadGui("dataS/gui/dialogs/OptionDialog.xml", "OptionDialog", optionDialog)
