@@ -12,6 +12,8 @@ PowerTools = Mod:init()
 
 -- PowerTools:enableDebugMode()
 
+PowerTools:source("lib/DialogHelper.lua")
+
 local ACTION = {
     SPAWN_PALLET = 1,
     SPAWN_BALE = 2,
@@ -78,6 +80,7 @@ function PowerTools:showSecondaryMenu(a)
     self:showMenu(true)
 end
 
+--TODO: FIX DIALOG
 function PowerTools:showMenu(actionName)
     self.lastAction = nil
 
@@ -170,7 +173,8 @@ function PowerTools:showMenu(actionName)
         dialog.target:setOptions({""}) -- Add fake option to force a "reset"
     end
 
-    g_gui:showOptionDialog(dialogArguments)
+    --TODO: FIX DIALOG
+    DialogHelper.showOptionDialog(dialogArguments)
     
 
 end
@@ -181,6 +185,7 @@ function PowerTools:showSubMenu(text, title, defaultOption, actions)
         options[#options + 1] = index .. ") " .. value[1]
     end
 
+    --TODO: FIX DIALOG
     self:showOptionDialog(
         text, 
         title, 
@@ -367,7 +372,7 @@ end
 
 
 
-
+--TODO: FIX DIALOG
 function PowerTools:showOptionDialog(text, title, options, callback, noReset)
     --TODO: hack to reset the "remembered" option (i.e. solve a bug in the game engine)
     local dialog = g_gui.guis["OptionDialog"]
@@ -375,7 +380,9 @@ function PowerTools:showOptionDialog(text, title, options, callback, noReset)
         dialog.target:setOptions({""}) -- Add fake option to force a "reset"
     end
 
-    g_gui:showOptionDialog({
+    --TODO: FIX DIALOG
+    
+    DialogHelper.showOptionDialog({
         text = text,
         title = title,
         defaultText = "",
@@ -456,7 +463,8 @@ function PowerTools:fillFillUnit(selectedFillUnit)
         end,
     }
 
-    g_gui:showOptionDialog(dialogArguments)
+    --TODO: FIX DIALOG
+    DialogHelper.showOptionDialog(dialogArguments)
 
 end
 
@@ -530,6 +538,7 @@ function PowerTools:fillVehicle()
             options[#options + 1] = string.format( "%s: %s (%d/%d)", value.vehiclePrefix, name, value.fillLevel, value.capacity)
         end
 
+        --TODO: FIX DIALOG
         self:showOptionDialog(
             g_i18n:getText("chooseFillUnitDetailed"),
             g_i18n:getText("chooseFillUnit"),
@@ -553,8 +562,10 @@ SavegameController.onSaveComplete = Utils.appendedFunction(SavegameController.on
     if not PowerTools.isQuickSaving then return end
 
     if errorCode == Savegame.ERROR_OK then
+        --TODO: check dialog
         g_gui:closeDialogByName("MessageDialog")
     else
+        --TODO: check dialog
         g_gui:showInfoDialog({
             dialogType = DialogElement.TYPE_WARNING,
             text = g_currentMission.inGameMenu.l10n:getText(InGameMenu.L10N_SYMBOL.NOT_SAVED)
@@ -593,6 +604,7 @@ function PowerTools:spawnBales(baleType)
     end
 
     local function showBaleTypeOptions()
+        --TODO: FIX DIALOG
         self:showOptionDialog(
             g_i18n:getText("spawnObjectsActionText"),
             g_i18n:getText("spawnObjectsActionTitle"),
@@ -632,6 +644,7 @@ function PowerTools:spawnPallets()
     end
 
     local function showPalletOptions()
+        --TODO: FIX DIALOG
         self:showOptionDialog(
             g_i18n:getText("spawnObjectsActionText"),
             g_i18n:getText("spawnObjectsActionTitle"),
@@ -702,6 +715,7 @@ function PowerTools:spawnLogs()
     end
 
     local function showLogOptions(preventReset)
+        --TODO: FIX DIALOG
         self:showOptionDialog(
             g_i18n:getText("spawnObjectsActionText"),
             g_i18n:getText("spawnObjectsActionTitle"),
