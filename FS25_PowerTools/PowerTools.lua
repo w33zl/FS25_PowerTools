@@ -36,6 +36,8 @@ local RESTART_MODE = {
     QUIT_TO_DESKTOP = 5,
 }
 
+local NOT_IMPLEMENTED = true
+
 PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(PlayerInputComponent.registerGlobalPlayerActionEvents, function()
     local triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings = false, true, false, true, nil, true
     local success, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
@@ -71,6 +73,11 @@ FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, function()
     end
 end)
 
+local function commandBuilder(consoleCommand, ...)
+    local arguments = { ... }
+    return consoleCommand .. " " .. table.concat(arguments, " ")
+end
+
 local function getOrInitGlobalMod(name)
     g_globalMods[name] = g_globalMods[name] or {}
     return g_globalMods[name]
@@ -86,6 +93,9 @@ end
 --TODO: FIX DIALOG
 function PowerTools:showMenu(actionName)
     self.lastAction = nil
+
+    local VISIBLE, HIDDEN = false, true
+    
 
     local useAltMode = actionName == InputAction.POWERTOOLSMENU_ALTERNATIVE
     local isPaused = g_currentMission.paused
@@ -115,11 +125,11 @@ function PowerTools:showMenu(actionName)
 
     local actionSaveGame = { g_i18n:getText("saveGame"), self.saveGame }
     local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects, (isInVehicle) }
-    local actionClearTipArea = { g_i18n:getText("actionClearTipArea"), self.clearTipArea, true }
+    local actionClearTipArea = { g_i18n:getText("actionClearTipArea"), self.clearTipArea, HIDDEN }
     local actionAddRemoveMoney = { g_i18n:getText("changeMoneyMode"), self.addRemoveMoney }
-    local actionToggleHUDMode = { g_i18n:getText("noHudMode"), self.toggleHUDMode }
-    local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength, true }
-    local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode, true }
+    local actionToggleHUDMode = { g_i18n:getText("noHudMode"), self.toggleHUDMode, VISIBLE }
+    local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength, VISIBLE }
+    local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode, VISIBLE }
     
     -- -- Conditionally disable options
     -- if isInVehicle == true then
@@ -719,11 +729,13 @@ end
 function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction)
     local callback = targetObject[targetCommand]
     
-    callback(unpack(payload))
+    local returnValue = callback(unpack(payload))
 
     if saveAction then
         self:saveAction(actionType, targetObject, targetCommand, payload)
     end
+
+    return returnValue
 end
 
 
