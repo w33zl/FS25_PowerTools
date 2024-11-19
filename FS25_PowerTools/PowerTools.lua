@@ -309,24 +309,32 @@ function PowerTools:toggleHUDMode()
 end
 
 function PowerTools:toggleFlightMode()
-    if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+    -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
 
-    g_currentMission.player:consoleCommandToggleFlightMode()
+    -- g_currentMission.player:consoleCommandToggleFlightMode()
+    executeConsoleCommand(commandBuilder("gsPlayerFlightToggle"))
+    -- PowerTools:executeAction(ACTION.FLIGHT_MODE, _G, "executeConsoleCommand", {commandBuilder("gsPlayerFlightToggle")}, true)
 
-    if g_flightModeEnabled then
-        g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
-        g_currentMission.player.debugFlightModeWalkingSpeed = 0.032
-        g_currentMission.player.debugFlightModeRunningFactor = 4
-
-        PowerTools.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-        g_currentMission.player.motionInformation.maxWalkingSpeed = 12
-    
-        g_currentMission.player:onInputDebugFlyToggle()
+    if g_localPlayer.toggleFlightModeCommand.value then
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
     else
-        g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("disabled"), "", "", 1500)
-        g_currentMission.player.motionInformation.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-        PowerTools.maxWalkingSpeed = nil
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", "", 1500)
     end
+
+    -- if isFlightModeEnabled then
+    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
+    --     -- g_currentMission.player.debugFlightModeWalkingSpeed = 0.032
+    --     -- g_currentMission.player.debugFlightModeRunningFactor = 4
+
+    --     -- PowerTools.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
+    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = 12
+    
+    --     -- g_currentMission.player:onInputDebugFlyToggle()
+    -- else
+    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("disabled"), "", "", 1500)
+    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
+    --     -- PowerTools.maxWalkingSpeed = nil
+    -- end
 
     self:saveAction(ACTION.FLIGHT_MODE, self,PowerTools.toggleFlightMode, {} )
 end
