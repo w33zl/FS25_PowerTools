@@ -276,17 +276,25 @@ function PowerTools:notImplemented()
     g_currentMission:showBlinkingWarning("Not implemented yet", 2000)
 end
 
-local NOT_IMPLEMENTED = true
 
 function PowerTools:toggleSuperStrength()
-    if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+    -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
 
-    g_currentMission.player:consoleCommandToggleSuperStrongMode()
+    local ssEnabled = g_localPlayer.hands:consoleCommandToggleSuperStrength()
+    local ssIsEnabled = g_localPlayer.hands.spec_hands.hasSuperStrength
+    Log:var("currentMaximumMass", g_localPlayer.hands.spec_hands.currentMaximumMass)
+    Log:var("pickupDistance", g_localPlayer.hands.spec_hands.pickupDistance)
+    
+    -- if ssEnabled == "Enabled super strength" then
+    --     ssIsEnabled = true
+    -- elseif ssEnabled == "Disabled super strength" then
+    --     ssIsEnabled = false
+    -- end
 
-    if g_currentMission.player.superStrengthEnabled then
-        g_currentMission:addGameNotification(g_i18n:getText("superStrength") .. ": " .. g_i18n:getText("enabled"), "", "")
-    else
-        g_currentMission:addGameNotification(g_i18n:getText("superStrength") .. ": " .. g_i18n:getText("disabled"), "", "")
+    if ssIsEnabled == true then
+        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("enabled"), "", "", 1500)
+    elseif ssIsEnabled == false then
+        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("disabled"), "", "", 1000)
     end
 
     self:saveAction(ACTION.SUPERMAN_MODE, self,PowerTools.toggleSuperStrength, {} )
