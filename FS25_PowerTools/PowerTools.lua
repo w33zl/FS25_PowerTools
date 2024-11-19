@@ -1225,3 +1225,12 @@ function PowerTools:delete()
     removeConsoleCommand("ptTable")
     
 end
+
+
+PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlightActive, function(self, superFunc, ...)
+    if self.isFlightActive then
+        g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), "", 1000) --TODO: translate
+    else
+        g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), "", 1000) --TODO: translate
+    end
+end)

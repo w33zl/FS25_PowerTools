@@ -38,6 +38,9 @@
         <text name="restartMode" text="Restart savegame" />
         <text name="forcedRestartMode" text="Restart savegame (hard reset)" />
         <text name="forcedExitMode" text="Exit to menu (hard reset)" />
-
+        <text name="flightActivated" text="Flight is currently active" />
+        <text name="flightActivatedExtra" text="Use keys Q and E to change the altitude" />
+        <text name="flightDeactivated" text="Flight is no longer active" />
+        <text name="flightDeactivatedExtra" text="Watch out where you land!" />
     </texts>
 </l10n>
