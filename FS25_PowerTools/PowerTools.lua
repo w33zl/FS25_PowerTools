@@ -25,6 +25,7 @@ local ACTION = {
     FLIGHT_MODE = 7,
     CHANGE_MONEY = 8,
     FILL_UNIT_ADD = 9,
+    SUPER_SPEED = 10,
 }
 
 local RESTART_MODE = {
@@ -129,6 +130,7 @@ function PowerTools:showMenu(actionName)
     local actionAddRemoveMoney = { g_i18n:getText("changeMoneyMode"), self.addRemoveMoney }
     local actionToggleHUDMode = { g_i18n:getText("noHudMode"), self.toggleHUDMode, VISIBLE }
     local actionToggleSuperStrength = { g_i18n:getText("superStrengthMode"), self.toggleSuperStrength, VISIBLE }
+    local actionToggleSuperSpeed = { g_i18n:getText("superSpeedMode"), self.toggleSuperSpeed, VISIBLE }
     local actionToggleFlightMode = { g_i18n:getText("flightMode"), self.toggleFlightMode, VISIBLE }
     
     -- -- Conditionally disable options
@@ -146,6 +148,7 @@ function PowerTools:showMenu(actionName)
         -- actionSpawnTreeTrunk,
         actionToggleSuperStrength,
         actionToggleFlightMode,
+        actionToggleSuperSpeed,
         actionToggleHUDMode,
         actionAddRemoveMoney,
         actionSaveGame,
@@ -276,6 +279,24 @@ function PowerTools:notImplemented()
     g_currentMission:showBlinkingWarning("Not implemented yet", 2000)
 end
 
+
+
+function PowerTools:toggleSuperSpeed()
+    -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+
+    g_localPlayer.toggleSuperSpeedCommand = g_localPlayer.toggleSuperSpeedCommand or {}
+    local toggleSuperSpeedCommand = g_localPlayer.toggleSuperSpeedCommand
+    toggleSuperSpeedCommand.value = not (toggleSuperSpeedCommand.value or false)
+    
+
+    if toggleSuperSpeedCommand.value then
+        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("enabled"), "", "", 1500)
+    else
+        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("disabled"), "", "", 1000)
+    end
+
+    self:saveAction(ACTION.SUPER_SPEED, self,PowerTools.toggleSuperSpeed, {} )
+end
 
 function PowerTools:toggleSuperStrength()
     -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
