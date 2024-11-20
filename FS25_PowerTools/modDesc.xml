@@ -1,59 +1,45 @@
 <?xml version="1.0" standalone="no"?>
-<modDesc descVersion="80">
+<modDesc descVersion="92">
     <author>w33zl</author>
-    <version>1.4.1.0</version>
+    <version>2.1.0.0</version>
     <title>
-        <en>Power Tools</en>
+        <en>PowerTools</en>
     </title>
     <contributors>Translations: Lactic, nagor</contributors>
     <description>
 <en><![CDATA[
-With the Power Tools menu you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or content creator.
+With the PowerTools menu you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or content creator.
 
-Using a single key/button (default F12) you activate the Power Tools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
+Using a single key/button (default F12) you activate the PowerTools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
 
 MAIN FEATURES:
 - Add/remove money to your farm
 - Fill vehicle - supports vehicles with multiple tanks/storage units and accepts any filltype supported by the vehicle *
 - Spawn any type of pallet (including production materials like sugar and clothes) *
 - Spawn any type of bale - supports round/square, all sizes and all types (straw, silage, cotton etc) *
-- Spawn tree logs - currently only supports birch, spruce and pine (in a limited number of lengths) *
+- Spawn tree logs - currently only supports limited number of lengths *
+- Toggle super speed, super strength or flight mode
 - Quickly save the current game, ether via hotkey or the menu *
-- Quickly exit current game and go to the main menu (or restart the savegame, see below)
-- Toggle "Flight mode" (then use J to activate flight mode and Q/E to ascend/descend in the air)
 - Toggle HUD/interface on/off
-- Toggle "Super strength" mode
 - Repeat last command
 - Open PowerTools menu in alternate mode (restart and exit to menu uses the "hard reset" method instead of "soft reset")
 - A limited PowerTools menu can now be opened when main menu is open as well as when the game is paused
 
-IMPORTANT: Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
-
-NOTES:
-- To reset your money (or set to a specific amount) use '=' as a prefix, e.g. '=100' would set your bank account to 100
-- If you choose the "Exit to menu" option when also have started the game with the '-restart -autoStartSavegameId 1' startup flags, the game will automagically restart your savegame
-- Now PowerTools properly distinguish between exit to menu and restart, even if the game is started with either the '-restart' and/or the '-autoStartSavegameId N' flags
-- You also have the console command 'ee' to exit the game (to main menu) and the 'rr' command to restart the current savegame. Both commands will do a clean restart of the game client (the exit and restart commands in the menu will do a soft reset).
-- Many of the features requires that you have admin access (to prevent cheating in multiplayer) - in single player everyone is admin though :)
-- Filling vehicles, saving the game and spawning bales/pallets/trees currently only work if you are the host of the game (i.e. single player or self-hosted multiplayer) and does not work on dedicated servers
-- To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings
-- The new alternate mode for the menu uses a separate hotkey (default Right Ctrl + F12)
+NOTES: 
+1. Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
+2. Many of the features requires that you have admin access (to prevent cheating in multiplayer) - in single player everyone is admin though :)
+3. To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings
+4. The new alternate mode menu uses a separate hotkey (default Right Ctrl + F12)
 
 CHANGELOG:
 
-v1.4:
-- NEW: Alternate menu added (trigger via new hotkey)
-- NEW: PowerTools dialog can now be opened when the main menu is open (fewer functions are available)
-- NEW: PowerTools dialog can now also be opened when the game is paused (fewer functions are available)
+v2.1:
+- NEW: Super Speed mode added
+- FIX: Super Strength mode is re-enabled
+- FIX: Flight mode is re-enabled
 
-v1.3.1:
-- FIX: Fixed minor issue with the restart command
-
-v1.3:
-- NEW: Last command can be repeated via hotkey (experimental feature)
-- NEW: Added "Restart savegame" command (different from exit to menu)
-- NEW: Added new console commands (see notes)
-- FIX: Tweaked the exit/restart feature for faster restarts
+v2.0:
+- NEW: FS25 support
 
 ]]></en>
 
