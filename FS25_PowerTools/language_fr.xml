@@ -37,6 +37,11 @@
         <text name="restartMode" text="Redémarrer la sauvegarde" />
         <text name="forcedRestartMode" text="Redémarrer la sauvegarde (hard reset)" />
         <text name="forcedExitMode" text="Quitter le menu (hard reset)" />
-
+        <text name="flightActivated" text="Le vol est actuellement actif" />
+        <text name="flightActivatedExtra" text="Utilisez les touches Q et E pour modifier l'altitude" />
+        <text name="flightDeactivated" text="Le vol n'est plus actif" />
+        <text name="flightDeactivatedExtra" text="Attention à l'endroit où vous atterrissez !" />
+        <text name="superSpeed" text="Super vitesse" />
+        <text name="superSpeedMode" text="Basculer la super vitesse" />
     </texts>
 </l10n>

@@ -38,5 +38,11 @@
         <text name="restartMode" text="Spielstand neu starten" />
         <text name="forcedRestartMode" text="Spielstand neu starten (Hard Reset)" />
         <text name="forcedExitMode" text="Beenden im Menü (harter Reset)" />
+        <text name="flightActivated" text="Flug ist derzeit aktiv" />
+        <text name="flightActivatedExtra" text="Verwenden Sie die Tasten Q und E, um die Höhe zu ändern" />
+        <text name="flightDeactivated" text="Flug ist nicht mehr aktiv" />
+        <text name="flightDeactivatedExtra" text="Passen Sie auf, wo Sie landen!" />
+        <text name="superSpeed" text="Supergeschwindigkeit" />
+        <text name="superSpeedMode" text="Supergeschwindigkeit einschalten" />        
     </texts>
 </l10n>
