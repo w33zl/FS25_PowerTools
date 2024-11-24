@@ -799,7 +799,7 @@ function PowerTools:spawnPallets()
                 if selectedOption > 0 then
                     -- g_currentMission:consoleCommandAddPallet(palletTypes[selectedOption][2])
                     local fillTypeName = palletTypes[selectedOption][2]
-                    self:executeConsoleAction(ACTION.SPAWN_PALLET, "gsPalletAdd", fillTypeName, true)
+                    self:executeAction(ACTION.SPAWN_PALLET, g_currentMission.vehicleSystem, "consoleCommandAddPallet", { fillTypeName }, true, true)
                     -- executeConsoleCommand("gsPalletAdd " .. palletTypes[selectedOption][2])
 
                     -- self:saveAction(ACTION.SPAWN_PALLET, g_currentMission, g_currentMission.consoleCommandAddPallet, { palletTypes[selectedOption][2] })
