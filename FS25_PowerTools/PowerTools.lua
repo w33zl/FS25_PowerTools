@@ -313,9 +313,9 @@ function PowerTools:toggleSuperStrength()
     -- end
 
     if ssIsEnabled == true then
-        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("enabled"), "", "", 1500)
+        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("enabled"), "", nil, 1500)
     elseif ssIsEnabled == false then
-        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("disabled"), "", "", 1000)
+        g_currentMission:addGameNotification(g_i18n:getText("superStrength"), g_i18n:getText("disabled"), "", nil, 1000)
     end
 
     self:saveAction(ACTION.SUPERMAN_MODE, self,PowerTools.toggleSuperStrength, {} )
