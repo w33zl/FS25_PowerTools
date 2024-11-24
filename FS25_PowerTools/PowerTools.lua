@@ -763,10 +763,10 @@ function PowerTools:executeConsoleAction(actionType, consoleCommand, arguments, 
     self:executeAction(actionType, _G, "executeConsoleCommand", { newCommand }, saveAction)
 end
 
-function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction)
+function PowerTools:executeAction(actionType, targetObject, targetCommand, payload, saveAction, appendTargetToPayload)
     local callback = targetObject[targetCommand]
     
-    local returnValue = callback(unpack(payload))
+    local returnValue = appendTargetToPayload and callback(targetObject, unpack(payload)) or callback(unpack(payload))
 
     if saveAction then
         self:saveAction(actionType, targetObject, targetCommand, payload)
