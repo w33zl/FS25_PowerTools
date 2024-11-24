@@ -789,29 +789,34 @@ function PowerTools:spawnPallets()
         options[#options + 1] = value[3]
     end
 
-    local function showPalletOptions()
+    local function showPalletOptions(lastOption)
+        lastOption = lastOption or 1
         --TODO: add optional amount
         self:showOptionDialog(
             g_i18n:getText("spawnObjectsActionText"),
             g_i18n:getText("spawnObjectsActionTitle"),
             options,
             function(target, selectedOption)
+                Log:var("selectedOption", selectedOption)
                 if selectedOption > 0 then
                     -- g_currentMission:consoleCommandAddPallet(palletTypes[selectedOption][2])
                     local fillTypeName = palletTypes[selectedOption][2]
+                    -- self:executeConsoleAction(ACTION.SPAWN_PALLET, "gsPalletAdd", fillTypeName, true)
                     self:executeAction(ACTION.SPAWN_PALLET, g_currentMission.vehicleSystem, "consoleCommandAddPallet", { fillTypeName }, true, true)
+                    -- g_currentMission.vehicleSystem:consoleCommandAddPallet("wheat", "500")
                     -- executeConsoleCommand("gsPalletAdd " .. palletTypes[selectedOption][2])
 
                     -- self:saveAction(ACTION.SPAWN_PALLET, g_currentMission, g_currentMission.consoleCommandAddPallet, { palletTypes[selectedOption][2] })
-                    showPalletOptions()
+                    showPalletOptions(selectedOption)
                 end
             end,
-            true
+            true,
+            lastOption
         )
             
     end
 
-    showPalletOptions()    
+    showPalletOptions()
 end
 
 function PowerTools:spawnLogs()
