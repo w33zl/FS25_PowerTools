@@ -3,6 +3,7 @@
     <translationContributors>nagor</translationContributors>
     <texts>
         <text name="input_POWERTOOLSMENU" text="Открыть меню Power Tools" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Открыть меню Power Tools с очисткой памяти" />
         <text name="input_POWERTOOLS_QUICKSAVE" text="Быстрое сохранение" />
         <text name="flightMode" text="Режим полёта" />
         <text name="enabled" text="Включено" />
@@ -35,8 +36,13 @@
         <text name="actionClearTipArea" text="Очистить область" />
         <text name="input_POWERTOOLS_REPEAT_ACTION" text="Повторить последнее действие" />
         <text name="restartMode" text="Перезапустить сохранение" />
-        <text name="forcedRestartMode" text="Перезапустить сохранение с очисткой памяти" />
+        <text name="forcedRestartMode" text="Перезапустить сохран. с очисткой памяти" />
         <text name="forcedExitMode" text="Выйти в меню игры с очисткой памяти" />
-
+        <text name="flightActivated" text="Режим полёта активирован" />
+        <text name="flightActivatedExtra" text="Используйте клавиши Q и E для изменения высоты" />
+        <text name="flightDeactivated" text="Режим полёта больше не активен" />
+        <text name="flightDeactivatedExtra" text="Следите за тем, где вы приземлитесь!" />
+        <text name="superSpeed" text="Суперскорость" />
+        <text name="superSpeedMode" text="Переключение Суперскорости" />
     </texts>
 </l10n>
