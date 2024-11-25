@@ -814,6 +814,7 @@ function PowerTools:spawnPallets()
     showPalletOptions()    
 end
 
+
 function PowerTools:spawnLogs()
     Log:debug("Spwaning logs")
     -- Log:table("g_treePlantManager", g_treePlantManager)
@@ -842,10 +843,47 @@ function PowerTools:spawnLogs()
     -- g_currentMission:consoleCommandLoadTree(MathUtil.clamp(6, 1, 8), "SPRUCE1", 6)
 
 
+    local knowTreeTypesBlacklist = {
+        APPLE = { },            
+        BEECH = {},            
+        LODGEPOLEPINE = {},    
+        BOXELDER = { -1 },         
+        CHERRY = { 3, 4, 5 },           
+        JAPANESEZELKOVA = { 4, 5, 6, 7, 8},  
+        TRANSPORT = {},        
+        PINUSSYLVESTRIS = {},  
+        CHINESEELM = { 3, 4 },       
+        DEADWOOD = {},         
+        AMERICANELM = { 6, 7, 8 },      
+        RAVAGED = {},          
+        SHAGBARKHICKORY = { 6, 7 },  
+        BETULAERMANII = { 3, 4, 5, 6, 7 },    
+        DOWNYSERVICEBERRY = { 4, 5, 6, 7},
+        ASPEN = {},            
+        PINUSTABULIFORMIS = {},
+        OAK = { 5, 6, 7, 8},              
+        GOLDENRAIN = { 3, 5 },       
+        TILIAAMURENSIS = { 4, 5, 6, 7, 8 },   
+        NORTHERNCATALPA = { -1 },              
+    } 
+
+
 
 
     local logTypes = {}
     local function addLogType(treeType, length)
+        if knowTreeTypesBlacklist[treeType.name] ~= nil then
+            if knowTreeTypesBlacklist[treeType.name][1] == -1 then
+                Log:var("Skip tree", treeType.name)
+                return
+            end
+            for index, value in ipairs(knowTreeTypesBlacklist[treeType.name]) do
+                if value == length then
+                    Log:var("Skip length " .. treeType.name, length)
+                    return
+                end
+            end
+        end
         logTypes[#logTypes + 1] = { treeType.index, treeType.name, treeType.title .. " [" .. length .. "m]", length }
     end
     for name, treeType in pairs(g_treePlantManager.nameToTreeType) do
