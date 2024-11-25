@@ -290,9 +290,9 @@ function PowerTools:toggleSuperSpeed()
     
 
     if toggleSuperSpeedCommand.value then
-        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("enabled"), "", "", 1500)
+        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("enabled"), "", nil, 1500)
     else
-        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("disabled"), "", "", 1000)
+        g_currentMission:addGameNotification(g_i18n:getText("superSpeed"), g_i18n:getText("disabled"), "", nil, 1000)
     end
 
     self:saveAction(ACTION.SUPER_SPEED, self,PowerTools.toggleSuperSpeed, {} )
@@ -337,9 +337,9 @@ function PowerTools:toggleFlightMode()
     -- PowerTools:executeAction(ACTION.FLIGHT_MODE, _G, "executeConsoleCommand", {commandBuilder("gsPlayerFlightToggle")}, true)
 
     if g_localPlayer.toggleFlightModeCommand.value then
-        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), nil, 2500)
     else
-        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", "", 1500)
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", nil, 1500)
     end
 
     -- if isFlightModeEnabled then
@@ -1250,8 +1250,8 @@ end
 
 PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlightActive, function(self, superFunc, ...)
     if self.isFlightActive then
-        g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), "", 1000) --TODO: translate
+        g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), nil, 1000)
     else
-        g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), "", 1000) --TODO: translate
+        g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), nil, 1000) 
     end
 end)
