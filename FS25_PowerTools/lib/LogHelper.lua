@@ -126,7 +126,7 @@ local function createLog(modName, modDirectory)
 end
 
 Log = createLog(g_currentModName, g_currentModDirectory)
-
+_G.Log = Log
 
 
 LogHelper = LogHelper or {}
