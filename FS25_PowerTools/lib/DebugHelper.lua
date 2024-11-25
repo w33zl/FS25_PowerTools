@@ -200,6 +200,11 @@ DebugHelper = {
             }
         end
 
+        if functionName == nil and type(target) == "string" then
+            functionName = target
+            target = self
+        end
+
         local function internalDecoder(self, superFunc, ...)
             local a = { ... }
             print("")

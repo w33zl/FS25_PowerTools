@@ -1,7 +1,7 @@
 GlobalHelper = {}
+_G.GlobalHelper = GlobalHelper
 
-
-function GlobalHelper:GetActionEvent(name, specialization, preferGlobal)
+function GlobalHelper.GetActionEvent(name, specialization, preferGlobal)
     local actionName = g_inputBinding.nameActions[name]
     local actionEvent = nil
 
@@ -39,7 +39,15 @@ function GlobalHelper:GetActionEvent(name, specialization, preferGlobal)
     return actionEvent
 end
 
-function GlobalHelper:GetSpecActionEventId(spec, inputAction)
+function GlobalHelper.executeAction(actionEvent)
+    if actionEvent == nil or actionEvent.callback == nil or type(actionEvent.callback) ~= "function" then
+        Log:warning("Could not trigger action event '%s'", actionEvent.id)
+        return
+    end
+    actionEvent.callback(actionEvent.targetObject)
+end
+
+function GlobalHelper.GetSpecActionEventId(spec, inputAction)
     if spec ~= nil and spec.actionEvents ~= nil and inputAction ~= nil then
         local actionEvent = spec.actionEvents[inputAction]
 
