@@ -13,6 +13,7 @@ deploy/mod_release.cmd
 
 kb/*
 docs/*
+
 FS22_PowerTools/PowerTools.lua.bak
 
 docs/*
