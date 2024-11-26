@@ -128,7 +128,6 @@ end
 Log = createLog(g_currentModName, g_currentModDirectory)
 _G.Log = Log
 
-
 LogHelper = LogHelper or {}
 
 --- Starts a execution timer with the given format string.
