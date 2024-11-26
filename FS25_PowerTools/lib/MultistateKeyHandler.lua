@@ -1,4 +1,21 @@
+--[[
 
+MultiStateKeyHandler (Weezls Mod Lib for FS25_PowerTools) - Allows binding keys with three different actions (short press, long press, double tap)
+
+Version:    2.0
+Modified:   2024-11-26
+Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+
+Changelog:
+v2.0        FS25 rewrite
+v1.0        Initial FS22 version
+
+License:    CC BY-NC-SA 4.0
+This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or 
+format for noncommercial purposes only, and only so long as attribution is given to the creator.
+If you remix, adapt, or build upon the material, you must license the modified material under identical terms. 
+
+]]
 
 local MULTISTATEKEY_TRIGGER = {
     UNKNOWN = 0,
