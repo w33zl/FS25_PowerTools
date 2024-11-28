@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>nagor</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Открыть меню Power Tools" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Открыть меню Power Tools с очисткой памяти" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Быстрое сохранение" />
+        <text name="flightMode" text="Режим полёта" />
+        <text name="enabled" text="Включено" />
+        <text name="disabled" text="Выключено" />
+        <text name="flightModeUsage" text="Клавиша J - переключение полёта, клавиши Q и E изменяют высоту." />
+        <text name="changeMoneyMode" text="Добавить/удалить деньги" />
+        <text name="exitMode" text="Выйти в меню игры" />
+        <text name="chooseAction" text="Выбрать действие" />
+        <text name="powerTools" text="Power Tools" />
+        <text name="changeMoneyUsage" text="Примеры: \\n'1000' добавит 1000 € на ваш банковский счёт \\n'-1000' уменьшит на 1000 €\\n'=1000' сделает ваш счёт равным 1000 €" />
+        <text name="errorNotNumeric" text="Недопустимое числовое значение: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Отменить" />
+        <text name="noHudMode" text="HUD Вкл/Выкл" />
+        <text name="superStrengthMode" text="Переключить суперсилу" />
+        <text name="superStrength" text="Суперсила" />
+        <text name="filltypeNone" text="Нет (пусто)" />
+        <text name="chooseFillUnit" text="Выберите технику для заполнения (отсек заполнения)" />
+        <text name="chooseFillUnitDetailed" text="Какую часть вы хотите заполнить?" />
+        <text name="fillVehicle" text="Заполнить технику" />
+        <text name="selectFillType" text="Выберите тип заполнения (или 'Нет (пусто)', чтобы очистить)" />
+        <text name="errorNoValidFilltypes" text="Нет подходящих типов заполнения для этого транспорта/агрегата" />
+        <text name="errorNoValidFillUnits" text="Нет подходящего транспорта/агрегата" />
+        <text name="tipOnGround" text="Создать кучу" />
+        <text name="confirmExit" text="Вы ДЕЙСТВИТЕЛЬНО хотите выйти?" />
+        <text name="exitRestartWarning" text="ОСТОРОЖНО! Выход без сохранения приведёт к потере вашего прогресса!" />
+        <text name="saveGame" text="Сохранить игру" />
+        <text name="spawnObjectsActionTitle" text="Создать объекты/продукцию" />
+        <text name="spawnObjectsActionText" text="Выберите, что создать" />
+        <text name="actionClearTipArea" text="Очистить область" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Повторить последнее действие" />
+        <text name="restartMode" text="Перезапустить сохранение" />
+        <text name="forcedRestartMode" text="Перезапустить сохран. с очисткой памяти" />
+        <text name="forcedExitMode" text="Выйти в меню игры с очисткой памяти" />
+        <text name="flightActivated" text="Flight is currently active" />
+        <text name="flightActivatedExtra" text="Use keys Q and E to change the altitude" />
+        <text name="flightDeactivated" text="Flight is no longer active" />
+        <text name="flightDeactivatedExtra" text="Watch out where you land!" />
+        <text name="superSpeed" text="Super Speed" />
+        <text name="superSpeedMode" text="Toggle Super Speed" />
+    </texts>
+</l10n>
