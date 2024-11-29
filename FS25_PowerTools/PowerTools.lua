@@ -51,9 +51,10 @@ PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(P
         PowerTools.actionEventId = actionEventId
         g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
     else
-        Log:warning("Failed to register main key for PowerTools")
-        Log:var("state", success)
-        Log:var("actionId", actionEventId)
+        --TODO: do we need to know this? or should we just silently ignore?
+        -- Log:debug("Failed to register main key for PowerTools")
+        -- Log:var("state", success)
+        -- Log:var("actionId", actionEventId)
     end    
 
     local state, actionEventId, otherEvents = g_inputBinding:registerActionEvent(InputAction.POWERTOOLSMENU_ALTERNATIVE, PowerTools, PowerTools.showMenu, triggerUp, triggerDown, triggerAlways, startActive, callbackState, disableConflictingBindings)
