@@ -49,7 +49,7 @@ PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(P
 
     if success then
         PowerTools.actionEventId = actionEventId
-        g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_HIGH)
+        g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL)
     else
         Log:warning("Failed to register main key for PowerTools")
         Log:var("state", success)
