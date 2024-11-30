@@ -1550,9 +1550,16 @@ end
 
 
 PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlightActive, function(self, superFunc, ...)
-    if self.isFlightActive then
-        g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), nil, 1000)
-    else
-        g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), nil, 1000) 
+    if g_localPlayer.toggleFlightModeCommand.value then
+
+        if self.isFlightActive then
+            g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), nil, 1000)
+        else
+            g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), nil, 1000)
+        end
+    end
+    --HACK: probably not needed
+    if superFunc ~= nil then
+        return superFunc(self, ...)
     end
 end)
