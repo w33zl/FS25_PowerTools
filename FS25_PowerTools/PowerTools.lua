@@ -1486,9 +1486,9 @@ end
 
 function PowerTools:loadMap()
     if self:getIsMultiplayer() then
-        Log:info("Running in multiplayer mode, some features will be disabled [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
+        Log:info("Running in multiplayer mode, some features will be disabled [isMaster=%s, isServer=%s, isServerAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getIsServerAdmin(), self:getHasAdminAccess())
     else
-        Log:debug("PowerTools is running in singleplayer mode [isMaster=%s, isServer=%s, isAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getHasFarmAdminAccess(), self:getIsValidFarmManager())
+        Log:debug("PowerTools is running in singleplayer mode [isMaster=%s, isServer=%s, isServerAdmin=%s, isFarmAdmin=%s]", self:getIsMasterUser(), self:getIsServer(), self:getIsServerAdmin(), self:getHasAdminAccess())
     end
 
     -- local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true)
