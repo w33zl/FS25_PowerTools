@@ -10,6 +10,7 @@ Changelog:
     2.1.0       Re-added super strength and flight mode, and added super speed
     2.0.0       FS25 version
 ]]
+local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
 
 PowerTools = Mod:init()
 
@@ -375,7 +376,7 @@ function PowerTools:toggleFlightActive()
     Log:var("g_localPlayer.mover.isFlightActive [AFTER]", g_localPlayer.mover.isFlightActive)
 end
 
-local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
+
 
 function PowerTools:toggleFlightModeExperimental()
 
