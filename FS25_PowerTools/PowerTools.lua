@@ -2,23 +2,29 @@
 Power Tools for FS25
 
 Author:     w33zl / WZL Modding (github.com/w33zl)
-Version:    2.2.0
-Modified:   2024-11-24
+Version:    2.3
+Modified:   2024-11-30
 
 Changelog:
+    2.2.1       Fix issues related to pallet spawning and flight mode
     2.2.0       New multistate buttons, refactored menu
     2.1.0       Re-added super strength and flight mode, and added super speed
     2.0.0       FS25 version
 ]]
+
 local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
+local ENABLE_EXPERIMENTAL_HUDHIDE = true
 
 PowerTools = Mod:init()
 
 -- PowerTools:enableDebugMode()
 
 PowerTools:source("lib/DialogHelper.lua")
--- PowerTools:source("lib/GlobalHelper.lua")
--- PowerTools:source("lib/MultistateKeyHandler.lua")
+
+if ENABLE_EXPERIMENTAL_HUDHIDE then
+    PowerTools:source("lib/GlobalHelper.lua")
+    PowerTools:source("lib/MultistateKeyHandler.lua")
+end
 
 local ACTION = {
     SPAWN_PALLET = 1,
@@ -1361,64 +1367,66 @@ function PowerTools:menuActionForceExitSavegame()
 
 end
 
--- function PowerTools:onHelpTextKey_doublePress()
---     g_currentMission:showBlinkingWarning("onHelpTextKey_doublePress")
--- end
+function PowerTools:onHelpTextKey_doublePress()
+    g_currentMission:showBlinkingWarning("onHelpTextKey_doublePress")
+end
 
--- function PowerTools:onHelpTextKey_longPress()
---     g_currentMission.hud:consoleCommandToggleVisibility()
--- end
+function PowerTools:onHelpTextKey_longPress()
+    g_currentMission.hud:consoleCommandToggleVisibility()
+end
 
--- function PowerTools:hookIntoGlobalKeys(dt)
---     if self.globalKeysInitiated == true then
---         Log:trace("SKIP hookIntoGlobalKeys")
---         return
---     end
---     Log:trace("hookIntoGlobalKeys")
+function PowerTools:hookIntoGlobalKeys(dt)
+    if self.globalKeysInitiated == true then
+        Log:trace("SKIP hookIntoGlobalKeys")
+        return
+    end
+    Log:trace("hookIntoGlobalKeys")
 
---     local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true)
---     -- Log:table("helpTextActionEvent4", helpTextActionEvent, 2)
-
-
---     if helpTextActionEvent ~= nil then
---         local helpTextKeyMSKH = MultistateKeyHandler.new()
---         helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
---         helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
---         helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onHelpTextKey_longPress, self)
-
---         self.helpTextKeyMSKH = helpTextKeyMSKH
-
---     end
-
---     self.globalKeysInitiated = (helpTextActionEvent ~= nil)
--- end
-
--- -- Player.load = Utils.overwrittenFunction(Player.load, function (self, superFunc, ...)
--- --     Log:debug("Player.load")
--- --     local retVal = superFunc(self, ...)
--- --     Log:var("Player.load g_localPlayer", g_localPlayer)
--- --     Log:var("Player.load TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
--- --     return retVal
--- -- end)
+    local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true)
+    -- Log:table("helpTextActionEvent4", helpTextActionEvent, 2)
 
 
--- Player.onStartMission = Utils.overwrittenFunction(Player.onStartMission, function (self, superFunc, ...)
---     -- Log:debug("Player.onStartMission")
+    if helpTextActionEvent ~= nil then
+        local helpTextKeyMSKH = MultistateKeyHandler.new()
+        helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
+        helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
+        helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onHelpTextKey_longPress, self)
+
+        self.helpTextKeyMSKH = helpTextKeyMSKH
+
+    end
+
+    self.globalKeysInitiated = (helpTextActionEvent ~= nil)
+end
+
+-- Player.load = Utils.overwrittenFunction(Player.load, function (self, superFunc, ...)
+--     Log:debug("Player.load")
 --     local retVal = superFunc(self, ...)
---     -- Log:var("Player.onStartMission g_localPlayer", g_localPlayer)
---     -- Log:var("Player.onStartMission TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
---     PowerTools:hookIntoGlobalKeys()
+--     Log:var("Player.load g_localPlayer", g_localPlayer)
+--     Log:var("Player.load TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
 --     return retVal
 -- end)
 
--- -- PlayerInputComponent.onPlayerLoad = Utils.overwrittenFunction(PlayerInputComponent.onPlayerLoad, function (self, superFunc, ...)
--- --     -- Log:debug("PlayerInputComponent.onPlayerLoad")
--- --     local retVal = superFunc(self, ...)
--- --     Log:var("PlayerInputComponent.onPlayerLoad g_localPlayer", g_localPlayer)
--- --     Log:var("PlayerInputComponent.onPlayerLoad TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
--- --     -- Log:table("PlayerInputComponent.onPlayerLoad():player.toggleFlightModeCommand", self.player.toggleFlightModeCommand, 2)
--- --     return retVal
--- -- end)
+if ENABLE_EXPERIMENTAL_HUDHIDE then
+    Log:info("Experiment HUD hide enabled")
+
+    Player.onStartMission = Utils.overwrittenFunction(Player.onStartMission, function (self, superFunc, ...)
+        -- Log:debug("Player.onStartMission")
+        local retVal = superFunc(self, ...)
+        -- Log:var("Player.onStartMission g_localPlayer", g_localPlayer)
+        -- Log:var("Player.onStartMission TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
+        PowerTools:hookIntoGlobalKeys()
+        return retVal
+    end)
+end
+-- PlayerInputComponent.onPlayerLoad = Utils.overwrittenFunction(PlayerInputComponent.onPlayerLoad, function (self, superFunc, ...)
+--     -- Log:debug("PlayerInputComponent.onPlayerLoad")
+--     local retVal = superFunc(self, ...)
+--     Log:var("PlayerInputComponent.onPlayerLoad g_localPlayer", g_localPlayer)
+--     Log:var("PlayerInputComponent.onPlayerLoad TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
+--     -- Log:table("PlayerInputComponent.onPlayerLoad():player.toggleFlightModeCommand", self.player.toggleFlightModeCommand, 2)
+--     return retVal
+-- end)
 
 
 function PowerTools:update(dt)
