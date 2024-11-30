@@ -1185,7 +1185,7 @@ end
 
 function PowerTools:spawnObjects(altMode)
     Log:var("spawnObjects@altMode", altMode)
-    if not self:validateMPAdmin() then return end
+    if not self:validateMPAdmin() or not self:validateFarm() then return end
 
     if self.baleTypes == nil then
         self:unwrapBaleTypes()
