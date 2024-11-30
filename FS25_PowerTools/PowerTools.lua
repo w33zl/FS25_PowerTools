@@ -366,33 +366,56 @@ function PowerTools:toggleHUDMode()
     self:saveAction(ACTION.HIDE_HUD, self,PowerTools.toggleHUDMode, {} )
 end
 
-function PowerTools:toggleFlightMode()
-    -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+function PowerTools:toggleFlightActive()
+    Log:var("g_localPlayer.mover.isFlightActive [BEFORE]", g_localPlayer.mover.isFlightActive)
+    -- g_localPlayer.mover.isFlightActive = not g_localPlayer.mover.isFlightActive
+    -- Log:var("g_localPlayer.mover.isFlightActive [BETWEEN]", g_localPlayer.mover.isFlightActive)
+    -- g_localPlayer.mover:toggleFlightActive()
+    PlayerInputComponent.onInputToggleFlightMode(g_localPlayer.inputComponent)
+    Log:var("g_localPlayer.mover.isFlightActive [AFTER]", g_localPlayer.mover.isFlightActive)
+end
 
-    -- g_currentMission.player:consoleCommandToggleFlightMode()
+local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
+
+function PowerTools:toggleFlightModeExperimental()
+
+    g_localPlayer.toggleFlightModeCommand.value = not g_localPlayer.toggleFlightModeCommand.value
+    if g_localPlayer.toggleFlightModeCommand.value then
+        g_localPlayer.toggleFlightModeCommand.onEnabled()
+
+        xpcall(function()
+            self:toggleFlightActive()
+        end, function(err) Log:warning("Failed to automatically activate flight mode. You need to manually enable it with J key. Reason was: "..tostring(err)) end)
+
+        if g_localPlayer.mover.isFlightActive then
+            --TODO: do we need to do anything?
+        else
+            g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), nil, 2500)
+        end
+    else
+        g_localPlayer.toggleFlightModeCommand.onDisabled()
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", nil, 1500)
+    end
+
+    
+    self:saveAction(ACTION.FLIGHT_MODE, self,PowerTools.toggleFlightModeExperimental, {} )    
+end
+
+function PowerTools:toggleFlightMode()
+    if ENABLE_EXPERIMENTAL_FLIGHTMODE then
+        Log:debug("Using experimental flight mode")
+        self:toggleFlightModeExperimental()
+        return
+    end
+    Log:debug("Using default flight mode")
+
     executeConsoleCommand(commandBuilder("gsPlayerFlightToggle"))
-    -- PowerTools:executeAction(ACTION.FLIGHT_MODE, _G, "executeConsoleCommand", {commandBuilder("gsPlayerFlightToggle")}, true)
 
     if g_localPlayer.toggleFlightModeCommand.value then
         g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), nil, 2500)
     else
         g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", nil, 1500)
     end
-
-    -- if isFlightModeEnabled then
-    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
-    --     -- g_currentMission.player.debugFlightModeWalkingSpeed = 0.032
-    --     -- g_currentMission.player.debugFlightModeRunningFactor = 4
-
-    --     -- PowerTools.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = 12
-    
-    --     -- g_currentMission.player:onInputDebugFlyToggle()
-    -- else
-    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("disabled"), "", "", 1500)
-    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-    --     -- PowerTools.maxWalkingSpeed = nil
-    -- end
 
     self:saveAction(ACTION.FLIGHT_MODE, self,PowerTools.toggleFlightMode, {} )
 end
