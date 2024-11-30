@@ -64,50 +64,50 @@ Mod = {
 
     debugMode = false,
 
-    printInternal = function(self, category, message, ...)
-        message = (message ~= nil and message:format(...)) or ""
-        if category ~= nil and category ~= "" then
-            category = string.format(" %s:", category)
-        else
-            category = ""
-        end
-        print(string.format("[%s]%s %s", self.title, category, tostring(message)))
-    end,
+    -- printInternal = function(self, category, message, ...)
+    --     message = (message ~= nil and message:format(...)) or ""
+    --     if category ~= nil and category ~= "" then
+    --         category = string.format(" %s:", category)
+    --     else
+    --         category = ""
+    --     end
+    --     print(string.format("[%s]%s %s", self.title, category, tostring(message)))
+    -- end,
 
-    printDebug = function(self, message, ...)
-        deprecated("Mod:printDebug()", "Log:debug()", true)
-        printCallstack()
-        if self.debugMode == true then
-            self:printInternal("DEBUG", message, ...)
-        end
-    end,
+    -- printDebug = function(self, message, ...)
+    --     deprecated("Mod:printDebug()", "Log:debug()", true)
+    --     printCallstack()
+    --     if self.debugMode == true then
+    --         self:printInternal("DEBUG", message, ...)
+    --     end
+    -- end,
 
-    printDebugVar = function(self, name, variable)
-        deprecated("Mod:printDebugVar()", "Log:var()", true)
-        if self.debugMode ~= true then
-            return
-        end
+    -- printDebugVar = function(self, name, variable)
+    --     deprecated("Mod:printDebugVar()", "Log:var()", true)
+    --     if self.debugMode ~= true then
+    --         return
+    --     end
 
-        -- local tt1 = (val or "")
-        local valType = type(variable)
+    --     -- local tt1 = (val or "")
+    --     local valType = type(variable)
     
-        if valType == "string" then
-            variable = string.format( "'%s'", variable )
-        end
+    --     if valType == "string" then
+    --         variable = string.format( "'%s'", variable )
+    --     end
     
-        local text = string.format( "%s=%s [@%s]", name, tostring(variable), valType )
-        self:printInternal("DBGVAR", text)
-    end,
+    --     local text = string.format( "%s=%s [@%s]", name, tostring(variable), valType )
+    --     self:printInternal("DBGVAR", text)
+    -- end,
     
-    printWarning = function(self, message, ...)
-        deprecated("Mod:printWarning()", "Log:warning()", true)
-        self:printInternal("Warning", message, ...)
-    end,
+    -- printWarning = function(self, message, ...)
+    --     deprecated("Mod:printWarning()", "Log:warning()", true)
+    --     self:printInternal("Warning", message, ...)
+    -- end,
 
-    printError = function(self, message, ...)
-        deprecated("Mod:printError()", "Log:error()", true)
-        self:printInternal("Error", message, ...)
-    end,
+    -- printError = function(self, message, ...)
+    --     deprecated("Mod:printError()", "Log:error()", true)
+    --     self:printInternal("Error", message, ...)
+    -- end,
 
     -- getIsMultiplayer = function(self) return g_currentMission.missionDynamicInfo.isMultiplayer end,
     getIsServer = function(self) return g_currentMission.getIsServer() end,
@@ -120,16 +120,16 @@ Mod = {
 Mod_MT = {
 }
 
-SubModule = {
-    printInfo = function(message, ...) Mod:printInfo(message, ...) end,
-    printDebug = function(message, ...) Mod:printDebug(message) end,
-    printDebugVar = function(name, variable) Mod:printDebugVar(name, variable) end,
-    printWarning = function(message, ...) Mod:printWarning(message) end,
-    printError = function(message, ...) Mod:printError(message) end,
-    parent = nil,
-}
-SubModule_MT = {
-}
+-- SubModule = {
+--     printInfo = function(message, ...) Mod:printInfo(message, ...) end,
+--     printDebug = function(message, ...) Mod:printDebug(message) end,
+--     printDebugVar = function(name, variable) Mod:printDebugVar(name, variable) end,
+--     printWarning = function(message, ...) Mod:printWarning(message) end,
+--     printError = function(message, ...) Mod:printError(message) end,
+--     parent = nil,
+-- }
+-- SubModule_MT = {
+-- }
 
 local function getTrueGlobalG()
     return getmetatable(_G).__index
@@ -147,6 +147,7 @@ Mod.__g = getTrueGlobalG() --getfenv(0)  --NOTE: WARNING: USE WITH CAUTION!!
 Mod.globalEnv = Mod.__g
 
 -- Wrapper to copy the global (but temporary) g_current* vars into the mod's environment
+--TODO: still needed in FS25?
 Mod.env.g_currentModSettingsDirectory = Mod.settingsDir
 Mod.env.g_currentModName = Mod.name
 Mod.env.g_currentModDirectory = Mod.dir
@@ -161,20 +162,20 @@ Mod.version = getXMLString(modDescXML, "modDesc.version");
 -- Mod.version = Mod.mod.version
 delete(modDescXML);
 
-function Mod:printInfo(message, ...)
-    deprecated("Mod:printInfo()", "Log:info()", true)
+-- function Mod:printInfo(message, ...)
+--     deprecated("Mod:printInfo()", "Log:info()", true)
 
-    self:printInternal("", message, ...)
-end
+--     self:printInternal("", message, ...)
+-- end
 
 
 
 -- Local aliases for convinience
-local function printInfo(message) Mod:printInfo(message) end
-local function printDebug(message) Mod:printDebug(message) end
-local function printDebugVar(name, variable) Mod:printDebugVar(name, variable) end
-local function printWarning(message) Mod:printWarning(message) end
-local function printError(message) Mod:printError(message) end
+-- local function printInfo(message) Mod:printInfo(message) end
+-- local function printDebug(message) Mod:printDebug(message) end
+-- local function printDebugVar(name, variable) Mod:printDebugVar(name, variable) end
+-- local function printWarning(message) Mod:printWarning(message) end
+-- local function printError(message) Mod:printError(message) end
 
 
 -- Helper functions
@@ -189,6 +190,7 @@ local function validateParam(value, typeName, message)
     return not failed
 end
 
+--TODO: replace with a new way of doing this?
 local ModSettings = {};
 ModSettings.__index = ModSettings;
 
@@ -574,19 +576,19 @@ function Mod:new()
     return newMod;
 end--function
 
-function SubModule:new(parent, table)
-    local newSubModule = table or {}
+-- function SubModule:new(parent, table)
+--     local newSubModule = table or {}
 
-    setmetatable(newSubModule, self)
-    self.__index = self
-    newSubModule.parent = parent
-    return newSubModule
-end
+--     setmetatable(newSubModule, self)
+--     self.__index = self
+--     newSubModule.parent = parent
+--     return newSubModule
+-- end
 
 
-function Mod:newSubModule(table)
-    return SubModule:new(self, table)
-end
+-- function Mod:newSubModule(table)
+--     return SubModule:new(self, table)
+-- end
 
 
 --- Check if the third party mod is loaded
