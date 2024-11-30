@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <modDesc descVersion="92">
     <author>w33zl</author>
-    <version>1.0.0.0</version>
+    <version>1.0.1.0</version>
     <title>
         <en>PowerTools</en>
     </title>
@@ -30,6 +30,12 @@ NOTES:
 2. Many of the features requires that you have admin access (to prevent cheating in multiplayer) - in single player everyone is admin though :)
 3. To be able to use "Repeat last action" you need to bind a hotkey in the input binding settings
 4. The new alternate mode menu uses a separate hotkey (default Right Ctrl + F12)
+
+CHANGELOG:
+v1.0.1:
+- HOTFIX: Pallet spawning should now work for all players (no matter how you start the game)
+- FIX: Choice of pallets is not reset (as intended, i.e. you can now spawn multiple pallets in a row)
+- FIX: Removed false error message when spawning pallets
 ]]></en>
 
 <de><![CDATA[
@@ -55,6 +61,12 @@ HINWEISE:
 2. Viele der Features erfordern einen Admin-Zugang (um Cheating im Multiplayer zu verhindern) - im Singleplayer ist allerdings jeder Admin :)
 3. Um die Funktion „Letzte Aktion wiederholen“ nutzen zu können, muss man einen Hotkey in den Einstellungen für die Eingabe binden
 4. Das neue Menü für den alternativen Modus verwendet einen separaten Hotkey (standardmäßig Rechts Strg + F12)
+
+CHANGELOG:
+v1.0.1:
+- HOTFIX: Das Spawnen von Paletten sollte jetzt für alle Spieler funktionieren (unabhängig davon, wie man das Spiel startet)
+- FIX: Die Auswahl der Paletten wird nicht zurückgesetzt (wie vorgesehen, d.h. man kann jetzt mehrere Paletten hintereinander spawnen)
+- FIX: Falsche Fehlermeldung beim Spawnen von Paletten beseitigt
 ]]></de>
 
 <fr><![CDATA[
@@ -80,6 +92,12 @@ NOTES :
 2. Beaucoup de fonctionnalités nécessitent un accès administrateur (pour éviter la triche en multijoueur) - en solo, tout le monde est administrateur :)
 3. Pour pouvoir utiliser « Répéter la dernière action », vous devez lier un raccourci clavier dans les paramètres de liaison d'entrée.
 4. Le nouveau menu du mode alternatif utilise un raccourci-clavier séparé (par défaut Ctrl + F12).
+
+CHANGELOG :
+v1.0.1 :
+- HOTFIX : L'apparition des palettes devrait maintenant fonctionner pour tous les joueurs (quelle que soit la façon dont vous démarrez le jeu).
+- FIXE : Le choix des palettes n'est pas réinitialisé (comme prévu, c'est à dire que vous pouvez maintenant faire apparaître plusieurs palettes à la suite).
+- FIXE : Suppression du message d'erreur erroné lors de la création de palettes.
 ]]></fr>
 
 
