@@ -910,7 +910,15 @@ function PowerTools:spawnPallet(palletType, amount)
     if #palletType == 5 and palletType[5] then
         fillType.palletFilename = palletType[4]
     end
-    xpcall(g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount), function(err) Log:warning("Failed to add pallet %s", fillType.name .. " " .. err .. "") end)
+    -- g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+    xpcall(function() 
+            g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+        end, 
+        function(err) 
+            Log:warning("Failed to add pallet %s", fillType.name .. " " .. err .. "")
+        end
+    )
+
     fillType.palletFilename = fillType.originalPalletFilename
 end
 
