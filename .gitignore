@@ -10,6 +10,8 @@ deploy/fsdt_build.cmd
 deploy/include.txt
 deploy/mod_build.cmd
 deploy/mod_release.cmd
+deploy/mod_build_mp.cmd
+
 
 kb/*
 docs/*
