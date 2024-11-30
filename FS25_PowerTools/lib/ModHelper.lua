@@ -109,13 +109,13 @@ Mod = {
         self:printInternal("Error", message, ...)
     end,
 
-    getIsMultiplayer = function(self) return g_currentMission.missionDynamicInfo.isMultiplayer end,
+    -- getIsMultiplayer = function(self) return g_currentMission.missionDynamicInfo.isMultiplayer end,
     getIsServer = function(self) return g_currentMission.getIsServer() end,
     getIsClient = function(self) return g_currentMission.getIsClient() end,
-    getIsDedicatedServer = function(self) return not self:getIsClient() and self:getIsServer() end, --g_dedicatedServer
-    getIsMasterUser = function(self) return g_currentMission.isMasterUser end,
-    getHasFarmAdminAccess = function(self) return g_currentMission:getHasPlayerPermission("farmManager") end,
-    getIsValidFarmManager = function(self) return g_currentMission.player ~= nil and self:getHasFarmAdminAccess() and g_currentMission.player.farmId ~= FarmManager.SPECTATOR_FARM_ID end,
+    -- getIsDedicatedServer = function(self) return not self:getIsClient() and self:getIsServer() end, --g_dedicatedServer
+    -- getIsMasterUser = function(self) return g_currentMission.isMasterUser end,
+    -- getHasFarmAdminAccess = function(self) return g_currentMission:getHasPlayerPermission("farmManager") end,
+    -- getIsValidFarmManager = function(self) return g_currentMission.player ~= nil and self:getHasFarmAdminAccess() and g_currentMission.player.farmId ~= FarmManager.SPECTATOR_FARM_ID end,
 }
 Mod_MT = {
 }
@@ -383,17 +383,80 @@ function Mod:init()
     return newMod;
 end--function
 
+
 function Mod:isServerAdmin()
-    return (g_currentMission:getIsServer() or g_currentMission.isMasterUser) and g_currentMission:getIsClient()
+    deprecated("isServerAdmin()", "getIsServerAdmin()")
+
+    return self:getIsServerAdmin()
 end
 
 function Mod:isFarmAdmin()
+    deprecated("isFarmAdmin()", "getIsFarmAdmin()")
+
+    return self:getIsServerAdmin()
+end
+
+---Check if the game is in multiplayer mode
+---@return boolean "True if the game is in multiplayer mode, otherwise false"
+function Mod:getIsMultiplayer()
+    return g_currentMission.missionDynamicInfo.isMultiplayer
+end
+
+function Mod:getIsDedicatedServer()
+    return (not self:getIsClient() and self:getIsServer()) or g_dedicatedServer ~= nil
+end
+
+function Mod:getHasFarmAdminAccess()
+    deprecated("getHasFarmAdminAccess()", "getIsFarmAdmin()")
+    return self:getIsFarmAdmin()
+end
+
+function  Mod:getIsValidFarmManager()
+    deprecated("getIsValidFarmManager()", "getIsFarmAdmin()")
+
+    return self:getIsFarmAdmin()
+end
+
+function Mod:getIsMasterUser()
+    return g_currentMission.isMasterUser    
+end
+
+---Checks if the player is in spectator mode (i.e. not associated with a farm)
+---@return boolean "True if the player is in spectator mode (farmId = 0), otherwise false"
+function Mod:getIsSpectatorFarm()
+    return g_localPlayer.farmId == FarmManager.SPECTATOR_FARM_ID
+end
+
+---Checks if the player is a server admin (either the host in self-hosted servers, or a master user in dedicated servers)
+---@return boolean "True if the player is a server admin, otherwise false"
+function Mod:getIsServerAdmin()
     return (g_currentMission:getIsServer() or g_currentMission.isMasterUser) and g_currentMission:getIsClient()
 end
 
-function Mod:getCurrentPlayer()
-    return g_currentMission.playerSystem.playersByUserId[g_currentMission.playerUserId]
+--- Checks if the player is a farm admin
+---@return boolean "True if the player is associated with a farm, and the player also has been promoted to farm admin for that farm, otherwise false"
+function Mod:getIsFarmAdmin()
+    local isSpectatorFarm = self:getIsSpectatorFarm()    
+    local currentFarm = not isSpectatorFarm and g_farmManager:getFarmById(g_localPlayer.farmId) or nil
+    
+    return (not isSpectatorFarm and currentFarm ~= nil and currentFarm:isUserFarmManager(g_localPlayer.userId)) or false
 end
+
+--- Checks if the player is a server admin or a farm admin
+---@return boolean "True if the player is a server admin or a farm admin, otherwise false"
+function Mod:getHasAdminAccess()
+    return self:getIsServerAdmin() or self:getIsFarmAdmin()
+end
+
+--- Returns the current player (convinient wraper for g_localPlayer, but also serves the purpose to make it easy to change if/when Giants decide to rename this object again)
+--- @return table "The current player"
+function Mod:getCurrentPlayer()
+    return g_localPlayer
+    -- return g_currentMission.playerSystem.playersByUserId[g_currentMission.playerUserId]
+end
+
+
+
 
 function Mod:enableDebugMode()
     deprecated("enableDebugMode()", "Log class")

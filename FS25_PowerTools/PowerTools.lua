@@ -1132,31 +1132,36 @@ function PowerTools:unwrapBaleTypes()
     self.baleTypes = baleTypes
 end
 
-function PowerTools:showWarningIfNoAccess(hasAccess)
+function PowerTools:showWarningIfNoAccess(hasAccess, custoMessage)
     if not hasAccess then
-        g_currentMission:showBlinkingWarning(g_i18n:getText("warning_youDontHaveAccessToThis"))
+        g_currentMission:showBlinkingWarning(custoMessage or g_i18n:getText("warning_youDontHaveAccessToThis"))
     end
     return hasAccess
 end
 
 function PowerTools:canTransferMoney()
-    return g_currentMission:getHasPlayerPermission(Farm.PERMISSION.TRANSFER_MONEY)
+    return self:getHasAdminAccess() or g_currentMission:getHasPlayerPermission(Farm.PERMISSION.TRANSFER_MONEY)
 end
 
 function PowerTools:validateIsFarmFinanceManager()
     return PowerTools:showWarningIfNoAccess(self:canTransferMoney())
 end
 
-function PowerTools:validateMPFarmAdmin()
-    return PowerTools:showWarningIfNoAccess(self:getIsValidFarmManager())
+-- function PowerTools:validateMPFarmAdmin()
+--     return PowerTools:showWarningIfNoAccess(self:getIsValidFarmManager())
+-- end
+
+-- function PowerTools:validateMPServerAdmin()
+--     return PowerTools:showWarningIfNoAccess(self:getIsMasterUser())
+-- end
+
+function PowerTools:validateFarm()
+    return PowerTools:showWarningIfNoAccess(not self:getIsSpectatorFarm()) --TODO: add custom error message
 end
 
-function PowerTools:validateMPServerAdmin()
-    return PowerTools:showWarningIfNoAccess(self:getIsMasterUser())
-end
 
 function PowerTools:validateMPAdmin()
-    return PowerTools:showWarningIfNoAccess(self:getIsMasterUser() or self:getIsValidFarmManager())
+    return PowerTools:showWarningIfNoAccess(self:getHasAdminAccess())
 
     -- if not requireFarmAdmin and g_currentMission.getIsServer() == true then
     --     return true
