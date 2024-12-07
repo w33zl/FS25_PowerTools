@@ -7,20 +7,15 @@ assignees: ''
 
 ---
 
-> **IMPORTANT!** Please be respectful of my time. If you can't be bothered providing relevant details for an issue, do you expect me to be bothered guessing what could be your problem? If you don't provide me with details, there is simply nothing for me to test/reproduce, and then there is no point in submitting a bug report. Try at least to answer the questions below, and preferably give me as much context and details as possible. 
+> **IMPORTANT!** Please be respectful of my time. If I don't get enough and/or specific details I really cannot investigate the issue. Please answer the questions below to the best of your ability, providing as much details and context as possible. 
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**WHAT IS THE PROBLEM?**
+> _A clear and concise description of what the bug is._
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**HOW CAN I REPRODUCE THE ERROR?**
+> E.g. first go to X, then do Y. The more details I get the greater is the chance that I can solve the issue.
+
 
 **Screenshots or log information**
 If applicable, add screenshots and/or errors and warnings from your log.txt to help explain your problem.
