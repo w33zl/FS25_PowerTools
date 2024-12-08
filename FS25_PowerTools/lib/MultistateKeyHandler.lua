@@ -24,6 +24,7 @@ local MULTISTATEKEY_TRIGGER = {
     DOUBLE_PRESS = 3,
     REPEATED_LONG_PRESS = 4,
     DOUBLE_PRESS_PENDING = 5,
+    SHORT_PRESS_FORCED = 6,
 }
 
 local MULTISTATEKEY_ACTION = {
@@ -37,6 +38,8 @@ local KEYSTATE_DOUBLETAP_THRESHOLD_LOW = 25
 local KEYSTATE_DOUBLETAP_THRESHOLD_HIGH = 225 --250
 local KEYSTATE_LONGPRESS_THRESHOLD = 500
 local KEYSTATE_LONGPRESS_REPEAT_DELAY = 1000
+
+local DEBUG_DRAW_MODE = false
 
 
 local MultistateKeyHandler = {}
@@ -57,6 +60,13 @@ local MultistateKeyHandlerRegistry = {
             end
         end
     end,
+    draw = function(self)
+        for _, instance in pairs(self.instances) do
+            if instance ~= nil and type(instance.debugDraw) == "function" then
+                instance:debugDraw()
+            end
+        end
+    end,    
     register = function(self, instance)
         table.insert(self.instances, instance)
     end,    
@@ -66,6 +76,11 @@ FSBaseMission.update = Utils.appendedFunction(FSBaseMission.update, function(bas
     MultistateKeyHandlerRegistry:refresh()
 end)
 
+if DEBUG_DRAW_MODE then
+    FSBaseMission.draw = Utils.appendedFunction(FSBaseMission.draw, function(baseMission, ...)
+        MultistateKeyHandlerRegistry:draw()
+    end)
+end
 
 FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, function(baseMission, ...)
     MultistateKeyHandlerRegistry.refresh = function() end -- Dummy function to disable update
@@ -91,12 +106,11 @@ end
 
 function MultistateKeyHandler:updateConditions()
     self.allowDoublePress = (self.doublePressCallback ~= nil)
+    self.allowLongPress = (self.longPressCallback ~= nil)
+    self.allowRepeatedLongpress = self.allowLongPress and self.allowRepeatedLongpress
 end
 
-
 --TODO: add function to register a new key
-
-
 
 function MultistateKeyHandler:injectIntoAction(actionEvent, preserveDefaultCallback, forceOverride)
     preserveDefaultCallback = (preserveDefaultCallback == nil) or preserveDefaultCallback
@@ -141,56 +155,114 @@ function MultistateKeyHandler:trigger(name, state, callbackState, isAnalog, isMo
         isMouse, 
         deviceCategory,
     }
-    self.lastState = state
+    local isSameState = (self.lastKeyState == state)
+    
+    
+    self.lastKeyState = state
     if state == 1 then
+        local isHolding = (state ~= 0 and isSameState)
+
         self.firstTriggerTime = self.firstTriggerTime or getTimeMs() -- Needed for repeated long press
         self.triggerTime = getTimeMs()
+        -- Log:debug("Trigger: %s [keyState: %s / lastState: %s / isHolding: %s]", state, self.keyState, self.lastState, tostring(isHolding))
         -- if self.allowRepeatedLongpress then
-            self:checkLongPressAction()
+            -- self:checkLongPressAction()
         -- end
+        -- self:checkAction()
+        self:onPressKey(isHolding)
     elseif state == 0 then
         self.releaseTime = getTimeMs()
-        self:checkAction()
+        self:onReleaseKey()
+        -- self:checkAction()
+        -- self.blockUntilNextReset = false
     end
 end
 
-function MultistateKeyHandler:checkLongPressAction()
-    local elapsed = self:getElapsed()
+function MultistateKeyHandler:onPressKey(isHolding)
+    if self.allowRepeatedLongpress then
+        self.repeatedTriggerTime = self.repeatedTriggerTime or self.firstTriggerTime or getTimeMs()
+        local totalElapsed = getTimeMs() - self.repeatedTriggerTime
+        -- local totalElapsed = getTimeMs() - self.repeatedTriggerTime
 
+        if totalElapsed > KEYSTATE_LONGPRESS_REPEAT_DELAY then
+            self:triggerState(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS)
+            -- local elapsed = getTimeMs() - self.firstTriggerTime
+            -- if elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
+            --     self:triggerState(MULTISTATEKEY_TRIGGER.LONG_PRESS)
+            -- end
+        end
+    end
+
+end
+
+function MultistateKeyHandler:onReleaseKey()
+    self.firstTriggerTime = self.firstTriggerTime or getTimeMs() -- Just to ensure we never get nil no matte what
+    local elapsed = self.releaseTime - self.firstTriggerTime
     if elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
-        -- Log:var("elapsed", elapsed)
-        self.lastLongPressTrigger = self.lastLongPressTrigger or self.firstTriggerTime
-        local elapsedSinceLastLongPress = getTimeMs() - self.lastLongPressTrigger
-        -- Log:var("elapsedSinceLastLongPress", elapsedSinceLastLongPress)
+        self:triggerState(MULTISTATEKEY_TRIGGER.LONG_PRESS)
+    elseif self.pendingState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
+        Log:debug("Ingored")
+    elseif self.allowDoublePress and elapsed < KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then
+        if self.pendingState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
+            self:triggerState(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS)
+        else
+            Log:debug("Double press pending")
+            self.pendingState = MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING
+        end
+    else -- This should always be a single press, right?
+        self:triggerState(MULTISTATEKEY_TRIGGER.SHORT_PRESS)
+        
+    end
+    -- self.firstTriggerTime = nil 
+end
 
-        if elapsedSinceLastLongPress > KEYSTATE_LONGPRESS_REPEAT_DELAY then
-            if self.allowRepeatedLongpress then
-                -- local newState = self.keyState == MultiKeyState.LONG_PRESS and MultiKeyState.REPEATED_LONG_PRESS or MultiKeyState.LONG_PRESS
-                self:execute(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS, false) -- Don't reset, we do a manual reset instead
-                self.lastLongPressTrigger = getTimeMs() -- Specific reset for long press repeats
-            else
-                self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS, true)
-            end
+function MultistateKeyHandler:triggerState(state)
+    Log:debug("Trigger state: %s", state)
+    local ignore = false
+
+    if state == MULTISTATEKEY_TRIGGER.LONG_PRESS then
+        -- Log:debug("Long press triggered")
+    elseif state == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
+        -- Log:debug("Repeated long press triggered")
+    elseif state == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS then
+        -- Log:debug("Double press triggered")
+    elseif state == MULTISTATEKEY_TRIGGER.SHORT_PRESS_FORCED then
+        -- Log:debug("Short press triggered forced")
+    elseif state == MULTISTATEKEY_TRIGGER.SHORT_PRESS then
+        -- Log:debug("Short press triggered")
+    else
+        ignore = true
+        Log:debug("Unknown trigger")
+    end
+
+    if not ignore then
+        self:execute(state)
+    end
+
+    if state == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
+        self.previousTriggerTime = self.firstTriggerTime
+        self.repeatedTriggerTime = getTimeMs()
+        self.pendingState = state
+    else
+        self.previousTriggerTime = nil
+        self.repeatedTriggerTime = nil
+        self.pendingState = nil
+    end
+
+    self.firstTriggerTime = nil
+    
+end
+
+function MultistateKeyHandler:update()
+    local elapsed = self:getElapsed()
+    if self.pendingState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
+        if elapsed > KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then -- If double press is pending but threshold is exceeded, fire as single press
+            self:triggerState(MULTISTATEKEY_TRIGGER.SHORT_PRESS_FORCED)
         end
     end
 end
 
-function MultistateKeyHandler:reset()
-    self.firstTriggerTime = nil
-    self.lastLongPressTrigger = nil
-    self.triggerTime = nil
-    self.releaseTime = nil
-    self.keyState = MULTISTATEKEY_TRIGGER.UNKNOWN
-end
-
 function MultistateKeyHandler:execute(keyState, reset)
-    reset = (reset == nil and true) or reset
-    self.keyState = keyState
-    if reset then
-        self:reset()
-    end
-    self.lastState = keyState
-
     local function executeDelegate(callback, customTarget, customPayload)
         -- Log:var("callback", callback)
         if not callback or (type(callback)) ~= "function" then
@@ -198,72 +270,174 @@ function MultistateKeyHandler:execute(keyState, reset)
             return
         end
 
-        callback(customTarget or self.actionEventTarget, unpack(customPayload or self.payload))
-        
+        callback(customTarget or self.actionEventTarget, unpack(customPayload or self.payload))        
     end
 
     if keyState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS then
-        -- Log:debug("Double press executed")
+        Log:debug("Double press executed")
         executeDelegate(self.doublePressCallback, self.doublePressTargetObject, self.doublePressPayload)
     elseif keyState == MULTISTATEKEY_TRIGGER.LONG_PRESS or keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
-        -- Log:debug("Long press executed")
+        Log:debug("Long press executed")
         executeDelegate(self.longPressCallback, self.longPressTargetObject, self.longPressPayload)
-    elseif keyState == MULTISTATEKEY_TRIGGER.SHORT_PRESS then
-        -- Log:debug("Short press executed")
+    elseif keyState == MULTISTATEKEY_TRIGGER.SHORT_PRESS or keyState == MULTISTATEKEY_TRIGGER.SHORT_PRESS_FORCED then
+        Log:debug("Short press executed")
         executeDelegate(self.singlePressCallback, self.singlePressTargetObject, self.singlePressPayload)
     end
 end
+
+-- function MultistateKeyHandler:checkLongPressAction()
+--     local elapsed = self:getElapsed()
+
+--     if elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
+--         -- Log:var("elapsed", elapsed)
+--         self.lastLongPressTrigger = self.lastLongPressTrigger or self.firstTriggerTime
+--         local elapsedSinceLastLongPress = getTimeMs() - self.lastLongPressTrigger
+--         -- Log:var("elapsedSinceLastLongPress", elapsedSinceLastLongPress)
+
+--         if elapsedSinceLastLongPress > KEYSTATE_LONGPRESS_REPEAT_DELAY then
+--             if self.allowRepeatedLongpress then
+--                 -- local newState = self.keyState == MultiKeyState.LONG_PRESS and MultiKeyState.REPEATED_LONG_PRESS or MultiKeyState.LONG_PRESS
+--                 self:execute(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS, false) -- Don't reset, we do a manual reset instead
+--                 self.lastLongPressTrigger = getTimeMs() -- Specific reset for long press repeats
+--             else
+--                 self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS, true)
+--             end
+--         end
+--     end
+-- end
+
+-- function MultistateKeyHandler:reset()
+--     self.firstTriggerTime = nil
+--     self.lastLongPressTrigger = nil
+--     self.triggerTime = nil
+--     self.releaseTime = nil
+--     self.keyState = MULTISTATEKEY_TRIGGER.UNKNOWN
+--     self.lastState = MULTISTATEKEY_TRIGGER.UNKNOWN
+--     self.blockUntilNextReset = false
+-- end
+
+-- function MultistateKeyHandler:execute(keyState, reset)
+--     if self.blockUntilNextReset then
+--         Log:debug("Block until next reset")
+--         return
+--     end
+    
+--     reset = (reset == nil and true) or reset
+--     local blockSinglePress = (self.lastState ~= MULTISTATEKEY_TRIGGER.UNKNOWN)
+--     -- Log:debug("Trigger: %s [keyState: %s / lastState: %s / blockSP: %s]", keyState, self.keyState, self.lastState, tostring(blockSinglePress))
+--     self.keyState = keyState
+--     if reset then
+--         self:reset()
+--     end
+--     self.blockUntilNextReset = keyState ~= MULTISTATEKEY_TRIGGER.SHORT_PRESS
+--     self.lastState = keyState
+
+--     local function executeDelegate(callback, customTarget, customPayload)
+--         -- Log:var("callback", callback)
+--         if not callback or (type(callback)) ~= "function" then
+--             Log:debug("No callback set")
+--             return
+--         end
+
+--         callback(customTarget or self.actionEventTarget, unpack(customPayload or self.payload))
+        
+--     end
+
+--     if keyState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS then
+--         -- Log:debug("Double press executed")
+--         executeDelegate(self.doublePressCallback, self.doublePressTargetObject, self.doublePressPayload)
+--     elseif keyState == MULTISTATEKEY_TRIGGER.LONG_PRESS or keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
+--         Log:debug("Long press executed")
+--         executeDelegate(self.longPressCallback, self.longPressTargetObject, self.longPressPayload)
+--     elseif not blockSinglePress and keyState == MULTISTATEKEY_TRIGGER.SHORT_PRESS then
+--         Log:debug("Short press executed")
+--         executeDelegate(self.singlePressCallback, self.singlePressTargetObject, self.singlePressPayload)
+--     end
+-- end
 
 function MultistateKeyHandler:getElapsed()
     return getTimeMs() - (self.firstTriggerTime or getTimeMs())
 end
 
-function MultistateKeyHandler:checkAction()
-    local elapsedSinceFirstTrigger = self:getElapsed()
-    -- Log:var("elapsedSinceFirstTrigger", elapsedSinceFirstTrigger)
+-- function MultistateKeyHandler:checkAction()
+--     local elapsedSinceFirstTrigger = self:getElapsed()
+--     -- Log:var("elapsedSinceFirstTrigger", elapsedSinceFirstTrigger)
 
-    if elapsedSinceFirstTrigger > KEYSTATE_LONGPRESS_THRESHOLD then
-        -- If repeated longpress already tiggered we just need to reset, otherwise execute the callback
-        if self.keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
-            self:reset()
-        else
-            self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS)
-        end
-    else
-        local currentState = self.keyState or MULTISTATEKEY_TRIGGER.UNKNOWN
+--     if elapsedSinceFirstTrigger > KEYSTATE_LONGPRESS_THRESHOLD then
+--         -- If repeated longpress already tiggered we just need to reset, otherwise execute the callback
+--         -- if self.keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
+--         --     self:reset()
+--         -- else
+--         --     self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS)
+--         -- end
+
+--         self.lastLongPressTrigger = self.lastLongPressTrigger or self.firstTriggerTime
+--         local elapsedSinceLastLongPress = getTimeMs() - self.lastLongPressTrigger
+--         -- Log:var("elapsedSinceLastLongPress", elapsedSinceLastLongPress)
+
+--         if elapsedSinceLastLongPress > KEYSTATE_LONGPRESS_REPEAT_DELAY then
+--             if self.allowRepeatedLongpress then
+--                 -- local newState = self.keyState == MultiKeyState.LONG_PRESS and MultiKeyState.REPEATED_LONG_PRESS or MultiKeyState.LONG_PRESS
+--                 self:execute(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS, false) -- Don't reset, we do a manual reset instead
+--                 self.lastLongPressTrigger = getTimeMs() -- Specific reset for long press repeats
+--             else
+--                 self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS, true)
+--             end
+--         end        
+--     else
+--         local currentState = self.keyState or MULTISTATEKEY_TRIGGER.UNKNOWN
         
 
-        -- local elapsedSinceFirstTrigger = getTimeMs() - self.firstTriggerTime
+--         -- local elapsedSinceFirstTrigger = getTimeMs() - self.firstTriggerTime
 
-        --TODO: add double press as conditional, no need to wait if no callback is there...
-        if self.allowDoublePress and elapsedSinceFirstTrigger <= KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then
-            if currentState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
+--         --TODO: add double press as conditional, no need to wait if no callback is there...
+--         if self.allowDoublePress and elapsedSinceFirstTrigger <= KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then
+--             if currentState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
                 
-                self:execute(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS)
-            else
-                Log:debug("Double press pending")
-                self.keyState = MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING
-            end
-        else
+--                 self:execute(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS)
+--             else
+--                 Log:debug("Double press pending")
+--                 self.keyState = MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING
+--             end
+--         else
             
-            self:execute(MULTISTATEKEY_TRIGGER.SHORT_PRESS)
-        end
+--             self:execute(MULTISTATEKEY_TRIGGER.SHORT_PRESS)
+--         end
         
-    end
-end
+--     end
+-- end
 
-function MultistateKeyHandler:update()
-    -- Log:var("self.keyState", self.keyState)
-    if self.keyState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
-        -- Log:var("self.keyState", self.keyState)
-        local elapsedSinceFirstTrigger = self:getElapsed()
+-- function MultistateKeyHandler:update()
+--     local elapsedSinceFirstTrigger = self:getElapsed()
 
-        -- If the total time since first trigger is greater than the high threshold for doubletap, we need to "force release" the button
-        if elapsedSinceFirstTrigger > KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then
-            self:checkAction()
-        end
-    end
-end
+--     -- Log:var("self.keyState", self.keyState)
+--     if self.keyState == MULTISTATEKEY_TRIGGER.DOUBLE_PRESS_PENDING then
+--         -- Log:var("self.keyState", self.keyState)
+        
+
+--         -- If the total time since first trigger is greater than the high threshold for doubletap, we need to "force release" the button
+--         if elapsedSinceFirstTrigger > KEYSTATE_DOUBLETAP_THRESHOLD_HIGH then
+--             self:checkAction()
+--         end
+--     elseif elapsedSinceFirstTrigger > KEYSTATE_LONGPRESS_THRESHOLD then
+--         self:checkAction()
+--         -- -- Log:var("elapsed", elapsed)
+--         -- self.lastLongPressTrigger = self.lastLongPressTrigger or self.firstTriggerTime
+--         -- local elapsedSinceLastLongPress = getTimeMs() - self.lastLongPressTrigger
+--         -- -- Log:var("elapsedSinceLastLongPress", elapsedSinceLastLongPress)
+
+--         -- if elapsedSinceLastLongPress > KEYSTATE_LONGPRESS_REPEAT_DELAY then
+--         --     if self.allowRepeatedLongpress then
+--         --         -- local newState = self.keyState == MultiKeyState.LONG_PRESS and MultiKeyState.REPEATED_LONG_PRESS or MultiKeyState.LONG_PRESS
+--         --         self:execute(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS, false) -- Don't reset, we do a manual reset instead
+--         --         self.lastLongPressTrigger = getTimeMs() -- Specific reset for long press repeats
+--         --     else
+--         --         self:execute(MULTISTATEKEY_TRIGGER.LONG_PRESS, true)
+--         --     end
+--         -- end
+                
+--     end
+-- end
 
 function MultistateKeyHandler:debugDraw()
     local first = self.firstTriggerTime or -1
@@ -288,10 +462,11 @@ function MultistateKeyHandler:setCallback(keyState, callback, target, payload)
         self.doublePressCallback = callback
         self.doublePressTargetObject = target
         self.doublePressPayload = payload
-    elseif keyState == MULTISTATEKEY_TRIGGER.LONG_PRESS then
+    elseif keyState == MULTISTATEKEY_TRIGGER.LONG_PRESS or keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
         self.longPressCallback = callback
         self.longPressTargetObject = target
         self.longPressPayload = payload
+        self.allowRepeatedLongpress = (keyState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS)
     end
     self:updateConditions()
 end
