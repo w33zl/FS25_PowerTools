@@ -127,7 +127,7 @@ function PowerTools:showMenu(actionName)
     local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround, (isInVehicle) }
     local actionSpawnPallets = { g_i18n:getText("infohud_pallet"), self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnPalletsAdvanced = { g_i18n:getText("infohud_pallet") .. SUFFIX_ADVANCED, self.spawnPallets, (isInVehicle) } --TODO: fix l10n
-    local actionSpawnBale = { g_i18n:getText("bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
+    local actionSpawnBale = { g_i18n:getText("infohud_bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
     local actionSpawnTreeTrunk = { g_i18n:getText("fillType_wood"), self.spawnLogs, (isInVehicle) } --TODO: fix l10n
 
     local actionSoftRestart = { g_i18n:getText("restartMode"), self.menuActionRestartGame }
