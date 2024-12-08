@@ -1389,7 +1389,7 @@ function PowerTools:hookIntoGlobalKeys(dt)
     if helpTextActionEvent ~= nil then
         local helpTextKeyMSKH = MultistateKeyHandler.new()
         helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
-        helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
+        -- helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
         helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onHelpTextKey_longPress, self)
 
         self.helpTextKeyMSKH = helpTextKeyMSKH
