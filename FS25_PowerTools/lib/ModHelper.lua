@@ -426,7 +426,7 @@ end
 ---Checks if the player is in spectator mode (i.e. not associated with a farm)
 ---@return boolean "True if the player is in spectator mode (farmId = 0), otherwise false"
 function Mod:getIsSpectatorFarm()
-    return g_localPlayer.farmId == FarmManager.SPECTATOR_FARM_ID
+    return g_localPlayer == nil or g_localPlayer.farmId == FarmManager.SPECTATOR_FARM_ID
 end
 
 ---Checks if the player is a server admin (either the host in self-hosted servers, or a master user in dedicated servers)
