@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <modDesc descVersion="93">
     <author>w33zl</author>
-    <version>1.0.1.0</version>
+    <version>1.0.1.0-dev-002</version>
     <title>
         <en>PowerTools</en>
     </title>
@@ -32,10 +32,17 @@ NOTES:
 4. The new alternate mode menu uses a separate hotkey (default Right Ctrl + F12)
 
 CHANGELOG:
+
+v1.0.2:
+- FIX: Flight should now automatically be active when enabling flight mode in the PowerTools menu (without the need to use the 'J' key)
+- FIX: Enabling flight mode should no longer add a console command in the list of recently used console commands
+- NEW: Added CZ translation
+
 v1.0.1:
 - HOTFIX: Pallet spawning should now work for all players (no matter how you start the game)
 - FIX: Choice of pallets is not reset (as intended, i.e. you can now spawn multiple pallets in a row)
 - FIX: Removed false error message when spawning pallets
+- NEW: Added ES translation
 ]]></en>
 
 <de><![CDATA[
