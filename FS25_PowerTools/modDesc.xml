@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <modDesc descVersion="92">
     <author>w33zl</author>
-    <version>1.0.1.0</version>
+    <version>1.0.1.0-hotfix</version>
     <title>
         <en>PowerTools</en>
     </title>
@@ -32,6 +32,9 @@ NOTES:
 4. The new alternate mode menu uses a separate hotkey (default Right Ctrl + F12)
 
 CHANGELOG:
+v1.0.1-hotfix:
+- HOTFIX: Prevent nil errors in the log for farmId when playing to dedicated servers
+
 v1.0.1:
 - HOTFIX: Pallet spawning should now work for all players (no matter how you start the game)
 - FIX: Choice of pallets is not reset (as intended, i.e. you can now spawn multiple pallets in a row)
