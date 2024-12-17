@@ -100,6 +100,33 @@ v1.0.1 :
 - FIXE : Suppression du message d'erreur erroné lors de la création de palettes.
 ]]></fr>
 
+<cz><![CDATA[
+Pomocí nabídky PowerTools máte rychlý a snadný přístup k některým funkcím „kvality života“. Zvláště užitečné, pokud jste modder nebo tvůrce obsahu.
+
+Pomocí jediné klávesy/tlačítka (výchozí F12) aktivujete nabídku PowerTools. Odtud můžete rychle přejít k různým funkcím, aniž byste potřebovali myš nebo procházeli více nabídkami.
+
+HLAVNÍ VLASTNOSTI:
+- Přidejte / odeberte peníze na svou farmu
+- Plnění vozidel - podporuje vozidla s více nádržemi/úložnými jednotkami a přijímá jakýkoli typ plnění podporovaný vozidlem *
+- Spawnujte jakýkoli typ palety (včetně výrobních materiálů, jako je cukr a oblečení) *
+- Spawnujte jakýkoli typ balíku - podporuje kulaté/čtvercové, všechny velikosti a všechny typy (sláma, siláž, bavlna atd.) *
+- Spawnujte klády - v současné době podporuje pouze omezený počet délek *
+- Přepněte super rychlost, super sílu nebo letový režim
+- Rychle uložte aktuální hru, buď pomocí klávesové zkratky nebo nabídky *
+- Zapnutí/vypnutí HUD/rozhraní
+- Opakujte poslední příkaz
+- Otevřete nabídku PowerTools v alternativním režimu (restart a návrat do nabídky používá metodu "hard reset" místo "soft reset")
+- Omezené menu PowerTools lze nyní otevřít, když je otevřeno hlavní menu, stejně jako když je hra pozastavena
+
+POZNÁMKY:
+1. Funkce označené hvězdičkou (*) nejsou dostupné na vyhrazených serverech, pouze v singleplayeru a multiplayeru s vlastním hostitelem.
+2. Mnoho funkcí vyžaduje, abyste měli administrátorský přístup (abyste zabránili podvádění v multiplayeru) - v singleplayeru je ale každý administrátor :)
+3. Abyste mohli použít "Opakovat poslední akci", musíte svázat klávesovou zkratku v nastavení vazby vstupu
+4. Nová nabídka alternativního režimu používá samostatnou klávesovou zkratku (výchozí pravý Ctrl + F12)
+
+]]></cz>
+
+
 
     </description>
     <iconFilename>icon_PowerTools.dds</iconFilename>
