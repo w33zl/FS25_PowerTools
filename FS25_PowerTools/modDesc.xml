@@ -34,6 +34,8 @@ NOTES:
 CHANGELOG:
 
 v1.0.2:
+- HOTFIX: Amended the issue where the game failed to load on a dedicated servers due to a nil error
+- HOTFIX: The refill option on certain vehicles (e.g. Goweil Vario Master) should no longer trigger the PowerTools menu
 - FIX: Flight should now automatically be active when enabling flight mode in the PowerTools menu (without the need to use the 'J' key)
 - FIX: Enabling flight mode should no longer add a console command in the list of recently used console commands
 - NEW: Added CZ translation
