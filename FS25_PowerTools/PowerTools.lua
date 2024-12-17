@@ -1189,9 +1189,11 @@ function PowerTools:validateFarm()
     return PowerTools:showWarningIfNoAccess(not self:getIsSpectatorFarm()) --TODO: add custom error message
 end
 
-
-function PowerTools:validateMPAdmin()
-    return PowerTools:showWarningIfNoAccess(self:getHasAdminAccess())
+---Ensure the current player has relevant admin access. If the first argument is true, only server admins are given access.
+---@param requireServerAdmin boolean 'Only allow server admins access, i.e. regular farm admins are not allowed'
+---@return boolean 'True if the player has admin access, false otherwise'
+function PowerTools:validateMPAdmin(requireServerAdmin)
+    return PowerTools:showWarningIfNoAccess((requireServerAdmin and self:getIsServerAdmin()) or self:getHasAdminAccess())
 
     -- if not requireFarmAdmin and g_currentMission.getIsServer() == true then
     --     return true
