@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <modDesc descVersion="94">
     <author>w33zl</author>
-    <version>1.0.1.0-hotfix</version>
+    <version>1.0.2.0</version>
     <title>
         <en>PowerTools</en>
     </title>
@@ -32,8 +32,9 @@ NOTES:
 4. The new alternate mode menu uses a separate hotkey (default Right Ctrl + F12)
 
 CHANGELOG:
-v1.0.1-hotfix:
+v1.0.2:
 - HOTFIX: Prevent nil errors in the log for farmId when playing to dedicated servers
+- HOTFIX: The PowerTools menu should no longer open instead of the refill option on certain vehicles (e.g. balers)
 
 v1.0.1:
 - HOTFIX: Pallet spawning should now work for all players (no matter how you start the game)
@@ -66,6 +67,11 @@ HINWEISE:
 4. Das neue Menü für den alternativen Modus verwendet einen separaten Hotkey (standardmäßig Rechts Strg + F12)
 
 CHANGELOG:
+
+v1.0.2:
+- HOTFIX: Verhindert Null-Fehler im Log für farmId beim Spielen auf dedizierten Servern
+- HOTFIX: Das PowerTools-Menü sollte sich bei bestimmten Fahrzeugen (z.B. Ballenpressen) nicht mehr anstelle der Nachfülloption öffnen
+
 v1.0.1:
 - HOTFIX: Das Spawnen von Paletten sollte jetzt für alle Spieler funktionieren (unabhängig davon, wie man das Spiel startet)
 - FIX: Die Auswahl der Paletten wird nicht zurückgesetzt (wie vorgesehen, d.h. man kann jetzt mehrere Paletten hintereinander spawnen)
@@ -97,6 +103,11 @@ NOTES :
 4. Le nouveau menu du mode alternatif utilise un raccourci-clavier séparé (par défaut Ctrl + F12).
 
 CHANGELOG :
+
+v1.0.2 :
+- HOTFIX : Empêche les erreurs nil dans le journal pour farmId lorsque l'on joue sur des serveurs dédiés.
+- HOTFIX : Le menu PowerTools ne devrait plus s'ouvrir à la place de l'option de remplissage sur certains véhicules (par exemple, les presses à balles).
+
 v1.0.1 :
 - HOTFIX : L'apparition des palettes devrait maintenant fonctionner pour tous les joueurs (quelle que soit la façon dont vous démarrez le jeu).
 - FIXE : Le choix des palettes n'est pas réinitialisé (comme prévu, c'est à dire que vous pouvez maintenant faire apparaître plusieurs palettes à la suite).
