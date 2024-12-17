@@ -1217,7 +1217,10 @@ end
 
 function PowerTools:spawnObjects(altMode)
     Log:var("spawnObjects@altMode", altMode)
-    if not self:validateMPAdmin() or not self:validateFarm() then return end
+
+    --TODO: this is a temporary solution, should be changed to allow all farm admins when working
+    if not self:validateMPHost() or not self:validateFarm() then return end
+    -- if not self:validateMPAdmin() or not self:validateFarm() then return end
 
     if self.baleTypes == nil then
         self:unwrapBaleTypes()
