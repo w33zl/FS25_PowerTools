@@ -1595,3 +1595,35 @@ PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlight
         return superFunc(self, ...)
     end
 end)
+
+
+
+-- if FEATURE_TOGGLE.EXTENDED_TIMESCALE then
+--     Log:var("FS25_UniversalGameTweaks", g_modIsLoaded.FS25_UniversalGameTweaks)
+--     -- Log:var("__g.FS25_UniversalGameTweaks", PowerTools.__g["FS25_UniversalGameTweaks"])
+--     PowerTools:source("PowerTools_ExtendedTimeScales.lua")
+--     Log:var("ExtendedTimeScales", ExtendedTimeScales)
+--     if ExtendedTimeScales == nil then
+--         Log:warning("Failed to load Extended Time Scales module from PowerTools")        
+--     else
+--         ExtendedTimeScales.init(PowerTools)
+--         Log:info("Extended time scales enabled")
+--     end
+-- end
+
+PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
+    if g_modIsLoaded.FS25_UniversalGameTweaks then
+        Log:info("FS25_UniversalGameTweaks is already loaded, the extended time scales module of PowerTools will not be loaded")
+        return
+    end
+    -- Log:var("FS25_UniversalGameTweaks", g_modIsLoaded.FS25_UniversalGameTweaks)
+    -- Log:var("__g.FS25_UniversalGameTweaks", PowerTools.__g["FS25_UniversalGameTweaks"])
+    self:source("PowerTools_ExtendedTimeScales.lua")
+    -- Log:var("ExtendedTimeScales", ExtendedTimeScales)
+    if ExtendedTimeScales == nil then
+        Log:warning("Failed to load Extended Time Scales module from PowerTools")        
+    else
+        ExtendedTimeScales.init(self)
+        Log:info("Extended time scales enabled")
+    end    
+end)
