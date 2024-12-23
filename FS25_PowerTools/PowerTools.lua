@@ -12,8 +12,15 @@ Changelog:
     2.0.0       FS25 version
 ]]
 
+
 local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
 local ENABLE_EXPERIMENTAL_HUDHIDE = true
+
+local FEATURE_TOGGLE = {
+    EXPERIMENTAL_FLIGHTMODE = true,
+    EXPERIMENTAL_HUDHIDE = true,
+    EXTENDED_TIMESCALE = true,
+}
 
 PowerTools = Mod:init()
 
@@ -1561,6 +1568,17 @@ function PowerTools:delete()
     removeConsoleCommand("ptTable")
     
 end
+
+function PowerTools:featureToggle(feature, delegate)
+    if feature == true then
+        if delegate ~= nil and type(delegate) == "function" then
+            delegate(self)
+        else
+            Log:error("Feature toggle delegate is not a function")
+        end
+    end
+end
+
 
 
 PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlightActive, function(self, superFunc, ...)
