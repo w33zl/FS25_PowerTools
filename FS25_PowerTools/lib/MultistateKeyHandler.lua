@@ -25,6 +25,7 @@ local MULTISTATEKEY_TRIGGER = {
     REPEATED_LONG_PRESS = 4,
     DOUBLE_PRESS_PENDING = 5,
     SHORT_PRESS_FORCED = 6,
+    BLOCK = 7,
 }
 
 local MULTISTATEKEY_ACTION = {
@@ -179,17 +180,16 @@ function MultistateKeyHandler:trigger(name, state, callbackState, isAnalog, isMo
 end
 
 function MultistateKeyHandler:onPressKey(isHolding)
-    if self.allowRepeatedLongpress then
+    if self.pendingState ~= MULTISTATEKEY_TRIGGER.BLOCK or self.allowRepeatedLongpress then
         self.repeatedTriggerTime = self.repeatedTriggerTime or self.firstTriggerTime or getTimeMs()
         local totalElapsed = getTimeMs() - self.repeatedTriggerTime
         -- local totalElapsed = getTimeMs() - self.repeatedTriggerTime
 
         if totalElapsed > KEYSTATE_LONGPRESS_REPEAT_DELAY then
-            self:triggerState(MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS)
-            -- local elapsed = getTimeMs() - self.firstTriggerTime
-            -- if elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
-            --     self:triggerState(MULTISTATEKEY_TRIGGER.LONG_PRESS)
-            -- end
+            -- Log:var("allowRepeatedLongpress", self.allowRepeatedLongpress)
+            local mode = self.allowRepeatedLongpress and MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS or MULTISTATEKEY_TRIGGER.LONG_PRESS
+            -- Log:var("mode", mode)
+            self:triggerState(mode)
         end
     end
 
@@ -198,7 +198,9 @@ end
 function MultistateKeyHandler:onReleaseKey()
     self.firstTriggerTime = self.firstTriggerTime or getTimeMs() -- Just to ensure we never get nil no matte what
     local elapsed = self.releaseTime - self.firstTriggerTime
-    if elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
+    if self.pendingState == MULTISTATEKEY_TRIGGER.BLOCK then
+        self:triggerState(MULTISTATEKEY_TRIGGER.BLOCK)
+    elseif elapsed > KEYSTATE_LONGPRESS_THRESHOLD then
         self:triggerState(MULTISTATEKEY_TRIGGER.LONG_PRESS)
     elseif self.pendingState == MULTISTATEKEY_TRIGGER.REPEATED_LONG_PRESS then
         Log:debug("Ingored")
@@ -217,8 +219,8 @@ function MultistateKeyHandler:onReleaseKey()
 end
 
 function MultistateKeyHandler:triggerState(state)
-    Log:debug("Trigger state: %s", state)
-    local ignore = false
+    Log:debug("Trigger state: %s, pendingState %s", state, self.pendingState)
+    local ignore = (self.pendingState == MULTISTATEKEY_TRIGGER.BLOCK)
 
     if state == MULTISTATEKEY_TRIGGER.LONG_PRESS then
         -- Log:debug("Long press triggered")
@@ -230,6 +232,8 @@ function MultistateKeyHandler:triggerState(state)
         -- Log:debug("Short press triggered forced")
     elseif state == MULTISTATEKEY_TRIGGER.SHORT_PRESS then
         -- Log:debug("Short press triggered")
+    elseif state == MULTISTATEKEY_TRIGGER.BLOCK then
+        ignore = true
     else
         ignore = true
         Log:debug("Unknown trigger")
@@ -243,6 +247,9 @@ function MultistateKeyHandler:triggerState(state)
         self.previousTriggerTime = self.firstTriggerTime
         self.repeatedTriggerTime = getTimeMs()
         self.pendingState = state
+    elseif state == MULTISTATEKEY_TRIGGER.LONG_PRESS then
+        self.previousTriggerTime = self.previousTriggerTime or self.firstTriggerTime
+        self.pendingState = MULTISTATEKEY_TRIGGER.BLOCK
     else
         self.previousTriggerTime = nil
         self.repeatedTriggerTime = nil
