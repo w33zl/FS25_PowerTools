@@ -465,7 +465,7 @@ function PowerTools:addRemoveMoney()
 
         end
 
-        local numericValue, isExact = 0, false
+        local numericValue, isExact = nil, false
 
         if value:find("=") == 1 then
             value = value:sub(2, -1)
