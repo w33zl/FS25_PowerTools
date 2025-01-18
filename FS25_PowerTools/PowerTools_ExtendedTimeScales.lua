@@ -27,7 +27,7 @@ function ExtendedTimeScales:prepareTimeScales()
 end
 
 function ExtendedTimeScales:toggleTimeScales()
-    Log:table("Platform.gameplay [BEFORE]", Platform.gameplay)
+    -- Log:table("Platform.gameplay [BEFORE]", Platform.gameplay)
     local gameplay = Platform.gameplay
     if gameplay ~= nil and gameplay.timeScaleSettings ~= nil then
         
@@ -39,7 +39,7 @@ function ExtendedTimeScales:toggleTimeScales()
             gameplay.timeScaleSettings = self.defaultTimeScales
         end
     end
-    Log:table("Platform.gameplay [AFTER]", Platform.gameplay)
+    -- Log:table("Platform.gameplay [AFTER]", Platform.gameplay)
 end
 
 
