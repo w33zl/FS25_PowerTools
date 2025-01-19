@@ -102,7 +102,7 @@ local function createLog(modName, modDirectory)
     local debugHelperFilename = modDirectory .. "lib/DebugHelper.lua"
 
     if not fileExists(debugHelperFilename) then
-        debugHelperFilename = modDirectory .. "scripts/ModLib/DebugHelper.lua"
+        debugHelperFilename = modDirectory .. "scripts/modLib/DebugHelper.lua"
     end
     if fileExists(debugHelperFilename) then
         newLog:info("Debug mode enabled!")
