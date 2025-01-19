@@ -2,22 +2,36 @@
 Power Tools for FS25
 
 Author:     w33zl / WZL Modding (github.com/w33zl)
-Version:    2.2.0
-Modified:   2024-11-24
+Version:    2.3
+Modified:   2024-11-30
 
 Changelog:
+    2.2.1       Fix issues related to pallet spawning and flight mode
     2.2.0       New multistate buttons, refactored menu
     2.1.0       Re-added super strength and flight mode, and added super speed
     2.0.0       FS25 version
 ]]
+
+
+local ENABLE_EXPERIMENTAL_FLIGHTMODE = true
+local ENABLE_EXPERIMENTAL_HUDHIDE = true
+
+local FEATURE_TOGGLE = {
+    EXPERIMENTAL_FLIGHTMODE = true,
+    EXPERIMENTAL_HUDHIDE = true,
+    EXTENDED_TIMESCALE = true,
+}
 
 PowerTools = Mod:init()
 
 -- PowerTools:enableDebugMode()
 
 PowerTools:source("lib/DialogHelper.lua")
--- PowerTools:source("lib/GlobalHelper.lua")
--- PowerTools:source("lib/MultistateKeyHandler.lua")
+
+if ENABLE_EXPERIMENTAL_HUDHIDE then
+    PowerTools:source("lib/GlobalHelper.lua")
+    PowerTools:source("lib/MultistateKeyHandler.lua")
+end
 
 local ACTION = {
     SPAWN_PALLET = 1,
@@ -120,7 +134,7 @@ function PowerTools:showMenu(actionName)
     local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround, (isInVehicle) }
     local actionSpawnPallets = { g_i18n:getText("infohud_pallet"), self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnPalletsAdvanced = { g_i18n:getText("infohud_pallet") .. SUFFIX_ADVANCED, self.spawnPallets, (isInVehicle) } --TODO: fix l10n
-    local actionSpawnBale = { g_i18n:getText("bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
+    local actionSpawnBale = { g_i18n:getText("infohud_bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
     local actionSpawnTreeTrunk = { g_i18n:getText("fillType_wood"), self.spawnLogs, (isInVehicle) } --TODO: fix l10n
 
     local actionSoftRestart = { g_i18n:getText("restartMode"), self.menuActionRestartGame }
@@ -366,33 +380,56 @@ function PowerTools:toggleHUDMode()
     self:saveAction(ACTION.HIDE_HUD, self,PowerTools.toggleHUDMode, {} )
 end
 
-function PowerTools:toggleFlightMode()
-    -- if NOT_IMPLEMENTED then return self:notImplemented() end --TODO: remove when working
+function PowerTools:toggleFlightActive()
+    Log:var("g_localPlayer.mover.isFlightActive [BEFORE]", g_localPlayer.mover.isFlightActive)
+    -- g_localPlayer.mover.isFlightActive = not g_localPlayer.mover.isFlightActive
+    -- Log:var("g_localPlayer.mover.isFlightActive [BETWEEN]", g_localPlayer.mover.isFlightActive)
+    -- g_localPlayer.mover:toggleFlightActive()
+    PlayerInputComponent.onInputToggleFlightMode(g_localPlayer.inputComponent)
+    Log:var("g_localPlayer.mover.isFlightActive [AFTER]", g_localPlayer.mover.isFlightActive)
+end
 
-    -- g_currentMission.player:consoleCommandToggleFlightMode()
+
+
+function PowerTools:toggleFlightModeExperimental()
+
+    g_localPlayer.toggleFlightModeCommand.value = not g_localPlayer.toggleFlightModeCommand.value
+    if g_localPlayer.toggleFlightModeCommand.value then
+        g_localPlayer.toggleFlightModeCommand.onEnabled()
+
+        xpcall(function()
+            self:toggleFlightActive()
+        end, function(err) Log:warning("Failed to automatically activate flight mode. You need to manually enable it with J key. Reason was: "..tostring(err)) end)
+
+        if g_localPlayer.mover.isFlightActive then
+            --TODO: do we need to do anything?
+        else
+            g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), nil, 2500)
+        end
+    else
+        g_localPlayer.toggleFlightModeCommand.onDisabled()
+        g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", nil, 1500)
+    end
+
+    
+    self:saveAction(ACTION.FLIGHT_MODE, self,PowerTools.toggleFlightModeExperimental, {} )    
+end
+
+function PowerTools:toggleFlightMode()
+    if ENABLE_EXPERIMENTAL_FLIGHTMODE then
+        Log:debug("Using experimental flight mode")
+        self:toggleFlightModeExperimental()
+        return
+    end
+    Log:debug("Using default flight mode")
+
     executeConsoleCommand(commandBuilder("gsPlayerFlightToggle"))
-    -- PowerTools:executeAction(ACTION.FLIGHT_MODE, _G, "executeConsoleCommand", {commandBuilder("gsPlayerFlightToggle")}, true)
 
     if g_localPlayer.toggleFlightModeCommand.value then
         g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), nil, 2500)
     else
         g_currentMission:addGameNotification(g_i18n:getText("flightMode"), g_i18n:getText("disabled"), "", nil, 1500)
     end
-
-    -- if isFlightModeEnabled then
-    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("enabled"), g_i18n:getText("flightModeUsage"), "", 2500)
-    --     -- g_currentMission.player.debugFlightModeWalkingSpeed = 0.032
-    --     -- g_currentMission.player.debugFlightModeRunningFactor = 4
-
-    --     -- PowerTools.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = 12
-    
-    --     -- g_currentMission.player:onInputDebugFlyToggle()
-    -- else
-    --     g_currentMission:addGameNotification(g_i18n:getText("flightMode") .. ": " .. g_i18n:getText("disabled"), "", "", 1500)
-    --     -- g_currentMission.player.motionInformation.maxWalkingSpeed = PowerTools.maxWalkingSpeed or g_currentMission.player.motionInformation.maxWalkingSpeed
-    --     -- PowerTools.maxWalkingSpeed = nil
-    -- end
 
     self:saveAction(ACTION.FLIGHT_MODE, self,PowerTools.toggleFlightMode, {} )
 end
@@ -428,7 +465,7 @@ function PowerTools:addRemoveMoney()
 
         end
 
-        local numericValue, isExact = 0, false
+        local numericValue, isExact = nil, false
 
         if value:find("=") == 1 then
             value = value:sub(2, -1)
@@ -1159,9 +1196,11 @@ function PowerTools:validateFarm()
     return PowerTools:showWarningIfNoAccess(not self:getIsSpectatorFarm()) --TODO: add custom error message
 end
 
-
-function PowerTools:validateMPAdmin()
-    return PowerTools:showWarningIfNoAccess(self:getHasAdminAccess())
+---Ensure the current player has relevant admin access. If the first argument is true, only server admins are given access.
+---@param requireServerAdmin boolean 'Only allow server admins access, i.e. regular farm admins are not allowed'
+---@return boolean 'True if the player has admin access, false otherwise'
+function PowerTools:validateMPAdmin(requireServerAdmin)
+    return PowerTools:showWarningIfNoAccess((requireServerAdmin and self:getIsServerAdmin()) or self:getHasAdminAccess())
 
     -- if not requireFarmAdmin and g_currentMission.getIsServer() == true then
     --     return true
@@ -1185,7 +1224,10 @@ end
 
 function PowerTools:spawnObjects(altMode)
     Log:var("spawnObjects@altMode", altMode)
-    if not self:validateMPAdmin() or not self:validateFarm() then return end
+
+    --TODO: this is a temporary solution, should be changed to allow all farm admins when working
+    if not self:validateMPHost() or not self:validateFarm() then return end
+    -- if not self:validateMPAdmin() or not self:validateFarm() then return end
 
     if self.baleTypes == nil then
         self:unwrapBaleTypes()
@@ -1337,64 +1379,66 @@ function PowerTools:menuActionForceExitSavegame()
 
 end
 
--- function PowerTools:onHelpTextKey_doublePress()
---     g_currentMission:showBlinkingWarning("onHelpTextKey_doublePress")
--- end
+function PowerTools:onHelpTextKey_doublePress()
+    g_currentMission:showBlinkingWarning("onHelpTextKey_doublePress")
+end
 
--- function PowerTools:onHelpTextKey_longPress()
---     g_currentMission.hud:consoleCommandToggleVisibility()
--- end
+function PowerTools:onHelpTextKey_longPress()
+    g_currentMission.hud:consoleCommandToggleVisibility()
+end
 
--- function PowerTools:hookIntoGlobalKeys(dt)
---     if self.globalKeysInitiated == true then
---         Log:trace("SKIP hookIntoGlobalKeys")
---         return
---     end
---     Log:trace("hookIntoGlobalKeys")
+function PowerTools:hookIntoGlobalKeys(dt)
+    if self.globalKeysInitiated == true then
+        Log:trace("SKIP hookIntoGlobalKeys")
+        return
+    end
+    Log:trace("hookIntoGlobalKeys")
 
---     local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true)
---     -- Log:table("helpTextActionEvent4", helpTextActionEvent, 2)
-
-
---     if helpTextActionEvent ~= nil then
---         local helpTextKeyMSKH = MultistateKeyHandler.new()
---         helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
---         helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
---         helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onHelpTextKey_longPress, self)
-
---         self.helpTextKeyMSKH = helpTextKeyMSKH
-
---     end
-
---     self.globalKeysInitiated = (helpTextActionEvent ~= nil)
--- end
-
--- -- Player.load = Utils.overwrittenFunction(Player.load, function (self, superFunc, ...)
--- --     Log:debug("Player.load")
--- --     local retVal = superFunc(self, ...)
--- --     Log:var("Player.load g_localPlayer", g_localPlayer)
--- --     Log:var("Player.load TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
--- --     return retVal
--- -- end)
+    local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true)
+    -- Log:table("helpTextActionEvent4", helpTextActionEvent, 2)
 
 
--- Player.onStartMission = Utils.overwrittenFunction(Player.onStartMission, function (self, superFunc, ...)
---     -- Log:debug("Player.onStartMission")
+    if helpTextActionEvent ~= nil then
+        local helpTextKeyMSKH = MultistateKeyHandler.new()
+        helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
+        -- helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
+        helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onHelpTextKey_longPress, self)
+
+        self.helpTextKeyMSKH = helpTextKeyMSKH
+
+    end
+
+    self.globalKeysInitiated = (helpTextActionEvent ~= nil)
+end
+
+-- Player.load = Utils.overwrittenFunction(Player.load, function (self, superFunc, ...)
+--     Log:debug("Player.load")
 --     local retVal = superFunc(self, ...)
---     -- Log:var("Player.onStartMission g_localPlayer", g_localPlayer)
---     -- Log:var("Player.onStartMission TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
---     PowerTools:hookIntoGlobalKeys()
+--     Log:var("Player.load g_localPlayer", g_localPlayer)
+--     Log:var("Player.load TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
 --     return retVal
 -- end)
 
--- -- PlayerInputComponent.onPlayerLoad = Utils.overwrittenFunction(PlayerInputComponent.onPlayerLoad, function (self, superFunc, ...)
--- --     -- Log:debug("PlayerInputComponent.onPlayerLoad")
--- --     local retVal = superFunc(self, ...)
--- --     Log:var("PlayerInputComponent.onPlayerLoad g_localPlayer", g_localPlayer)
--- --     Log:var("PlayerInputComponent.onPlayerLoad TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
--- --     -- Log:table("PlayerInputComponent.onPlayerLoad():player.toggleFlightModeCommand", self.player.toggleFlightModeCommand, 2)
--- --     return retVal
--- -- end)
+if ENABLE_EXPERIMENTAL_HUDHIDE then
+    Log:info("Experiment HUD hide enabled")
+
+    Player.onStartMission = Utils.overwrittenFunction(Player.onStartMission, function (self, superFunc, ...)
+        -- Log:debug("Player.onStartMission")
+        local retVal = superFunc(self, ...)
+        -- Log:var("Player.onStartMission g_localPlayer", g_localPlayer)
+        -- Log:var("Player.onStartMission TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
+        PowerTools:hookIntoGlobalKeys()
+        return retVal
+    end)
+end
+-- PlayerInputComponent.onPlayerLoad = Utils.overwrittenFunction(PlayerInputComponent.onPlayerLoad, function (self, superFunc, ...)
+--     -- Log:debug("PlayerInputComponent.onPlayerLoad")
+--     local retVal = superFunc(self, ...)
+--     Log:var("PlayerInputComponent.onPlayerLoad g_localPlayer", g_localPlayer)
+--     Log:var("PlayerInputComponent.onPlayerLoad TOGGLE_HELP_TEXT", GlobalHelper.GetActionEvent(InputAction.TOGGLE_HELP_TEXT, nil, true))
+--     -- Log:table("PlayerInputComponent.onPlayerLoad():player.toggleFlightModeCommand", self.player.toggleFlightModeCommand, 2)
+--     return retVal
+-- end)
 
 
 function PowerTools:update(dt)
@@ -1525,11 +1569,61 @@ function PowerTools:delete()
     
 end
 
+function PowerTools:featureToggle(feature, delegate)
+    if feature == true then
+        if delegate ~= nil and type(delegate) == "function" then
+            delegate(self)
+        else
+            Log:error("Feature toggle delegate is not a function")
+        end
+    end
+end
+
+
 
 PlayerMover.toggleFlightActive = Utils.appendedFunction(PlayerMover.toggleFlightActive, function(self, superFunc, ...)
-    if self.isFlightActive then
-        g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), nil, 1000)
-    else
-        g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), nil, 1000) 
+    if g_localPlayer.toggleFlightModeCommand.value then
+
+        if self.isFlightActive then
+            g_currentMission:addGameNotification("", g_i18n:getText("flightActivated"), g_i18n:getText("flightActivatedExtra"), nil, 1000)
+        else
+            g_currentMission:addGameNotification("", g_i18n:getText("flightDeactivated"), g_i18n:getText("flightDeactivatedExtra"), nil, 1000)
+        end
     end
+    --HACK: probably not needed
+    if superFunc ~= nil then
+        return superFunc(self, ...)
+    end
+end)
+
+
+
+-- if FEATURE_TOGGLE.EXTENDED_TIMESCALE then
+--     Log:var("FS25_UniversalGameTweaks", g_modIsLoaded.FS25_UniversalGameTweaks)
+--     -- Log:var("__g.FS25_UniversalGameTweaks", PowerTools.__g["FS25_UniversalGameTweaks"])
+--     PowerTools:source("PowerTools_ExtendedTimeScales.lua")
+--     Log:var("ExtendedTimeScales", ExtendedTimeScales)
+--     if ExtendedTimeScales == nil then
+--         Log:warning("Failed to load Extended Time Scales module from PowerTools")        
+--     else
+--         ExtendedTimeScales.init(PowerTools)
+--         Log:info("Extended time scales enabled")
+--     end
+-- end
+
+PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
+    if g_modIsLoaded.FS25_UniversalGameTweaks then
+        Log:info("FS25_UniversalGameTweaks is already loaded, the extended time scales module of PowerTools will not be loaded")
+        return
+    end
+    -- Log:var("FS25_UniversalGameTweaks", g_modIsLoaded.FS25_UniversalGameTweaks)
+    -- Log:var("__g.FS25_UniversalGameTweaks", PowerTools.__g["FS25_UniversalGameTweaks"])
+    self:source("PowerTools_ExtendedTimeScales.lua")
+    -- Log:var("ExtendedTimeScales", ExtendedTimeScales)
+    if ExtendedTimeScales == nil then
+        Log:warning("Failed to load Extended Time Scales module from PowerTools")        
+    else
+        ExtendedTimeScales.init(self)
+        Log:info("Extended time scales enabled")
+    end    
 end)

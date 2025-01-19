@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>SniperKittenCZ</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Otevřít nabídku Power Tools" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Otevřít alternativně nabídku Power Tools" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Rychlé uložení" />
+        <text name="flightMode" text="Letový režim" />
+        <text name="enabled" text="Povolen" />
+        <text name="disabled" text="Zakázán" />
+        <text name="flightModeUsage" text="Klávesou J přepínáte let, klávesami Q a E měníte výšku." />
+        <text name="changeMoneyMode" text="Přidat/odebrat peníze" />
+        <text name="exitMode" text="Ukončit do menu" />
+        <text name="chooseAction" text="Vyberat akci" />
+        <text name="powerTools" text="Power Tools" />
+        <text name="changeMoneyUsage" text="Příklady: \\n'1000' pro připsání 1000 € na váš účet \\n'-1000' pro odečtení 1000 € z vašeho účtu \\n'=1000' pro nastavení vašeho účtu na 1000 €" />
+        <text name="errorNotNumeric" text="Není platná číselná hodnota: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Zrušit" />
+        <text name="noHudMode" text="Zobrazit / skrýt HUD" />
+        <text name="superStrengthMode" text="Přepout Super sílu" />
+        <text name="superStrength" text="Super síla" />
+        <text name="filltypeNone" text="Žádný (prázdný)" />
+        <text name="chooseFillUnit" text="Výběr úložného prostoru (naplnit jednotku)" />
+        <text name="chooseFillUnitDetailed" text="Které úložiště (fillunit) chcete naplnit?" />
+        <text name="fillVehicle" text="Naplnit vozidlo" />
+        <text name="selectFillType" text="Vyberte typ výplně, který chcete přidat (nebo 'none' pro vyprázdnění)" />
+        <text name="errorNoValidFilltypes" text="Žádné platné typy náplní pro toto vozidlo" />
+        <text name="errorNoValidFillUnits" text="Žádné platné jednotky pro plnění" />
+        <text name="tipOnGround" text="Sypat na zem" />
+        <text name="confirmExit" text="Opravdu chcete odejít?" />
+        <text name="exitRestartWarning" text="POZOR! Ukončení bez uložení způsobí ztrátu vašeho postupu!" />
+        <text name="saveGame" text="Uložit hru" />
+        <text name="spawnObjectsActionTitle" text="Spawnovat objekty / materiály" />
+        <text name="spawnObjectsActionText" text="Vybrat typ objektu / materiálu, který chcete přidat." />
+        <text name="actionClearTipArea" text="Vyčistit oblast sypání" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Opakovat poslední akci" />
+        <text name="restartMode" text="Restartovat uloženou hru" />
+        <text name="forcedRestartMode" text="Restartovat uloženou hru (tvrdý reset)" />
+        <text name="forcedExitMode" text="Ukončit do menu (tvrdý reset)" />
+        <text name="flightActivated" text="Letový režim je v současné době aktivní" />
+        <text name="flightActivatedExtra" text="Klávesami Q a E změníte výšku." />
+        <text name="flightDeactivated" text="Letový režim již není aktivní" />
+        <text name="flightDeactivatedExtra" text="Dávejte pozor, kam přistáváte!" />
+        <text name="superSpeed" text="Super rychlost" />
+        <text name="superSpeedMode" text="Přepnout Super rychlost" />
+        
+    </texts>
+</l10n>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Nagy Papy</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Az elektromos kéziszerszámok menü megnyitása" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Másodlagos elektromos kéziszerszámok menü megnyitása" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Gyors mentés" />
+        <text name="flightMode" text="Repülési mód" />
+        <text name="enabled" text="Engedélyezve" />
+        <text name="disabled" text="Letiltva" />
+        <text name="flightModeUsage" text="Használja a J billentyűt a repülés váltásához, a Q és E billentyűkkel módosíthatja a magasságot" />
+        <text name="changeMoneyMode" text="Pénz hozzáadása/eltávolítása" />
+        <text name="exitMode" text="Kilépés a menüből" />
+        <text name="chooseAction" text="Művelet kiválasztása" />
+        <text name="powerTools" text="Elektromos eszközök" />
+        <text name="changeMoneyUsage" text="Példák: \\n'1000' 1000 euró hozzáadásához \\n'-1000' 1000 euró levonása fiókjából\\n'=1000' a fiók beállításához 1000 €-ig" />
+		<text name="errorNotNumeric" text="Érvénytelen számérték: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Mégse" />
+        <text name="noHudMode" text="HUD be-/kikapcsolása" />
+        <text name="superStrengthMode" text="Szupererő váltása" />
+        <text name="szuperStrength" text="Szupererő" />
+        <text name="filltypeNone" text="Nincs (üres)" />
+        <text name="chooseFillUnit" text="Tárhely kiválasztása (kitöltési egység)" />
+        <text name="chooseFillUnitDetailed" text="Melyik tárhelyet (fillunit) szeretné feltölteni?" />
+        <text name="fillVehicle" text="Töltsön járművet" />
+        <text name="selectFillType" text="Válassza ki a hozzáadni kívánt kitöltési típust (vagy 'none'-t az üreshez)" />
+        <text name="errorNoValidFilltypes" text="Nincs érvényes kitöltési típus ehhez a járműhöz" />
+        <text name="errorNoValidFillUnits" text="Nincsenek érvényes kitöltési egységek" />
+        <text name="tipOnGround" text="Tip a földön" />
+        <text name="confirmExit" text="Tényleg ki akar lépni?" />
+        <text name="exitRestartWarning" text="FIGYELEM! A mentés nélküli kilépés az előrehaladás elvesztését okozza!" />
+        <text name="saveGame" text="Játék mentése" />
+        <text name="spawnObjectsActionTitle" text="Spawn objektumok/anyagok" />
+        <text name="spawnObjectsActionText" text="Válassza ki a hozzáadni kívánt objektum/anyag típusát" />
+        <text name="actionClearTipArea" text="Tippterület törlése" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Utolsó művelet ismétlése" />
+        <text name="restartMode" text="A mentési játék újraindítása" />
+        <text name="forcedRestartMode" text="Mentésjáték újraindítása (hard reset)" />
+        <text name="forcedExitMode" text="Kilépés a menüből (hard reset)" />
+        <text name="flightActivated" text="A repülés jelenleg aktív" />
+        <text name="flightActivatedExtra" text="Használja a Q és E billentyűket a magasság módosításához" />
+        <text name="flightDeactivated" text="A repülés már nem aktív" />
+        <text name="flightDeactivatedExtra" text="Vigyázzon, hová száll le!" />
+        <text name="szuperSpeed" text="Szupersebesség" />
+        <text name="superSpeedMode" text="Szupersebesség váltása" />
+        <text name="advancedMode" text="Speciális" />
+        
+    </texts>
+</l10n>
