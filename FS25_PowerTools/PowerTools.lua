@@ -26,11 +26,11 @@ PowerTools = Mod:init()
 
 -- PowerTools:enableDebugMode()
 
-PowerTools:source("lib/DialogHelper.lua")
+PowerTools:source("scripts/modLib/DialogHelper.lua")
 
 if ENABLE_EXPERIMENTAL_HUDHIDE then
-    PowerTools:source("lib/GlobalHelper.lua")
-    PowerTools:source("lib/MultistateKeyHandler.lua")
+    PowerTools:source("scripts/modLib/GlobalHelper.lua")
+    PowerTools:source("scripts/modLib/MultistateKeyHandler.lua")
 end
 
 local ACTION = {

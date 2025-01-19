@@ -187,8 +187,8 @@ POZNÁMKY:
     <multiplayer supported="true"/>
     <l10n filenamePrefix="language"/>
     <extraSourceFiles>
-        <sourceFile filename="lib/LogHelper.lua"/>
-        <sourceFile filename="lib/ModHelper.lua"/>
+        <sourceFile filename="scripts/modLib/LogHelper.lua"/>
+        <sourceFile filename="scripts/modLib/ModHelper.lua"/>
         <sourceFile filename="PowerTools.lua"/>
     </extraSourceFiles>
 
