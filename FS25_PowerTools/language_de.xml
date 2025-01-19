@@ -1,48 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <l10n>
     <translationContributors>w33zl</translationContributors>
     <texts>
-        <text name="input_POWERTOOLSMENU" text="Menü Power Tools öffnen" />
-        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Öffnen Sie das sekundäre Menü Power Tools" />
-        <text name="input_POWERTOOLS_QUICKSAVE" text="Schnellspeichern" />
-        <text name="flightMode" text="Flugmodus" />
-        <text name="enabled" text="Aktiviert" />
-        <text name="disabled" text="Deaktiviert" />
-        <text name="flightModeUsage" text="Mit der Taste J schalten Sie den Flugmodus um, mit den Tasten Q und E ändern Sie die Höhe" />
-        <text name="changeMoneyMode" text="Geld hinzufügen/entfernen" />
-        <text name="exitMode" text="Zum Menü zurückkehren" />
-        <text name="chooseAction" text="Aktion wählen" />
-        <text name="powerTools" text="Power Tools" />
-        <text name="changeMoneyUsage" text="Negative Zahl zum Entfernen verwenden, z. B. '-5000'\\nBeginnen Sie mit '=', um einen bestimmten Betrag (wieder) einzustellen, \\nz. B. '=0'" />
-        <text name="errorNotNumeric" text="Kein gültiger numerischer Wert: " />
-        <text name="buttonOk" text="Ok" />
-        <text name="buttonCancel" text="Abbrechen" />
-        <text name="noHudMode" text="HUD ein-/ausschalten" />
-        <text name="superStrengthMode" text="Superstärke umschalten" />
-        <text name="superStrength" text="Superkraft" />
-        <text name="filltypeNone" text="Keine (leer)" />
-        <text name="chooseFillUnit" text="Speicherplatz wählen (Fillunit)" />
-        <text name="chooseFillUnitDetailed" text="Welchen Lagerraum (Fillunit) möchten Sie befüllen?" />
-        <text name="fillVehicle" text="Fahrzeug befüllen" />
-        <text name="selectFillType" text="Wählen Sie den hinzuzufügenden Fülltyp (oder 'keine' zum Leeren)" />
-        <text name="errorNoValidFilltypes" text="Keine gültigen Fülltypen für dieses Fahrzeug" />
-        <text name="errorNoValidFillUnits" text="Keine gültigen Fülleinheiten verfügbar" />
-        <text name="tipOnGround" text="Auf den Boden kippen" />
-        <text name="confirmExit" text="Wollen Sie WIRKLICH aussteigen?" />
-        <text name="exitRestartWarning" text="VORSICHT! Beenden ohne zu speichern führt zum Verlust Ihrer Fortschritte!" />
-        <text name="saveGame" text="Spiel speichern" />
-        <text name="spawnObjectsActionTitle" text="Objekte/Materialien hervorbringen" />
-        <text name="spawnObjectsActionText" text="Wählen Sie, welche Art von Objekt/Material Sie hinzufügen möchten" />
-        <text name="actionClearTipArea" text="Spitzenbereich löschen" />
-        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Wiederholung der letzten Aktion" />
-        <text name="restartMode" text="Spielstand neu starten" />
-        <text name="forcedRestartMode" text="Spielstand neu starten (Hard Reset)" />
-        <text name="forcedExitMode" text="Beenden im Menü (harter Reset)" />
-        <text name="flightActivated" text="Flug ist derzeit aktiv" />
-        <text name="flightActivatedExtra" text="Verwenden Sie die Tasten Q und E, um die Höhe zu ändern" />
-        <text name="flightDeactivated" text="Flug ist nicht mehr aktiv" />
-        <text name="flightDeactivatedExtra" text="Passen Sie auf, wo Sie landen!" />
-        <text name="superSpeed" text="Supergeschwindigkeit" />
-        <text name="superSpeedMode" text="Supergeschwindigkeit einschalten" />        
+        <text name="input_POWERTOOLSMENU" text="Menü Power Tools öffnen"/>
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Öffnen Sie das sekundäre Menü Power Tools"/>
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Schnellspeichern"/>
+        <text name="flightMode" text="Flugmodus"/>
+        <text name="enabled" text="Aktiviert"/>
+        <text name="disabled" text="Deaktiviert"/>
+        <text name="flightModeUsage" text="Mit der Taste J schalten Sie den Flugmodus um, mit den Tasten Q und E ändern Sie die Höhe"/>
+        <text name="changeMoneyMode" text="Geld hinzufügen/entfernen"/>
+        <text name="exitMode" text="Zum Menü zurückkehren"/>
+        <text name="chooseAction" text="Aktion wählen"/>
+        <text name="powerTools" text="Power Tools"/>
+        <text name="changeMoneyUsage" text="Negative Zahl zum Entfernen verwenden, z. B. '-5000'\\nBeginnen Sie mit '=', um einen bestimmten Betrag (wieder) einzustellen, \\nz. B. '=0'"/>
+        <text name="errorNotNumeric" text="Kein gültiger numerischer Wert: "/>
+        <text name="buttonOk" text="Ok"/>
+        <text name="buttonCancel" text="Abbrechen"/>
+        <text name="noHudMode" text="HUD ein-/ausschalten"/>
+        <text name="superStrengthMode" text="Superstärke umschalten"/>
+        <text name="superStrength" text="Superkraft"/>
+        <text name="filltypeNone" text="Keine (leer)"/>
+        <text name="chooseFillUnit" text="Speicherplatz wählen (Fillunit)"/>
+        <text name="chooseFillUnitDetailed" text="Welchen Lagerraum (Fillunit) möchten Sie befüllen?"/>
+        <text name="fillVehicle" text="Fahrzeug befüllen"/>
+        <text name="selectFillType" text="Wählen Sie den hinzuzufügenden Fülltyp (oder 'keine' zum Leeren)"/>
+        <text name="errorNoValidFilltypes" text="Keine gültigen Fülltypen für dieses Fahrzeug"/>
+        <text name="errorNoValidFillUnits" text="Keine gültigen Fülleinheiten verfügbar"/>
+        <text name="tipOnGround" text="Auf den Boden kippen"/>
+        <text name="confirmExit" text="Wollen Sie WIRKLICH aussteigen?"/>
+        <text name="exitRestartWarning" text="VORSICHT! Beenden ohne zu speichern führt zum Verlust Ihrer Fortschritte!"/>
+        <text name="saveGame" text="Spiel speichern"/>
+        <text name="spawnObjectsActionTitle" text="Objekte/Materialien hervorbringen"/>
+        <text name="spawnObjectsActionText" text="Wählen Sie, welche Art von Objekt/Material Sie hinzufügen möchten"/>
+        <text name="actionClearTipArea" text="Spitzenbereich löschen"/>
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Wiederholung der letzten Aktion"/>
+        <text name="restartMode" text="Spielstand neu starten"/>
+        <text name="forcedRestartMode" text="Spielstand neu starten (Hard Reset)"/>
+        <text name="forcedExitMode" text="Beenden im Menü (harter Reset)"/>
+        <text name="flightActivated" text="Flug ist derzeit aktiv"/>
+        <text name="flightActivatedExtra" text="Verwenden Sie die Tasten Q und E, um die Höhe zu ändern"/>
+        <text name="flightDeactivated" text="Flug ist nicht mehr aktiv"/>
+        <text name="flightDeactivatedExtra" text="Passen Sie auf, wo Sie landen!"/>
+        <text name="superSpeed" text="Supergeschwindigkeit"/>
+        <text name="superSpeedMode" text="Supergeschwindigkeit einschalten"/>        
+        <text name="advancedMode" text="Fortgeschrittene"/>
+        <text name="showFieldMenu" text="Feld Optionen"/>
+        <text name="fieldMenuTitle" text="Feldwerkzeuge"/>
+        <text name="actionSetFieldCrop" text="Feldfrucht ändern"/>
+        <text name="actionSetFieldGround" text="Feld Boden ändern"/>
     </texts>
 </l10n>
