@@ -22,3 +22,7 @@ docs/*
 
 icon_PowerTools_bak.pdn
 TODO.md
+.env
+FS25_PowerTools/.build/*
+FS25_PowerTools/modDesc.build
+*.bak
