@@ -126,12 +126,16 @@ function PowerTools:showMenu(actionName)
     local isPaused = g_currentMission.paused
     local isInMainMenu = g_gui.currentGui ~= nil
     local isInVehicle = g_localPlayer:getCurrentVehicle() ~= nil
+    local isInField = g_fieldManager:getFieldIdAtPlayerPosition() ~= nil
+
+
 
     -- Log:var("useAltMode", useAltMode)
     -- Log:var("isPaused", isPaused)
 
     local actionFillVehicle = { g_i18n:getText("fillVehicle"), self.fillVehicle, (not isInVehicle) }
     local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround, (isInVehicle) }
+    local actionShowFieldMenu = { g_i18n:getText("showFieldMenu"), self.showFieldMenu, (isInVehicle or not isInField) }
     local actionSpawnPallets = { g_i18n:getText("infohud_pallet"), self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnPalletsAdvanced = { g_i18n:getText("infohud_pallet") .. SUFFIX_ADVANCED, self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnBale = { g_i18n:getText("infohud_bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
@@ -160,6 +164,9 @@ function PowerTools:showMenu(actionName)
         actionExit = actionForceExit
     end 
 
+
+    Log:table("actionShowFieldMenu", actionShowFieldMenu)
+
     -- -- Conditionally disable options
     -- if isInVehicle == true then
     --     actionSpawnBale = nil
@@ -170,6 +177,7 @@ function PowerTools:showMenu(actionName)
     local actions = {
         actionFillVehicle,
         actionSpawnObjects,
+        actionShowFieldMenu,
         -- actionSpawnPallets,
         -- actionSpawnBale,
         -- actionSpawnTreeTrunk,
@@ -318,8 +326,37 @@ function PowerTools:repeatLastAction()
         end
     end
 
-    
+end
 
+function PowerTools:showFieldMenu()
+    local fieldId = g_fieldManager:getFieldIdAtPlayerPosition()
+    local hasPlayerAccess = false
+    -- Log:var("field", fieldId)
+
+    if fieldId ~= nil then
+        local playerX, _, playerZ = g_localPlayer:getPosition()
+        -- local isFarmlandOwner = g_farmlandManager:getFarmlandOwner()
+        hasPlayerAccess = g_farmlandManager:getCanAccessLandAtWorldPosition(g_localPlayer.farmId, playerX, playerZ) --TODO: needs to be verified in MP as guest
+    end
+
+    Log:var("hasPlayerAccess", hasPlayerAccess)
+
+    if not self:showWarningIfNoAccess(hasPlayerAccess) then
+        return
+    end
+
+    --TODO: replace next line with uncommented block when we need a submenu
+    FieldStateDialog.show(tostring(fieldId))
+    -- self:showSubMenu(
+    --     g_i18n:getText("showFieldMenu"),
+    --     g_i18n:getText("fieldMenuTitle"), 
+    --     1, 
+    --     {
+    --         { g_i18n:getText("actionSetFieldCrop"), function() FieldStateDialog.show(tostring(fieldId), "", "") end }, --TODO: show field menuVisible
+    --         { g_i18n:getText("actionSetFieldGround"), function() FieldStateDialog.show(tostring(fieldId)) end }, --TODO: show field menuVisible
+    --     }
+        
+    -- )
 end
 
 function PowerTools:tipToGround()

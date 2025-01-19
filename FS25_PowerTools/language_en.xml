@@ -45,6 +45,10 @@
         <text name="superSpeed" text="Super Speed" />
         <text name="superSpeedMode" text="Toggle Super Speed" />
         <text name="advancedMode" text="Advanced" />
+        <text name="showFieldMenu" text="Field Options" />
+        <text name="fieldMenuTitle" text="Field Tools" />
+        <text name="actionSetFieldCrop" text="Change field crop" />
+        <text name="actionSetFieldGround" text="Change field ground" />
         
     </texts>
 </l10n>
