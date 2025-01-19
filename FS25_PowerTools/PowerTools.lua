@@ -148,7 +148,7 @@ function PowerTools:showMenu(actionName)
     local actionRestart = actionSoftRestart
     local actionExit = actionSoftExit
 
-
+    local actionUIScaleMenu = { g_i18n:getText("showUIScaleMenu"), self.showUIScaleMenu, (not useAltMode) }
 
     local actionSaveGame = { g_i18n:getText("saveGame"), self.saveGame }
     local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects, (isInVehicle) }
@@ -178,13 +178,11 @@ function PowerTools:showMenu(actionName)
         actionFillVehicle,
         actionSpawnObjects,
         actionShowFieldMenu,
-        -- actionSpawnPallets,
-        -- actionSpawnBale,
-        -- actionSpawnTreeTrunk,
         actionToggleSuperStrength,
         actionToggleFlightMode,
         actionToggleSuperSpeed,
         actionToggleHUDMode,
+        actionUIScaleMenu,
         actionAddRemoveMoney,
         actionSaveGame,
         actionExit,
@@ -227,6 +225,7 @@ function PowerTools:showMenu(actionName)
         actions = {
             actionSoftRestart,
             actionSoftExit,
+            actionUIScaleMenu,
             actionSaveGame,
             actionForceExit,
             actionForceRestart,
@@ -326,6 +325,74 @@ function PowerTools:repeatLastAction()
         end
     end
 
+end
+
+
+function PowerTools:showUIScaleMenu()
+    local currentScaleIndex = g_settingsModel:getValue(SettingsModel.SETTING.UI_SCALE)
+    Log:var("currentScaleIndex", currentScaleIndex)
+
+    local currentSetting = g_gameSettings:getValue(SettingsModel.SETTING.UI_SCALE) -- Persistent
+    local currentSettingIndex = Utils.getUIScaleIndex(currentSetting)
+    local currentSettingScale = Utils.getUIScaleFromIndex(currentSettingIndex)
+    local actualUIScale = g_currentMission.hud.infoDisplay.uiScale or currentSettingScale
+    local actualUIScaleIndex = Utils.getUIScaleIndex(actualUIScale)
+
+    Log:var("currentSetting", currentSetting)
+    Log:var("currentSettingIndex", currentSettingIndex)
+    Log:var("currentSettingScale", currentSettingScale)
+    Log:var("actualUIScale", actualUIScale)
+    Log:var("actualUIScaleIndex", actualUIScaleIndex)
+
+    -- for index, value in pairs(g_settingsModel.uiScaleValues) do
+    --     Log:debug("Index: %d, Value: %d", index, value)
+    -- end
+
+    self:showOptionDialog(
+        g_i18n:getText("uiScaleMenuInfo"), 
+        g_i18n:getText("uiScaleMenuTitle"), 
+        g_settingsModel.uiScaleTexts,
+        function(target, selectedOption, a)
+            if type(selectedOption) ~= "number" or selectedOption == 0 then
+                return
+            end
+
+            -- local selectedValue = g_settingsModel.uiScaleTexts[selectedOption]
+            -- Log:var("selectedValue", selectedValue)
+            -- local cleanSelectedValue = string.gsub(selectedValue, "%%", "")
+            -- local numericValue = tonumber(cleanSelectedValue)
+            local numericValue = Utils.getUIScaleFromIndex(selectedOption)
+
+            -- Log:var("cleanSelectedValue", cleanSelectedValue)
+            Log:var("numericValue", numericValue)
+
+            if numericValue ~= nil and type(numericValue) == "number" then
+                
+                Log:debug("Setting scale to %f", numericValue)
+                g_currentMission.hud:setScale(numericValue)
+                -- currentScaleIndex = g_settingsModel:getValue(SettingsModel.SETTING.UI_SCALE)
+                Log:var("uiScale AFTER", g_currentMission.hud.infoDisplay.uiScale)
+                Log:info("HUD scalet changed to %d%%", g_currentMission.hud.infoDisplay.uiScale * 100)
+            else
+                Log:warning("Could not set scale to %d [#]", numericValue, selectedOption)
+            end
+            
+            -- self:showUIScaleMenu()
+        end,
+        true,
+        actualUIScaleIndex
+    )
+
+    -- self:showSubMenu(
+    --     g_i18n:getText("showFieldMenu"), --TODO: add text to display field and land number
+    --     g_i18n:getText("fieldMenuTitle"), 
+    --     1, 
+    --     {
+    --         { g_i18n:getText("actionSetFieldCrop"), function() FieldStateDialog.show(tostring(fieldId), "", "") end }, --TODO: show field menuVisible
+    --         { g_i18n:getText("actionSetFieldGround"), function() FieldStateDialog.show(tostring(fieldId)) end }, --TODO: show field menuVisible
+    --     }
+        
+    -- )
 end
 
 function PowerTools:showFieldMenu()

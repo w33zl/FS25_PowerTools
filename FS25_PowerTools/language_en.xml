@@ -48,7 +48,10 @@
         <text name="showFieldMenu" text="Field Options" />
         <text name="fieldMenuTitle" text="Field Tools" />
         <text name="actionSetFieldCrop" text="Change field crop" />
-        <text name="actionSetFieldGround" text="Change field ground" />
+        <text name="actionSetFieldGround" text="Change field ground" />        
+        <text name="showUIScaleMenu" text="Change UI Scale" />
+        <text name="uiScaleMenuTitle" text="UI Scale" />
+        <text name="uiScaleMenuInfo" text="Choose new temporary UI scale (note: to permanently change the scale you need to change this in the game settings):" />
         
     </texts>
 </l10n>
