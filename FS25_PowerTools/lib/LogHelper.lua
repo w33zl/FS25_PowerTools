@@ -30,13 +30,19 @@ local function createLog(modName, modDirectory)
         modName = modName,
         title = title or modName,
         print = function(self, category, message, ...)
+            local printDelegate = print
             message = (message ~= nil and message:format(...)) or ""
             if category ~= nil and category ~= "" then
+                if category == "Warning"  then
+                    printDelegate = printWarning
+                elseif category == "Error" then
+                    printDelegate = printError
+                end
                 category = " " .. category .. ":"
             else
                 category = ""
             end
-            print(string.format("[%s]%s %s", self.title, category, tostring(message)))
+            printDelegate(string.format("[%s]%s %s", self.title, category, tostring(message)))
         end,
         debug = function(self, message, ...) self:print("DEBUG", message, ...) end,
         debugIf = function(self, condition, message, ...) if condition then self:debug(message, ...) end end,
@@ -96,7 +102,7 @@ local function createLog(modName, modDirectory)
     local debugHelperFilename = modDirectory .. "lib/DebugHelper.lua"
 
     if not fileExists(debugHelperFilename) then
-        debugHelperFilename = modDirectory .. "scripts/ModLib/DebugHelper.lua"
+        debugHelperFilename = modDirectory .. "scripts/modLib/DebugHelper.lua"
     end
     if fileExists(debugHelperFilename) then
         newLog:info("Debug mode enabled!")

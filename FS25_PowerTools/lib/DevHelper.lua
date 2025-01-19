@@ -46,7 +46,7 @@ function DevHelper.measureStart(formatString)
         startTime = getTimeSec(),
         stop = function(self, noPrint)
             self.endTime = getTimeSec()
-            self.diff = self.endTime - self.startTime
+            self.diff = (self.endTime - self.startTime) -- Should be seconds
             self.results = string.format(formatString, self.diff)
             if not noPrint then
                 print(self.results)
