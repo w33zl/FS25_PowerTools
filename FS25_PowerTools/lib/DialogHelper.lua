@@ -63,24 +63,24 @@ function DialogHelper.showYesNoDialog(parameters)
     yesNoDialog:show()
 end
 
-function DialogHelper.showSiloDialog(parameters)
-    --FIXME: not working
-    local siloDialog = SiloDialog.new()
+-- function DialogHelper.showSiloDialog(parameters)
+--     --FIXME: not working
+--     local siloDialog = SiloDialog.new()
 
-    g_gui:loadGui("dataS/gui/dialogs/SiloDialog.xml", "SiloDialog", siloDialog)
+--     g_gui:loadGui("dataS/gui/dialogs/SiloDialog.xml", "SiloDialog", siloDialog)
 
-    if parameters.callback and (type(parameters.callback)) == "function" then
-        siloDialog:setCallback(parameters.callback, parameters.target, parameters.args)
-    end
+--     if parameters.callback and (type(parameters.callback)) == "function" then
+--         siloDialog:setCallback(parameters.callback, parameters.target, parameters.args)
+--     end
 
-    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
-        siloDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
-    end
+--     if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+--         siloDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
+--     end
 
-    siloDialog:setTitle(parameters.title or "")
+--     siloDialog:setTitle(parameters.title or "")
 
-    siloDialog:show()
-end
+--     siloDialog:show()
+-- end
 
 
 function DialogHelper.showTextInputDialog(parameters)
