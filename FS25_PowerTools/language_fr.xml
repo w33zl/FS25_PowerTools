@@ -49,5 +49,8 @@
         <text name="fieldMenuTitle" text="Outils de terrain"/>
         <text name="actionSetFieldCrop" text="Changer de culture"/>
         <text name="actionSetFieldGround" text="Changer de terrain"/>
-    </texts>
+    		<text name="showUIScaleMenu" text="Changement d'échelle de l'assurance-chômage"/>
+		<text name="uiScaleMenuTitle" text="Échelle de l'interface utilisateur"/>
+		<text name="uiScaleMenuInfo" text="Choisissez une nouvelle échelle temporaire pour l'interface utilisateur (note : pour changer l'échelle de façon permanente, vous devez modifier cette échelle dans les paramètres du jeu) :"/>
+</texts>
 </l10n>

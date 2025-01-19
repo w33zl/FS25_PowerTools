@@ -49,5 +49,8 @@
         <text name="fieldMenuTitle" text="Feldwerkzeuge"/>
         <text name="actionSetFieldCrop" text="Feldfrucht ändern"/>
         <text name="actionSetFieldGround" text="Feld Boden ändern"/>
-    </texts>
+    		<text name="showUIScaleMenu" text="UI-Skala ändern"/>
+		<text name="uiScaleMenuTitle" text="UI-Skala"/>
+		<text name="uiScaleMenuInfo" text="Wählen Sie eine neue temporäre UI-Skala (Hinweis: Um die Skala dauerhaft zu ändern, müssen Sie diese in den Spieleinstellungen ändern):"/>
+</texts>
 </l10n>
