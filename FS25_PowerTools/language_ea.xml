@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Pericops</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Abrir Menu Power Tools" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Abrir Menu Secundario Power Tools" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Guardado rápido" />
+        <text name="flightMode" text="Modo vuelo" />
+        <text name="enabled" text="Activado" />
+        <text name="disabled" text="Desactivado" />
+        <text name="flightModeUsage" text="Utilice la tecla J para alternar el vuelo, las teclas Q y E cambian la altitud" />
+        <text name="changeMoneyMode" text="Añadir/quitar dinero" />
+        <text name="exitMode" text="Salir del menu" />
+        <text name="chooseAction" text="Eligir acción" />
+        <text name="powerTools" text="Power Tools" />
+        <text name="changeMoneyUsage" text="Ejemplos: \\n'1000' para añadir 1.000€ a tu cuenta \\n'-1000' para quitar 1.000€ de tu cuenta\\n'=1000' para configurar tu cuenta en 1.000€" />
+        <text name="errorNotNumeric" text="No es un valor numérico válido: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Cancelar" />
+        <text name="noHudMode" text="Herramienta HUD on/off" />
+        <text name="superStrengthMode" text="Modo Super Fuerza" />
+        <text name="superStrength" text="Super Fuerza" />
+        <text name="filltypeNone" text="Ninguno (vacío)" />
+        <text name="chooseFillUnit" text="Elija almacenamiento (unidad de llenado)" />
+        <text name="chooseFillUnitDetailed" text="¿Qué almacenamiento (unidad de relleno) desea llenar?" />
+        <text name="fillVehicle" text="Llenar vehículo" />
+        <text name="selectFillType" text="Seleccione el tipo de relleno para agregar (o ninguno para vaciar)" />
+        <text name="errorNoValidFilltypes" text="No hay tipos de relleno válidos para este vehículo." />
+        <text name="errorNoValidFillUnits" text="No hay unidades de relleno válidas disponibles" />
+        <text name="tipOnGround" text="Puntero en tierra" />
+        <text name="confirmExit" text="¿REALMENTE quieres salir?" />
+        <text name="exitRestartWarning" text="¡PRECAUCIÓN! ¡Salir sin guardar causará la pérdida de tu progreso!" />
+        <text name="saveGame" text="Guardar partida" />
+        <text name="spawnObjectsActionTitle" text="Generar objetos/materiales" />
+        <text name="spawnObjectsActionText" text="Elige qué tipo de objeto/material para agregar" />
+        <text name="actionClearTipArea" text="Limpiar el área del puntero" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Repetir la última acción" />
+        <text name="restartMode" text="Reiniciar partida guardada" />
+        <text name="forcedRestartMode" text="Reiniciar partida guardada (restablecimiento completo)" />
+        <text name="forcedExitMode" text="Salir al menú (restablecimiento completo)" />
+        <text name="flightActivated" text="Modo vuelo está actualmente activo" />
+        <text name="flightActivatedExtra" text="Utilice las teclas Q y E para cambiar la altitud." />
+        <text name="flightDeactivated" text="Modo vuelo ya no está activo" />
+        <text name="flightDeactivatedExtra" text="¡Cuidado donde aterrizas!" />
+        <text name="superSpeed" text="Súper velocidad" />
+        <text name="superSpeedMode" text="Herramienta Super velocidad" />
+        
+    </texts>
+</l10n>
