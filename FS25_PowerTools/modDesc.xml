@@ -57,77 +57,101 @@ v1.0.1:
 ]]></en>
 
 <de><![CDATA[
-Mit dem Menü "PowerTools" haben Sie schnellen und einfachen Zugriff auf einige "Lebensqualitäts"-Funktionen. Dies ist besonders nützlich, wenn Sie Modder oder Inhaltsersteller sind.
+Mit dem PowerTools-Menü haben Sie schnellen und einfachen Zugriff auf einige "Lebensqualitäts"-Funktionen. Besonders nützlich, wenn Sie ein Modder oder Inhaltsersteller sind.
 
-Mit einer einzigen Taste (standardmäßig F12) aktivieren Sie das Menü "PowerTools". Von dort aus können Sie schnell zu den verschiedenen Funktionen navigieren, ohne dass Sie eine Maus benötigen oder sich durch mehrere Menüs bewegen müssen.
+Mit einer einzigen Taste (standardmäßig F12) aktivieren Sie das PowerTools-Menü. Von dort aus können Sie schnell zu den verschiedenen Funktionen navigieren, ohne dass Sie eine Maus benötigen oder sich durch mehrere Menüs bewegen müssen.
 
-HAUPTMERKMALE:
+HAUPTFUNKTIONEN:
 - Hinzufügen/Entfernen von Geld zu Ihrer Farm
 - Fahrzeug befüllen - unterstützt Fahrzeuge mit mehreren Tanks/Lagereinheiten und akzeptiert jeden vom Fahrzeug unterstützten Fülltyp *
 - Jede Art von Palette erzeugen (einschließlich Produktionsmaterialien wie Zucker und Kleidung) *
 - Jede Art von Ballen erzeugen - unterstützt rund/quadratisch, alle Größen und alle Arten (Stroh, Silage, Baumwolle usw.) *
-- Baumstämme erzeugen - unterstützt derzeit nur eine begrenzte Anzahl von Längen *
+- Baumstämme erzeugen - derzeit wird nur eine begrenzte Anzahl von Längen unterstützt *
 - Umschalten zwischen Supergeschwindigkeit, Superstärke und Flugmodus
 - Schnelles Speichern des aktuellen Spiels, entweder per Hotkey oder über das Menü *
-- HUD/Interface ein-/ausschalten
-- Wiederholen des letzten Befehls
-- Öffnen des PowerTools-Menüs im alternativen Modus (Neustart und Verlassen des Menüs mit der „Hard Reset“-Methode anstelle von „Soft Reset“)
-- Ein eingeschränktes PowerTools-Menü kann nun geöffnet werden, wenn das Hauptmenü geöffnet ist und wenn das Spiel pausiert wird.
+- HUD/Interface ein-/ausschalten (jetzt mit Schnellbefehl: F1/Hilfe-Menü-Taste für ~1 Sekunde gedrückt halten)
+- Wiederholung des letzten Befehls
+- PowerTools-Menü im alternativen Modus öffnen (Neustart und Verlassen des Menüs verwendet die "Hard Reset"-Methode anstelle von "Soft Reset")
+- Ein eingeschränktes PowerTools-Menü kann nun sowohl bei geöffnetem Hauptmenü als auch bei pausiertem Spiel geöffnet werden
+- Zusätzliche Zeitskalen: Halten Sie die Verkleinerungstaste (Standard: 7) gedrückt, um die Zeit anzuhalten, und halten Sie die Erhöhungstaste (Standard: 8) gedrückt
 
-HINWEISE: 
-1. Die mit einem Sternchen (*) gekennzeichneten Funktionen sind nicht auf dedizierten Servern verfügbar, sondern nur im Einzelspielermodus und im selbstgehosteten Mehrspielermodus.
+HINWEISE:
+1. Die mit einem Sternchen (*) gekennzeichneten Funktionen sind nicht auf dedizierten Servern verfügbar, sondern nur im Einzelspielermodus und im selbst gehosteten Mehrspielermodus.
 2. Viele der Features erfordern einen Admin-Zugang (um Cheating im Multiplayer zu verhindern) - im Singleplayer ist allerdings jeder Admin :)
-3. Um die Funktion „Letzte Aktion wiederholen“ nutzen zu können, muss man einen Hotkey in den Einstellungen für die Eingabe binden
+3. Um die Funktion "Letzte Aktion wiederholen" nutzen zu können, muss man einen Hotkey in den Einstellungen für die Eingabe binden
 4. Das neue Menü für den alternativen Modus verwendet einen separaten Hotkey (standardmäßig Rechts Strg + F12)
-5. Für Spieler mit einer Tastatur, die nicht das WASD-Layout hat, z.B. AZERTY, kann die Tastenbelegung für Auf-/Absteigen (Standard: Q/E) im Flugmodus anders sein (z.B. Tasten A/E für AZERTY-Layout verwenden)
+5. Für Spieler mit einer Tastatur, die nicht das WASD-Layout hat, z.B. AZERTY, kann die Tastenbelegung für das Auf- und Absteigen (Standard: Q/E) im Flugmodus anders sein (z.B. Tasten A/E für AZERTY-Layout verwenden)
 
 CHANGELOG:
 
+WIP:
+- Zusätzliche Taste
+- UI-Skala
+- NEU: Schnelles Ein-/Ausblenden des HUD durch Gedrückthalten der Hilfe-Menü-Taste (Standard: F1)
+- NEU: Zusätzliche Zeitskalen hinzugefügt (Null/Pause sowie 1500, 5000 und 7500)
+- NEW: CZ, HU und EA Übersetzung hinzugefügt
+- FIX: Problem behoben, bei dem PowerTools Eingabedialoge aus dem Basisspiel und anderen Mods beeinflusst haben (Bug #27)
+- FIX: Der Flugmodus sollte jetzt automatisch aktiv sein, wenn er im PowerTools-Menü aktiviert wird (ohne dass die 'J'-Taste gedrückt werden muss)
+- FIX: Das Aktivieren des Flugmodus sollte keinen Konsolenbefehl mehr in die Liste der zuletzt verwendeten Konsolenbefehle aufnehmen
+
 v1.0.2:
-- HOTFIX: Verhindert Null-Fehler im Log für farmId beim Spielen auf dedizierten Servern
-- HOTFIX: Das PowerTools-Menü sollte sich bei bestimmten Fahrzeugen (z.B. Ballenpressen) nicht mehr anstelle der Nachfülloption öffnen
+- HOTFIX: Das Problem, dass das Spiel auf dedizierten Servern nicht geladen werden konnte, wurde behoben ('farmId' war 'nil'-Fehler)
+- HOTFIX: Das PowerTools-Menü sollte sich bei bestimmten Fahrzeugen (z.B. Pressen wie Goweil Vario Master) nicht mehr anstelle der Nachfülloption öffnen
 
 v1.0.1:
 - HOTFIX: Das Spawnen von Paletten sollte jetzt für alle Spieler funktionieren (unabhängig davon, wie man das Spiel startet)
-- FIX: Die Auswahl der Paletten wird nicht zurückgesetzt (wie vorgesehen, d.h. man kann jetzt mehrere Paletten hintereinander spawnen)
+- FIX: Auswahl an Paletten wird nicht zurückgesetzt (wie vorgesehen, d.h. man kann jetzt mehrere Paletten hintereinander spawnen)
 - FIX: Falsche Fehlermeldung beim Spawnen von Paletten beseitigt
+- NEW: ES-Übersetzung hinzugefügt
 ]]></de>
 
 <fr><![CDATA[
-Le menu Outils vous permet d'accéder rapidement et facilement à certaines fonctions de "qualité de vie". C'est particulièrement utile si vous êtes un moddeur ou un créateur de contenu.
+Le menu PowerTools vous permet d'accéder rapidement et facilement à certaines fonctions de "qualité de vie". Particulièrement utile si vous êtes un moddeur ou un créateur de contenu.
 
-Une seule touche/bouton (par défaut F12) vous permet d'activer le menu Power Tools. À partir de là, vous pouvez naviguer rapidement vers les différentes fonctions sans avoir besoin d'une souris ou de naviguer dans plusieurs menus.
+Une seule touche/bouton (par défaut F12) permet d'activer le menu PowerTools. À partir de là, vous pouvez naviguer rapidement vers les différentes fonctions sans avoir besoin d'une souris ou de naviguer dans plusieurs menus.
 
 CARACTÉRISTIQUES PRINCIPALES :
 - Ajouter/supprimer de l'argent à votre ferme
-- Remplir un véhicule - supporte les véhicules avec plusieurs réservoirs/unités de stockage et accepte tout type de remplissage supporté par le véhicule *
-- Créer n'importe quel type de palette (y compris les matériaux de production comme le sucre et les vêtements) *
+- Remplissage du véhicule - prend en charge les véhicules dotés de plusieurs réservoirs/unités de stockage et accepte tous les types de remplissage pris en charge par le véhicule *.
+- Création de n'importe quel type de palette (y compris les matériaux de production comme le sucre et les vêtements) *
 - Produire n'importe quel type de balles - rondes ou carrées, de toutes tailles et de tous types (paille, ensilage, coton, etc.) *
 - Produire des troncs d'arbres - pour l'instant, seul un nombre limité de longueurs est pris en charge *
 - Changement de la super vitesse, de la super force ou du mode de vol
 - Sauvegarde rapide de la partie en cours, soit par le raccourci clavier, soit par le menu *
-- Activer/désactiver le HUD/interface
+- Activer/désactiver le HUD/interface (maintenant avec une commande rapide : maintenir la touche F1/le bouton du menu d'aide pendant ~1 seconde)
 - Répéter la dernière commande
-- Ouvrir le menu PowerTools en mode alternatif (le redémarrage et la sortie du menu utilisent la méthode « hard reset » au lieu de « soft reset »).
+- Ouvrir le menu PowerTools en mode alternatif (le redémarrage et la sortie du menu utilisent la méthode "hard reset" au lieu de "soft reset").
 - Un menu PowerTools limité peut maintenant être ouvert lorsque le menu principal est ouvert ainsi que lorsque le jeu est en pause.
+- Échelles de temps supplémentaires, maintenez le bouton de diminution (par défaut : 7) pour mettre le temps en pause, et maintenez le bouton d'augmentation (par défaut : 8)
 
-NOTES : 
-1. Les fonctions marquées d'un astérisque (*) ne sont pas disponibles sur les serveurs dédiés, seulement en mode solo et en mode multijoueur auto-hébergé.
+NOTES :
+1. Les fonctionnalités marquées d'un astérisque (*) ne sont pas disponibles sur les serveurs dédiés, seulement en solo et en multijoueur auto-hébergé.
 2. Beaucoup de fonctionnalités nécessitent un accès administrateur (pour éviter la triche en multijoueur) - en solo, tout le monde est administrateur :)
-3. Pour pouvoir utiliser « Répéter la dernière action », vous devez lier un raccourci clavier dans les paramètres de liaison d'entrée.
+3. Pour pouvoir utiliser "Répéter la dernière action", vous devez lier un raccourci clavier dans les paramètres de liaison d'entrée.
 4. Le nouveau menu du mode alternatif utilise un raccourci-clavier séparé (par défaut Ctrl + F12).
 5. Pour les joueurs dont le clavier n'a pas la disposition WASD, par exemple AZERTY, la combinaison de touches pour la montée/descente (par défaut : Q/E) en mode vol peut être différente (par exemple, utiliser les touches A/E pour la disposition AZERTY).
 
 CHANGELOG :
 
+WIP :
+- Bouton supplémentaire
+- Échelle de l'interface utilisateur
+- NOUVEAU : Afficher/masquer rapidement le HUD en maintenant la touche du menu d'aide enfoncée (par défaut : F1)
+- NOUVEAU : Ajout d'échelles de temps supplémentaires (zéro/pause ainsi que 1500, 5000 et 7500)
+- NOUVEAU : Ajout de la traduction en CZ, HU et EA
+- FIX : Correction du problème où PowerTools affectait les dialogues d'entrée du jeu de base et d'autres mods (bug #27)
+- CORRECTIF : Le vol devrait maintenant être automatiquement activé lorsque le mode vol est activé dans le menu PowerTools (sans avoir besoin d'utiliser la touche 'J').
+- CORRECTIF : L'activation du mode vol ne devrait plus ajouter une commande console dans la liste des commandes consoles récemment utilisées.
+
 v1.0.2 :
-- HOTFIX : Empêche les erreurs nil dans le journal pour farmId lorsque l'on joue sur des serveurs dédiés.
-- HOTFIX : Le menu PowerTools ne devrait plus s'ouvrir à la place de l'option de remplissage sur certains véhicules (par exemple, les presses à balles).
+- HOTFIX : Correction du problème où le jeu ne se chargeait pas sur un serveur dédié (erreur 'farmId' étant 'nil')
+- HOTFIX : Le menu PowerTools ne devrait plus s'ouvrir à la place de l'option de remplissage sur certains véhicules (par exemple, les presses à balles telles que Goweil Vario Master).
 
 v1.0.1 :
-- HOTFIX : L'apparition des palettes devrait maintenant fonctionner pour tous les joueurs (quelle que soit la façon dont vous démarrez le jeu).
+- HOTFIX : Le spawning des palettes devrait maintenant fonctionner pour tous les joueurs (quelle que soit la façon dont vous démarrez le jeu).
 - FIXE : Le choix des palettes n'est pas réinitialisé (comme prévu, c'est à dire que vous pouvez maintenant faire apparaître plusieurs palettes à la suite).
-- FIXE : Suppression du message d'erreur erroné lors de la création de palettes.
+- CORRECTIF : Suppression du message d'erreur erroné lors de la création de palettes.
+- NOUVEAU : Ajout de la traduction ES
 ]]></fr>
 
 <cz><![CDATA[
