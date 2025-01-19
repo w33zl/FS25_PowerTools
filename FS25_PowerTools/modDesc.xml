@@ -20,10 +20,11 @@ MAIN FEATURES:
 - Spawn tree logs - currently only supports limited number of lengths *
 - Toggle super speed, super strength or flight mode
 - Quickly save the current game, ether via hotkey or the menu *
-- Toggle HUD/interface on/off
+- Toggle HUD/interface on/off (now with quick command: hold F1/help menu button for ~1 second)
 - Repeat last command
 - Open PowerTools menu in alternate mode (restart and exit to menu uses the "hard reset" method instead of "soft reset")
 - A limited PowerTools menu can now be opened when main menu is open as well as when the game is paused
+- Additional time scales, hold decrease button (default: 7) to pause time, and hold increase button (default: 8)
 
 NOTES: 
 1. Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
@@ -34,15 +35,19 @@ NOTES:
 
 CHANGELOG:
 
-v1.0.2:
-- HOTFIX: Amended the issue where the game failed to load on a dedicated servers due to a nil error
-- HOTFIX: The refill option on certain vehicles (e.g. Goweil Vario Master) should no longer trigger the PowerTools menu
+WIP:
+- Extra button
+- UI scale
+- NEW: Quickly show/hide the HUD by holding down the help menu key (default: F1)
+- NEW: Adds additional time scales (zero/pause as well as 1500, 5000 and 7500)
+- NEW: Added CZ, HU and EA translation
+- FIX: Fixed the issue where PowerTools affected input dialogs from base game and other mods (bug #27)
 - FIX: Flight should now automatically be active when enabling flight mode in the PowerTools menu (without the need to use the 'J' key)
 - FIX: Enabling flight mode should no longer add a console command in the list of recently used console commands
-- NEW: Added CZ translation
+
 v1.0.2:
-- HOTFIX: Prevent nil errors in the log for farmId when playing to dedicated servers
-- HOTFIX: The PowerTools menu should no longer open instead of the refill option on certain vehicles (e.g. balers)
+- HOTFIX: Amended the issue where the game failed to load on a dedicated servers ('farmId' being 'nil' error)
+- HOTFIX: The PowerTools menu should no longer open instead of the refill option on certain vehicles (e.g. balers such as Goweil Vario Master)
 
 v1.0.1:
 - HOTFIX: Pallet spawning should now work for all players (no matter how you start the game)
@@ -155,12 +160,12 @@ POZNÁMKY:
 
     </description>
     <iconFilename>icon_PowerTools.dds</iconFilename>
-    <multiplayer supported="true" />
-    <l10n filenamePrefix="language" />
+    <multiplayer supported="true"/>
+    <l10n filenamePrefix="language"/>
     <extraSourceFiles>
-        <sourceFile filename="lib/LogHelper.lua" />
-        <sourceFile filename="lib/ModHelper.lua" />
-        <sourceFile filename="PowerTools.lua" />
+        <sourceFile filename="lib/LogHelper.lua"/>
+        <sourceFile filename="lib/ModHelper.lua"/>
+        <sourceFile filename="PowerTools.lua"/>
     </extraSourceFiles>
 
     <inputBinding>
@@ -173,11 +178,11 @@ POZNÁMKY:
     </inputBinding>
 
     <actions>
-        <action name="POWERTOOLSMENU" />
-        <action name="POWERTOOLSMENU_ALTERNATIVE" />
-        <action name="POWERTOOLS_QUICKSAVE" />
-        <action name="POWERTOOLS_REPEAT_ACTION" />
-        <action name="POWERTOOLS_TOGGLE_MODES" />
+        <action name="POWERTOOLSMENU"/>
+        <action name="POWERTOOLSMENU_ALTERNATIVE"/>
+        <action name="POWERTOOLS_QUICKSAVE"/>
+        <action name="POWERTOOLS_REPEAT_ACTION"/>
+        <action name="POWERTOOLS_TOGGLE_MODES"/>
 	</actions>
 
 </modDesc>
