@@ -25,6 +25,7 @@ MAIN FEATURES:
 - Open PowerTools menu in alternate mode (restart and exit to menu uses the "hard reset" method instead of "soft reset")
 - A limited PowerTools menu can now be opened when main menu is open as well as when the game is paused
 - Additional time scales, hold decrease button (default: 7) to pause time, and hold increase button (default: 8)
+- Change field state (crop type, growth stage, ground type etc)
 
 NOTES: 
 1. Features marked with an asterisk (*) isn't available on dedicated servers, only in singleplayer and self-hosted multiplayer.
@@ -38,8 +39,9 @@ CHANGELOG:
 WIP:
 - Extra button
 - UI scale
+- NEW: Field menu to change crop, ground type etc
 - NEW: Quickly show/hide the HUD by holding down the help menu key (default: F1)
-- NEW: Adds additional time scales (zero/pause as well as 1500, 5000 and 7500)
+- NEW: Adds additional time scales (zero/pause as well as x1500, x5000 and x7500)
 - NEW: Added CZ, HU and EA translation
 - FIX: Fixed the issue where PowerTools affected input dialogs from base game and other mods (bug #27)
 - FIX: Flight should now automatically be active when enabling flight mode in the PowerTools menu (without the need to use the 'J' key)

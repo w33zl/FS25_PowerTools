@@ -331,11 +331,10 @@ end
 function PowerTools:showFieldMenu()
     local fieldId = g_fieldManager:getFieldIdAtPlayerPosition()
     local hasPlayerAccess = false
-    -- Log:var("field", fieldId)
 
     if fieldId ~= nil then
         local playerX, _, playerZ = g_localPlayer:getPosition()
-        -- local isFarmlandOwner = g_farmlandManager:getFarmlandOwner()
+        -- local isFarmlandOwner = g_farmlandManager:getFarmlandOwner() -- can maybe be used to determine if the admin should have had access or not
         hasPlayerAccess = g_farmlandManager:getCanAccessLandAtWorldPosition(g_localPlayer.farmId, playerX, playerZ) --TODO: needs to be verified in MP as guest
     end
 
@@ -348,7 +347,7 @@ function PowerTools:showFieldMenu()
     --TODO: replace next line with uncommented block when we need a submenu
     FieldStateDialog.show(tostring(fieldId))
     -- self:showSubMenu(
-    --     g_i18n:getText("showFieldMenu"),
+    --     g_i18n:getText("showFieldMenu"), --TODO: add text to display field and land number
     --     g_i18n:getText("fieldMenuTitle"), 
     --     1, 
     --     {
@@ -357,6 +356,9 @@ function PowerTools:showFieldMenu()
     --     }
         
     -- )
+    --TODO: add actions:
+    -- FarmlandManager:consoleCommandBuyFarmland(id) / sell if you already own...
+    -- FarmlandManager:consoleCommandBuyAllFarmlands() / sell all
 end
 
 function PowerTools:tipToGround()
