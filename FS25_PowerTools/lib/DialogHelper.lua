@@ -84,27 +84,38 @@ end
 
 
 function DialogHelper.showTextInputDialog(parameters)
-    local textInputDialog = TextInputDialog.new()
-    local imePrompt = nil
+    -- local textInputDialog = TextInputDialog.new()
+    -- local imePrompt = nil
 
-    if parameters.isPasswordDialog then
-        g_gui:loadGui("dataS/gui/dialogs/PasswordDialog.xml", "TextInputDialog", textInputDialog)
-    else
-        g_gui:loadGui("dataS/gui/dialogs/TextInputDialog.xml", "TextInputDialog", textInputDialog)
-    end
+    -- if parameters.isPasswordDialog then
+    --     g_gui:loadGui("dataS/gui/dialogs/PasswordDialog.xml", "TextInputDialog", textInputDialog)
+    -- else
+    --     g_gui:loadGui("dataS/gui/dialogs/TextInputDialog.xml", "TextInputDialog", textInputDialog)
+    -- end
 
-    if parameters.callback and (type(parameters.callback)) == "function" then
-        textInputDialog:setCallback(parameters.callback, parameters.target, parameters.defaultText, parameters.text, imePrompt, parameters.maxCharacters, parameters.args, parameters.isPasswordDialog, parameters.disableFilter)
-    end
+    -- if parameters.callback and (type(parameters.callback)) == "function" then
+    --     textInputDialog:setCallback(parameters.callback, parameters.target, parameters.defaultText, parameters.text, imePrompt, parameters.maxCharacters, parameters.args, parameters.isPasswordDialog, parameters.disableFilter)
+    -- end
 
-    if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
-        textInputDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
-    end
+    -- if parameters.okButtonText ~= nil or parameters.cancelButtonText ~= nil then
+    --     textInputDialog:setButtonTexts(parameters.okButtonText, parameters.cancelButtonText)
+    -- end
 
-    textInputDialog:setTitle(parameters.title or "") --NOTE: title is not used yet
+    -- textInputDialog:setTitle(parameters.title or "") --NOTE: title is not used yet
 
-    local textHeight, _ = textInputDialog.dialogTextElement:getTextHeight()
-    textInputDialog:resizeDialog(textHeight)    
+    -- local textHeight, _ = textInputDialog.dialogTextElement:getTextHeight()
+    -- textInputDialog:resizeDialog(textHeight)    
 
-    textInputDialog:show()
+    -- textInputDialog:show()
+
+    local applyTextFilter, imePrompt = false, nil
+
+    TextInputDialog.show(parameters.callback, parameters.target, parameters.defaultText, parameters.title, imePrompt, parameters.maxCharacters, parameters.okButtonText, parameters.args, parameters.text, applyTextFilter)
 end
+
+
+--HACK: This is a back to solve a basegame bug
+TextInputDialog.sendCallback = Utils.overwrittenFunction(TextInputDialog.sendCallback, function(self, superFunc, ...)
+    superFunc(self, ...)
+    self.textElement.maxCharacters = nil
+end)
