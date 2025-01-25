@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <modDesc descVersion="94">
     <author>w33zl</author>
-    <version>1.0.2.1394-dev</version>
+    <version>1.0.2.1559-dev</version>
     <title>
         <en>[DEV] PowerTools</en>
     </title>
@@ -15,16 +15,18 @@ Using a single key/button (default F12) you activate the PowerTools menu. From t
 MAIN FEATURES:
 - Add/remove money to your farm
 - Fill vehicle - supports vehicles with multiple tanks/storage units and accepts any filltype supported by the vehicle *
-- Spawn any type of pallet (including production materials like sugar and clothes) *
+- Spawn any type of pallet (including production materials like sugar and clothes)
 - Spawn any type of bale - supports round/square, all sizes and all types (straw, silage, cotton etc) *
 - Spawn tree logs - currently only supports limited number of lengths *
 - Toggle super speed, super strength or flight mode
 - Quickly save the current game, ether via hotkey or the menu *
 - Toggle HUD/interface on/off (now with quick command: hold F1/help menu button for ~1 second)
 - Repeat last command
-- Open PowerTools menu in alternate mode (restart and exit to menu uses the "hard reset" method instead of "soft reset")
+- Open PowerTools menu in alternate mode:
+-- Restart and exit to menu uses the "hard reset" method instead of "soft reset"
+-- Change UI scale (will be reset on restart, to permanently change the UI scale use the game settings instead)
 - A limited PowerTools menu can now be opened when main menu is open as well as when the game is paused
-- Additional time scales, hold decrease button (default: 7) to pause time, and hold increase button (default: 8)
+- Additional time scales, hold decrease button (default: 7) to pause time, and hold increase button (default: 8) to enable/disable additional speeds *
 - Change field state (crop type, growth stage, ground type etc)
 
 NOTES: 
@@ -36,16 +38,17 @@ NOTES:
 
 CHANGELOG:
 
-WIP:
-- Extra button
-- UI scale
+v1.1.0:
 - NEW: Field menu to change crop, ground type etc
 - NEW: Quickly show/hide the HUD by holding down the help menu key (default: F1)
+- NEW: Change UI scale via the alternate menu (non-persistent)
 - NEW: Adds additional time scales (zero/pause as well as x1500, x5000 and x7500)
 - NEW: Added CZ, HU and EA translation
-- FIX: Fixed the issue where PowerTools affected input dialogs from base game and other mods (bug #27)
+- FIX: Fixed the issue where PowerTools conflicted with input dialogs from base game and other mods  [#27]
 - FIX: Flight should now automatically be active when enabling flight mode in the PowerTools menu (without the need to use the 'J' key)
 - FIX: Enabling flight mode should no longer add a console command in the list of recently used console commands
+- FIX: Spawning pallets now work in multiplayer (both dedicated server and self-hosted)  [#15]
+- FIX: Super strength now work in multiplayer (both dedicated server and self-hosted) [#8]
 
 v1.0.2:
 - HOTFIX: Amended the issue where the game failed to load on a dedicated servers ('farmId' being 'nil' error)
