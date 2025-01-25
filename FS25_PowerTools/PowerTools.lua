@@ -28,6 +28,7 @@ PowerTools = Mod:init()
 -- PowerTools:enableDebugMode()
 
 PowerTools:source("scripts/modLib/DialogHelper.lua")
+PowerTools:source("SpawnObjectEvent.lua")
 
 if ENABLE_EXPERIMENTAL_HUDHIDE then
     PowerTools:source("scripts/modLib/GlobalHelper.lua")
@@ -1056,7 +1057,9 @@ function PowerTools:spawnPallet(palletType, amount)
     end
     -- g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
     xpcall(function() 
-            g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+            SpawnObjectEvent.spawnPallet(fillType.index)
+            -- g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+
         end, 
         function(err) 
             Log:warning("Failed to add pallet %s", fillType.name .. " " .. err .. "")
@@ -1304,7 +1307,7 @@ function PowerTools:validateFarm()
 end
 
 ---Ensure the current player has relevant admin access. If the first argument is true, only server admins are given access.
----@param requireServerAdmin boolean 'Only allow server admins access, i.e. regular farm admins are not allowed'
+---@param requireServerAdmin boolean? 'Only allow server admins access, i.e. regular farm admins are not allowed'
 ---@return boolean 'True if the player has admin access, false otherwise'
 function PowerTools:validateMPAdmin(requireServerAdmin)
     return PowerTools:showWarningIfNoAccess((requireServerAdmin and self:getIsServerAdmin()) or self:getHasAdminAccess())
@@ -1333,8 +1336,8 @@ function PowerTools:spawnObjects(altMode)
     Log:var("spawnObjects@altMode", altMode)
 
     --TODO: this is a temporary solution, should be changed to allow all farm admins when working
-    if not self:validateMPHost() or not self:validateFarm() then return end
-    -- if not self:validateMPAdmin() or not self:validateFarm() then return end
+    -- if not self:validateMPHost() or not self:validateFarm() then return end
+    if not self:validateMPAdmin() or not self:validateFarm() then return end
 
     if self.baleTypes == nil then
         self:unwrapBaleTypes()
