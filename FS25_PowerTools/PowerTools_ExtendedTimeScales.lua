@@ -63,6 +63,8 @@ end
 
 
 function ExtendedTimeScales:onIncreaseTimescale_longPress()
+    if not self:validateServerAdmin() then return end
+
     self:toggleTimeScales()
 
     local message = nil
@@ -74,7 +76,16 @@ function ExtendedTimeScales:onIncreaseTimescale_longPress()
     g_currentMission:addGameNotification(message, "", "", nil, 1500)
 end
 
+function ExtendedTimeScales:validateServerAdmin()
+    if not self.parent:getIsServerAdmin() then
+        g_currentMission:showBlinkingWarning("notAllowed_serverAdminsOnly")
+        return false
+    end
+    return true
+end
+
 function ExtendedTimeScales:onDecreaseTimescale_longPress()
+    if not self:validateServerAdmin() then return end
     -- if g_currentMission.missionInfo.timeScale  then
     --     self.lastKnownTimeScale = g_currentMission.missionInfo.timeScale
         
@@ -111,7 +122,7 @@ function ExtendedTimeScales:hookIntoGlobalKeys()
         end
     end
 
-    if self.parent:getIsServerAdmin() then
+    -- if self.parent:getIsServerAdmin() then
 
         hookIntoKey(InputAction.DECREASE_TIMESCALE, function(actionEvent) 
             local decreaseTimescaleMSKH = MultistateKeyHandler.new(nil, nil, nil, true)
@@ -133,25 +144,12 @@ function ExtendedTimeScales:hookIntoGlobalKeys()
         end)
 
         Log:info("Server admin specific hooks injected")
-    else
+    -- else
 
-        Log:info("Advanced features are only available for server admins. Changing time scales is disabled.")
-
-    end
-
-    -- local helpTextActionEvent = GlobalHelper.GetActionEvent(InputAction.DECREASE_TIMESCALE, nil, true)
-    -- -- Log:table("helpTextActionEvent4", helpTextActionEvent, 2)
-
-
-    -- if helpTextActionEvent ~= nil then
-    --     local helpTextKeyMSKH = MultistateKeyHandler.new(nil, nil, nil, true)
-    --     helpTextKeyMSKH:injectIntoAction(helpTextActionEvent, nil, false)
-    --     helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.DOUBLE_PRESS, self.onHelpTextKey_doublePress, self)
-    --     helpTextKeyMSKH:setCallback(MULTISTATEKEY_TRIGGER.LONG_PRESS, self.onDecreaseTimescale_longPress, self)
-
-    --     self.helpTextKeyMSKH = helpTextKeyMSKH
+    --     Log:info("Advanced features are only available for server admins. Changing time scales is disabled.")
 
     -- end
+
 
     self.globalKeysInitiated = true
 end
