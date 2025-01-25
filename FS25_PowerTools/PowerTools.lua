@@ -20,6 +20,7 @@ local FEATURE_TOGGLE = {
     EXPERIMENTAL_FLIGHTMODE = true,
     EXPERIMENTAL_HUDHIDE = true,
     EXTENDED_TIMESCALE = true,
+    SUPERSTRENGTH_HACK = true,
 }
 
 PowerTools = Mod:init()
@@ -27,6 +28,7 @@ PowerTools = Mod:init()
 -- PowerTools:enableDebugMode()
 
 PowerTools:source("scripts/modLib/DialogHelper.lua")
+PowerTools:source("SpawnObjectEvent.lua")
 
 if ENABLE_EXPERIMENTAL_HUDHIDE then
     PowerTools:source("scripts/modLib/GlobalHelper.lua")
@@ -126,12 +128,16 @@ function PowerTools:showMenu(actionName)
     local isPaused = g_currentMission.paused
     local isInMainMenu = g_gui.currentGui ~= nil
     local isInVehicle = g_localPlayer:getCurrentVehicle() ~= nil
+    local isInField = g_fieldManager:getFieldIdAtPlayerPosition() ~= nil
+
+
 
     -- Log:var("useAltMode", useAltMode)
     -- Log:var("isPaused", isPaused)
 
     local actionFillVehicle = { g_i18n:getText("fillVehicle"), self.fillVehicle, (not isInVehicle) }
     local actionTipOnGround = { g_i18n:getText("tipOnGround"), self.tipToGround, (isInVehicle) }
+    local actionShowFieldMenu = { g_i18n:getText("showFieldMenu"), self.showFieldMenu, (isInVehicle or not isInField) }
     local actionSpawnPallets = { g_i18n:getText("infohud_pallet"), self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnPalletsAdvanced = { g_i18n:getText("infohud_pallet") .. SUFFIX_ADVANCED, self.spawnPallets, (isInVehicle) } --TODO: fix l10n
     local actionSpawnBale = { g_i18n:getText("infohud_bale"), self.spawnBales, (isInVehicle) } --TODO: fix l10n
@@ -144,7 +150,7 @@ function PowerTools:showMenu(actionName)
     local actionRestart = actionSoftRestart
     local actionExit = actionSoftExit
 
-
+    local actionUIScaleMenu = { g_i18n:getText("showUIScaleMenu"), self.showUIScaleMenu, (not useAltMode) }
 
     local actionSaveGame = { g_i18n:getText("saveGame"), self.saveGame }
     local actionSpawnObjects = { g_i18n:getText("spawnObjectsActionTitle"), self.spawnObjects, (isInVehicle) }
@@ -160,6 +166,9 @@ function PowerTools:showMenu(actionName)
         actionExit = actionForceExit
     end 
 
+
+    Log:table("actionShowFieldMenu", actionShowFieldMenu)
+
     -- -- Conditionally disable options
     -- if isInVehicle == true then
     --     actionSpawnBale = nil
@@ -170,13 +179,12 @@ function PowerTools:showMenu(actionName)
     local actions = {
         actionFillVehicle,
         actionSpawnObjects,
-        -- actionSpawnPallets,
-        -- actionSpawnBale,
-        -- actionSpawnTreeTrunk,
+        actionShowFieldMenu,
         actionToggleSuperStrength,
         actionToggleFlightMode,
         actionToggleSuperSpeed,
         actionToggleHUDMode,
+        actionUIScaleMenu,
         actionAddRemoveMoney,
         actionSaveGame,
         actionExit,
@@ -219,6 +227,7 @@ function PowerTools:showMenu(actionName)
         actions = {
             actionSoftRestart,
             actionSoftExit,
+            actionUIScaleMenu,
             actionSaveGame,
             actionForceExit,
             actionForceRestart,
@@ -318,8 +327,107 @@ function PowerTools:repeatLastAction()
         end
     end
 
-    
+end
 
+
+function PowerTools:showUIScaleMenu()
+    local currentScaleIndex = g_settingsModel:getValue(SettingsModel.SETTING.UI_SCALE)
+    Log:var("currentScaleIndex", currentScaleIndex)
+
+    local currentSetting = g_gameSettings:getValue(SettingsModel.SETTING.UI_SCALE) -- Persistent
+    local currentSettingIndex = Utils.getUIScaleIndex(currentSetting)
+    local currentSettingScale = Utils.getUIScaleFromIndex(currentSettingIndex)
+    local actualUIScale = g_currentMission.hud.infoDisplay.uiScale or currentSettingScale
+    local actualUIScaleIndex = Utils.getUIScaleIndex(actualUIScale)
+
+    Log:var("currentSetting", currentSetting)
+    Log:var("currentSettingIndex", currentSettingIndex)
+    Log:var("currentSettingScale", currentSettingScale)
+    Log:var("actualUIScale", actualUIScale)
+    Log:var("actualUIScaleIndex", actualUIScaleIndex)
+
+    -- for index, value in pairs(g_settingsModel.uiScaleValues) do
+    --     Log:debug("Index: %d, Value: %d", index, value)
+    -- end
+
+    self:showOptionDialog(
+        g_i18n:getText("uiScaleMenuInfo"), 
+        g_i18n:getText("uiScaleMenuTitle"), 
+        g_settingsModel.uiScaleTexts,
+        function(target, selectedOption, a)
+            if type(selectedOption) ~= "number" or selectedOption == 0 then
+                return
+            end
+
+            -- local selectedValue = g_settingsModel.uiScaleTexts[selectedOption]
+            -- Log:var("selectedValue", selectedValue)
+            -- local cleanSelectedValue = string.gsub(selectedValue, "%%", "")
+            -- local numericValue = tonumber(cleanSelectedValue)
+            local numericValue = Utils.getUIScaleFromIndex(selectedOption)
+
+            -- Log:var("cleanSelectedValue", cleanSelectedValue)
+            Log:var("numericValue", numericValue)
+
+            if numericValue ~= nil and type(numericValue) == "number" then
+                
+                Log:debug("Setting scale to %f", numericValue)
+                g_currentMission.hud:setScale(numericValue)
+                -- currentScaleIndex = g_settingsModel:getValue(SettingsModel.SETTING.UI_SCALE)
+                Log:var("uiScale AFTER", g_currentMission.hud.infoDisplay.uiScale)
+                Log:info("HUD scalet changed to %d%%", g_currentMission.hud.infoDisplay.uiScale * 100)
+            else
+                Log:warning("Could not set scale to %d [#]", numericValue, selectedOption)
+            end
+            
+            -- self:showUIScaleMenu()
+        end,
+        true,
+        actualUIScaleIndex
+    )
+
+    -- self:showSubMenu(
+    --     g_i18n:getText("showFieldMenu"), --TODO: add text to display field and land number
+    --     g_i18n:getText("fieldMenuTitle"), 
+    --     1, 
+    --     {
+    --         { g_i18n:getText("actionSetFieldCrop"), function() FieldStateDialog.show(tostring(fieldId), "", "") end }, --TODO: show field menuVisible
+    --         { g_i18n:getText("actionSetFieldGround"), function() FieldStateDialog.show(tostring(fieldId)) end }, --TODO: show field menuVisible
+    --     }
+        
+    -- )
+end
+
+function PowerTools:showFieldMenu()
+    local fieldId = g_fieldManager:getFieldIdAtPlayerPosition()
+    local hasPlayerAccess = false
+
+    if fieldId ~= nil then
+        local playerX, _, playerZ = g_localPlayer:getPosition()
+        -- local isFarmlandOwner = g_farmlandManager:getFarmlandOwner() -- can maybe be used to determine if the admin should have had access or not
+        hasPlayerAccess = g_farmlandManager:getCanAccessLandAtWorldPosition(g_localPlayer.farmId, playerX, playerZ) --TODO: needs to be verified in MP as guest
+    end
+
+    Log:var("hasPlayerAccess", hasPlayerAccess)
+
+    if not self:showWarningIfNoAccess(hasPlayerAccess) then
+        return
+    end
+
+    --TODO: replace next line with uncommented block when we need a submenu
+    FieldStateDialog.show(tostring(fieldId))
+    -- self:showSubMenu(
+    --     g_i18n:getText("showFieldMenu"), --TODO: add text to display field and land number
+    --     g_i18n:getText("fieldMenuTitle"), 
+    --     1, 
+    --     {
+    --         { g_i18n:getText("actionSetFieldCrop"), function() FieldStateDialog.show(tostring(fieldId), "", "") end }, --TODO: show field menuVisible
+    --         { g_i18n:getText("actionSetFieldGround"), function() FieldStateDialog.show(tostring(fieldId)) end }, --TODO: show field menuVisible
+    --     }
+        
+    -- )
+    --TODO: add actions:
+    -- FarmlandManager:consoleCommandBuyFarmland(id) / sell if you already own...
+    -- FarmlandManager:consoleCommandBuyAllFarmlands() / sell all
 end
 
 function PowerTools:tipToGround()
@@ -949,7 +1057,9 @@ function PowerTools:spawnPallet(palletType, amount)
     end
     -- g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
     xpcall(function() 
-            g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+            SpawnObjectEvent.spawnPallet(fillType.index)
+            -- g_currentMission.vehicleSystem:consoleCommandAddPallet(fillType.name, amount)
+
         end, 
         function(err) 
             Log:warning("Failed to add pallet %s", fillType.name .. " " .. err .. "")
@@ -1197,7 +1307,7 @@ function PowerTools:validateFarm()
 end
 
 ---Ensure the current player has relevant admin access. If the first argument is true, only server admins are given access.
----@param requireServerAdmin boolean 'Only allow server admins access, i.e. regular farm admins are not allowed'
+---@param requireServerAdmin boolean? 'Only allow server admins access, i.e. regular farm admins are not allowed'
 ---@return boolean 'True if the player has admin access, false otherwise'
 function PowerTools:validateMPAdmin(requireServerAdmin)
     return PowerTools:showWarningIfNoAccess((requireServerAdmin and self:getIsServerAdmin()) or self:getHasAdminAccess())
@@ -1226,25 +1336,33 @@ function PowerTools:spawnObjects(altMode)
     Log:var("spawnObjects@altMode", altMode)
 
     --TODO: this is a temporary solution, should be changed to allow all farm admins when working
-    if not self:validateMPHost() or not self:validateFarm() then return end
-    -- if not self:validateMPAdmin() or not self:validateFarm() then return end
+    -- if not self:validateMPHost() or not self:validateFarm() then return end
+    if not self:validateMPAdmin() or not self:validateFarm() then return end
 
-    if self.baleTypes == nil then
-        self:unwrapBaleTypes()
-    end
+    local allowBales = g_server ~= nil --or self:getHasAdminAccess() --TODO: for now, only allowed if server
+    local allowTrees = g_server ~= nil --or self:getHasAdminAccess() --TODO: for now, only allowed if server
 
     local actions = {}
 
-    for key, value in pairs(self.baleTypes) do
-        actions[#actions + 1] = {
-            g_i18n:getText("infohud_bale") .. " [" .. value.fillTypeTitle .. "]",
-            self.spawnBales,
-            { value }
-        }
+    if allowBales then
+        if self.baleTypes == nil then
+            self:unwrapBaleTypes()
+        end
+
+        for key, value in pairs(self.baleTypes) do
+            actions[#actions + 1] = {
+                g_i18n:getText("infohud_bale") .. " [" .. value.fillTypeTitle .. "]",
+                self.spawnBales,
+                { value }
+            }
+        end
     end
 
     table.insert( actions, 1 , { g_i18n:getText("infohud_pallet") .. (altMode and SUFFIX_ADVANCED or ""), self.spawnPallets, {altMode } } )--infohud_pallet 
-    table.insert( actions, 2 , { g_i18n:getText("fillType_wood"), self.spawnLogs, { altMode } } )
+
+    if allowTrees then
+        table.insert( actions, 2 , { g_i18n:getText("fillType_wood"), self.spawnLogs, { altMode } } )
+    end
 
     self:showSubMenu(
         g_i18n:getText("spawnObjectsActionText"),
@@ -1611,6 +1729,7 @@ end)
 --     end
 -- end
 
+--*** FEATURE TOGGLE: EXTENDED TIMESCALES ***
 PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
     if g_modIsLoaded.FS25_UniversalGameTweaks then
         Log:info("FS25_UniversalGameTweaks is already loaded, the extended time scales module of PowerTools will not be loaded")
@@ -1626,4 +1745,35 @@ PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
         ExtendedTimeScales.init(self)
         Log:info("Extended time scales enabled")
     end    
+end)
+
+
+--*** FEATURE TOGGLE: SUPERSTRENGTH HACK ***
+PowerTools:featureToggle(FEATURE_TOGGLE.SUPERSTRENGTH_HACK, function(self)
+
+    Log:debug("Init super strength hack")
+
+    FSBaseMission.sendInitialClientState = Utils.overwrittenFunction(FSBaseMission.sendInitialClientState, function(self, originalFunc, conn, usr, ...)
+        originalFunc(self, conn, usr, ...)
+        Log:debug("sendInitialClientState")
+    
+        local player = conn and g_currentMission:getPlayerByConnection(conn)
+    
+        if player and player.hands.consoleCommandToggleSuperStrength ~= nil then
+            local name = usr and usr.nickname or "[UNKNOWN PLAYER]"
+    
+            
+            Log:var("mass before", player.hands.spec_hands.currentMaximumMass)
+            
+            -- player.hands.spec_hands.currentMaximumMass = HandToolHands.SUPER_STRENGTH_PICKUP_MASS
+            
+            player.hands:consoleCommandToggleSuperStrength()
+            -- player.hands.spec_hands.currentMaximumMass = HandToolHands.MAXIMUM_PICKUP_MASS
+            Log:var("mass after", player.hands.spec_hands.currentMaximumMass)
+    
+            Log:info("SuperStrength MP hack enabled for %s", name)
+        end
+    
+    end)
+
 end)

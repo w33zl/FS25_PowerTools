@@ -45,6 +45,14 @@
         <text name="superSpeed" text="Super Speed" />
         <text name="superSpeedMode" text="Toggle Super Speed" />
         <text name="advancedMode" text="Advanced" />
+        <text name="showFieldMenu" text="Field Options" />
+        <text name="fieldMenuTitle" text="Field Tools" />
+        <text name="actionSetFieldCrop" text="Change field crop" />
+        <text name="actionSetFieldGround" text="Change field ground" />        
+        <text name="showUIScaleMenu" text="Change UI Scale" />
+        <text name="uiScaleMenuTitle" text="UI Scale" />
+        <text name="uiScaleMenuInfo" text="Choose new temporary UI scale (note: to permanently change the scale you need to change this in the game settings):" />
+        <text name="notAllowed_serverAdminsOnly" text="Not allowed! This feature is only available to server admins." />
         
     </texts>
 </l10n>
