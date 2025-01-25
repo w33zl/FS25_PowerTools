@@ -29,6 +29,7 @@
     "**/*.pdn",
     "**/*.bak",
     "**/*.md",
+    "**/*.xsd",
     "**/language_LANGCODE.xml"
   ],
   "autoBumpModDescVersion": true,
