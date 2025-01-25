@@ -20,6 +20,7 @@ local FEATURE_TOGGLE = {
     EXPERIMENTAL_FLIGHTMODE = true,
     EXPERIMENTAL_HUDHIDE = true,
     EXTENDED_TIMESCALE = true,
+    SUPERSTRENGTH_HACK = true,
 }
 
 PowerTools = Mod:init()
@@ -1717,6 +1718,7 @@ end)
 --     end
 -- end
 
+--*** FEATURE TOGGLE: EXTENDED TIMESCALES ***
 PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
     if g_modIsLoaded.FS25_UniversalGameTweaks then
         Log:info("FS25_UniversalGameTweaks is already loaded, the extended time scales module of PowerTools will not be loaded")
@@ -1732,4 +1734,35 @@ PowerTools:featureToggle(FEATURE_TOGGLE.EXTENDED_TIMESCALE, function(self)
         ExtendedTimeScales.init(self)
         Log:info("Extended time scales enabled")
     end    
+end)
+
+
+--*** FEATURE TOGGLE: SUPERSTRENGTH HACK ***
+PowerTools:featureToggle(FEATURE_TOGGLE.SUPERSTRENGTH_HACK, function(self)
+
+    Log:debug("Init super strength hack")
+
+    FSBaseMission.sendInitialClientState = Utils.overwrittenFunction(FSBaseMission.sendInitialClientState, function(self, originalFunc, conn, usr, ...)
+        originalFunc(self, conn, usr, ...)
+        Log:debug("sendInitialClientState")
+    
+        local player = conn and g_currentMission:getPlayerByConnection(conn)
+    
+        if player and player.hands.consoleCommandToggleSuperStrength ~= nil then
+            local name = usr and usr.nickname or "[UNKNOWN PLAYER]"
+    
+            
+            Log:var("mass before", player.hands.spec_hands.currentMaximumMass)
+            
+            -- player.hands.spec_hands.currentMaximumMass = HandToolHands.SUPER_STRENGTH_PICKUP_MASS
+            
+            player.hands:consoleCommandToggleSuperStrength()
+            -- player.hands.spec_hands.currentMaximumMass = HandToolHands.MAXIMUM_PICKUP_MASS
+            Log:var("mass after", player.hands.spec_hands.currentMaximumMass)
+    
+            Log:info("SuperStrength MP hack enabled for %s", name)
+        end
+    
+    end)
+
 end)
