@@ -1339,22 +1339,30 @@ function PowerTools:spawnObjects(altMode)
     -- if not self:validateMPHost() or not self:validateFarm() then return end
     if not self:validateMPAdmin() or not self:validateFarm() then return end
 
-    if self.baleTypes == nil then
-        self:unwrapBaleTypes()
-    end
+    local allowBales = g_server ~= nil --or self:getHasAdminAccess() --TODO: for now, only allowed if server
+    local allowTrees = g_server ~= nil --or self:getHasAdminAccess() --TODO: for now, only allowed if server
 
     local actions = {}
 
-    for key, value in pairs(self.baleTypes) do
-        actions[#actions + 1] = {
-            g_i18n:getText("infohud_bale") .. " [" .. value.fillTypeTitle .. "]",
-            self.spawnBales,
-            { value }
-        }
+    if allowBales then
+        if self.baleTypes == nil then
+            self:unwrapBaleTypes()
+        end
+
+        for key, value in pairs(self.baleTypes) do
+            actions[#actions + 1] = {
+                g_i18n:getText("infohud_bale") .. " [" .. value.fillTypeTitle .. "]",
+                self.spawnBales,
+                { value }
+            }
+        end
     end
 
     table.insert( actions, 1 , { g_i18n:getText("infohud_pallet") .. (altMode and SUFFIX_ADVANCED or ""), self.spawnPallets, {altMode } } )--infohud_pallet 
-    table.insert( actions, 2 , { g_i18n:getText("fillType_wood"), self.spawnLogs, { altMode } } )
+
+    if allowTrees then
+        table.insert( actions, 2 , { g_i18n:getText("fillType_wood"), self.spawnLogs, { altMode } } )
+    end
 
     self:showSubMenu(
         g_i18n:getText("spawnObjectsActionText"),
