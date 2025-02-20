@@ -155,7 +155,7 @@ function ExtendedTimeScales:hookIntoGlobalKeys()
 end
 
 function ExtendedTimeScales.init(parent)
-    Log:info("ExtendedTimeScales.init")
+    Log:debug("ExtendedTimeScales.init")
 
     ExtendedTimeScales.parent = parent
 
