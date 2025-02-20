@@ -53,5 +53,6 @@
 		<text name="uiScaleMenuTitle" text="Échelle de l'interface utilisateur"/>
 		<text name="uiScaleMenuInfo" text="Choisissez une nouvelle échelle temporaire pour l'interface utilisateur (note : pour changer l'échelle de façon permanente, vous devez modifier cette échelle dans les paramètres du jeu) :"/>
 		<text name="notAllowed_serverAdminsOnly" text="Interdit ! Cette fonctionnalité n'est disponible que pour les administrateurs de serveurs."/>
+		<text name="input_POWERTOOLS_TOGGLE_MODES" text="Mode bascule"/>
 </texts>
 </l10n>

@@ -53,5 +53,6 @@
 		<text name="uiScaleMenuTitle" text="UI-Skala"/>
 		<text name="uiScaleMenuInfo" text="Wählen Sie eine neue temporäre UI-Skala (Hinweis: Um die Skala dauerhaft zu ändern, müssen Sie diese in den Spieleinstellungen ändern):"/>
 		<text name="notAllowed_serverAdminsOnly" text="Nicht erlaubt! Diese Funktion ist nur für Serveradministratoren verfügbar."/>
+		<text name="input_POWERTOOLS_TOGGLE_MODES" text="Toggle-Modus"/>
 </texts>
 </l10n>

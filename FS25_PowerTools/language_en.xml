@@ -5,6 +5,8 @@
         <text name="input_POWERTOOLSMENU" text="Open Power Tools Menu" />
         <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Open Secondary Power Tools Menu" />
         <text name="input_POWERTOOLS_QUICKSAVE" text="Quick Save" />
+        <text name="input_POWERTOOLS_TOGGLE_MODES" text="Toggle Mode" />
+        
         <text name="flightMode" text="Flight mode" />
         <text name="enabled" text="Enabled" />
         <text name="disabled" text="Disabled" />
