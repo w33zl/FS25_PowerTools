@@ -221,7 +221,7 @@ POZNÁMKY:
         <action name="POWERTOOLSMENU_ALTERNATIVE"/>
         <action name="POWERTOOLS_QUICKSAVE"/>
         <action name="POWERTOOLS_REPEAT_ACTION"/>
-        <action name="POWERTOOLS_TOGGLE_MODES"/>
+        <!-- <action name="POWERTOOLS_TOGGLE_MODES"/> -->
 	</actions>
 
 </modDesc>
