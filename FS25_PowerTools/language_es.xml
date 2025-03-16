@@ -5,6 +5,8 @@
         <text name="input_POWERTOOLSMENU" text="Abrir Menu Power Tools" />
         <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Abrir Menu Secundario Power Tools" />
         <text name="input_POWERTOOLS_QUICKSAVE" text="Guardado rápido" />
+		<text name="input_POWERTOOLS_TOGGLE_MODES" text="Modo alternar" />
+		
         <text name="flightMode" text="Modo vuelo" />
         <text name="enabled" text="Activado" />
         <text name="disabled" text="Desactivado" />
@@ -44,6 +46,15 @@
         <text name="flightDeactivatedExtra" text="¡Cuidado donde aterrizas!" />
         <text name="superSpeed" text="Súper velocidad" />
         <text name="superSpeedMode" text="Herramienta Super velocidad" />
+		<text name="advancedMode" text="Avanzado" />
+        <text name="showFieldMenu" text="Opciones de campo" />
+        <text name="fieldMenuTitle" text="Herramientas de campo" />
+        <text name="actionSetFieldCrop" text="Cambiar cultivo del campo" />
+        <text name="actionSetFieldGround" text="Cambiar estado del campo" />        
+        <text name="showUIScaleMenu" text="Cambiar escala IU" />
+        <text name="uiScaleMenuTitle" text="UI Escala" />
+        <text name="uiScaleMenuInfo" text="Elija una nueva escala de interfaz de usuario temporal (nota: para cambiar permanentemente la escala, debe cambiar esto en la configuración del juego):" />
+        <text name="notAllowed_serverAdminsOnly" text="¡No permitido! Esta función solo está disponible para administradores de servidores." />
         
     </texts>
 </l10n>
