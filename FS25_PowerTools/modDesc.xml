@@ -194,7 +194,59 @@ POZNÁMKY:
 4. Nová nabídka alternativního režimu používá samostatnou klávesovou zkratku (výchozí pravý Ctrl + F12)
 
 ]]></cz>
+<it><![CDATA[
+Con il menu PowerTools è possibile accedere in modo rapido e semplice ad alcune funzioni di “qualità della vita”. Particolarmente utile se si è modder o creatori di contenuti.
 
+Utilizzando un solo tasto (F12 di default) si attiva il menu PowerTools. Da qui è possibile navigare rapidamente tra le diverse funzioni senza dover usare il mouse o navigare tra più menu.
+
+CARATTERISTICHE PRINCIPALI:
+- Aggiungere/rimuovere denaro alla fattoria
+- Riempimento del veicolo - supporta i veicoli con più serbatoi/unità di stoccaggio e accetta qualsiasi tipo di riempimento supportato dal veicolo
+- Generazione di qualsiasi tipo di pallet (compresi materiali di produzione come zucchero e vestiti)
+- Crea qualsiasi tipo di balla - supporta quelle rotonde/quadrate, di tutte le dimensioni e di tutti i tipi (paglia, insilato, cotone, ecc.) *
+- Creare tronchi d'albero - attualmente supporta solo un numero limitato di lunghezze.
+- Alterna la supervelocità, la superforza o la modalità di volo
+- Salvataggio rapido della partita in corso, tramite il tasto di scelta rapida o il menu.
+- Attivazione/disattivazione dell'HUD/interfaccia (ora con comando rapido: tenere premuto F1/tasto menu aiuto per ~1 secondo)
+- Ripetere l'ultimo comando
+- Aprire il menu PowerTools in modalità alternativa:
+-- Riavviare e uscire dal menu utilizzando il metodo “hard reset” anziché “soft reset”.
+-- Cambiare la scala dell'interfaccia utente (verrà ripristinata al riavvio, per modificare in modo permanente la scala dell'interfaccia utente utilizzare invece le impostazioni del gioco)
+- Un menu PowerTools limitato può ora essere aperto quando il menu principale è aperto e quando il gioco è in pausa.
+- Scale temporali aggiuntive, tenere premuto il pulsante di diminuzione (predefinito: 7) per mettere in pausa il tempo, e tenere premuto il pulsante di aumento (predefinito: 8) per attivare/disattivare le velocità aggiuntive *
+- Modifica dello stato del campo (tipo di coltura, stadio di crescita, tipo di terreno, ecc.)
+
+NOTE: 
+1. Le funzioni contrassegnate con l'asterisco (*) non sono disponibili sui server dedicati, ma solo nel singleplayer e nel multiplayer self-hosted.
+2. Molte delle funzioni richiedono l'accesso come amministratore (per evitare imbrogli in multiplayer) - in single player tutti sono amministratori :)
+3. Per poter utilizzare la funzione “Ripeti l'ultima azione”, è necessario assegnare un tasto di scelta rapida nelle impostazioni di binding dell'input.
+4. Il nuovo menu della modalità alternativa utilizza un tasto di scelta rapida separato (default Ctrl destro + F12).
+5. Per i giocatori con una tastiera che non ha il layout WASD, ad esempio AZERTY, il binding dei tasti per salire/scendere (predefinito: Q/E) in modalità volo può essere diverso (ad esempio, utilizzare i tasti A/E per il layout AZERTY).
+
+CHANGELOG:
+
+v1.1.0:
+- NUOVO: Menu di campo per cambiare coltura, tipo di terreno, ecc.
+- NUOVO: Mostra/nasconde rapidamente l'HUD tenendo premuto il tasto del menu di aiuto (predefinito: F1).
+- NOVITÀ: modifica della scala dell'interfaccia utente tramite il menu alternativo (non persistente)
+- NOVITÀ: Aggiunte ulteriori scale temporali (zero/pausa e x1500, x5000 e x7500)
+- NUOVO: Aggiunta la traduzione di CZ, HU e EA
+- FIX: Risolto il problema per cui PowerTools entrava in conflitto con le finestre di dialogo di input del gioco base e di altre mod [#27].
+- FIX: Il volo dovrebbe ora essere automaticamente attivo quando si abilita la modalità di volo nel menu PowerTools (senza la necessità di usare il tasto 'J').
+- FIX: L'attivazione della modalità di volo non dovrebbe più aggiungere un comando della console nell'elenco dei comandi della console usati di recente.
+- FIX: Le palette di spawning ora funzionano in multiplayer (sia su server dedicato che su server autonomo) [#15].
+- FIX: La superforza ora funziona in multiplayer (sia su server dedicato che in self-hosted) [#8]
+
+v1.0.2:
+- HOTFIX: Modificato il problema per cui il gioco non riusciva a caricarsi su un server dedicato (errore 'farmId' che era 'nil')
+- HOTFIX: Il menu PowerTools non dovrebbe più aprirsi al posto dell'opzione di rifornimento su alcuni veicoli (ad esempio le presse come la Goweil Vario Master).
+
+v1.0.1:
+- HOTFIX: Lo spawning dei pallet dovrebbe ora funzionare per tutti i giocatori (indipendentemente da come si inizia la partita).
+- FIX: La scelta dei pallet non viene azzerata (come previsto, cioè ora è possibile generare più pallet di fila).
+- FIX: Rimosso il falso messaggio di errore quando si generano i pallet.
+- NUOVO: Aggiunta traduzione ES
+]]></it>
 
 
     </description>

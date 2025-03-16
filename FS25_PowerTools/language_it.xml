@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>FirenzeIT</translationContributors>
+    <texts>
+        <text name="input_POWERTOOLSMENU" text="Apri il menu PowerTools" />
+        <text name="input_POWERTOOLSMENU_ALTERNATIVE" text="Apri il menu secondario del PowerTools" />
+        <text name="input_POWERTOOLS_QUICKSAVE" text="Salvataggio rapido" />
+        <text name="input_POWERTOOLS_TOGGLE_MODES" text="Modalità di attivazione" />
+        
+        <text name="flightMode" text="Modalità di volo" />
+        <text name="enabled" text="Abilitato" />
+        <text name="disabled" text="Disabilitato" />
+        <text name="flightModeUsage" text="Usa il tasto J per attivare il volo, i tasti Q ed E per cambiare l'altitudine" />
+        <text name="changeMoneyMode" text="Aggiungi/rimuovi denaro" />
+        <text name="exitMode" text="Esci dal menu" />
+        <text name="chooseAction" text="Scegli l'azione" />
+        <text name="powerTools" text="PowerTools" />
+        <text name="changeMoneyUsage" text="Esempi: \\n'1000' per aggiungere 1.000 euro al conto \n'-1000' per sottrarre 1.000 euro dal conto \n'=1000' per impostare il conto a 1.000 euro" />
+        <text name="errorNotNumeric" text="Valore numerico non valido: " />
+        <text name="buttonOk" text="Ok" />
+        <text name="buttonCancel" text="Annulla" />
+        <text name="noHudMode" text="Attiva/disattiva l'HUD" />
+        <text name="superStrengthMode" text="Attiva la super forza" />
+        <text name="superStrength" text="Super forza" />
+        <text name="filltypeNone" text="Nessuno (vuoto)" />
+        <text name="chooseFillUnit" text="Scegli lo spazio di archiviazione (unità di riempimento)" />
+        <text name="chooseFillUnitDetailed" text="Quale spazio di stoccaggio (unità di riempimento) vuoi riempire?" />
+        <text name="fillVehicle" text="Riempire il veicolo" />
+        <text name="selectFillType" text="Selezionare il tipo di riempimento da aggiungere (o ‘none’ per svuotare)" />
+        <text name="errorNoValidFilltypes" text="Nessun tipo di riempimento valido per questo veicolo" />
+        <text name="errorNoValidFillUnits" text="Non sono disponibili unità di riempimento valide" />
+        <text name="tipOnGround" text="Puntale a terra" />
+        <text name="confirmExit" text="Vuoi veramente uscire?" />
+        <text name="exitRestartWarning" text="ATTENZIONE! L'uscita senza salvare causerà la perdita dei progressi!" />
+        <text name="saveGame" text="Salva la partita" />
+        <text name="spawnObjectsActionTitle" text="Spawn oggetti/materiali" />
+        <text name="spawnObjectsActionText" text="Scegli quale tipo di oggetto/materiale aggiungere" />
+        <text name="actionClearTipArea" text="Cancella l'area della punta" />
+        <text name="input_POWERTOOLS_REPEAT_ACTION" text="Ripeti l'ultima azione" />
+        <text name="restartMode" text="Riavvia il gioco di salvataggio" />
+        <text name="forcedRestartMode" text="Riavvia il gioco di salvataggio (hard reset)" />
+        <text name="forcedExitMode" text="Esci dal menu (hard reset)" />
+        <text name="flightActivated" text="Il volo è attualmente attivo" />
+        <text name="flightActivatedExtra" text="Usa i tasti Q ed E per cambiare l'altitudine" />
+        <text name="flightDeactivated" text="Il volo non è più attivo" />
+        <text name="flightDeactivatedExtra" text="Attenti a dove atterrate!" />
+        <text name="superSpeed" text="Supervelocità" />
+        <text name="superSpeedMode" text="Attiva la supervelocità" />
+        <text name="advancedMode" text="Avanzato" />
+        <text name="showFieldMenu" text="Opzioni del campo" />
+        <text name="fieldMenuTitle" text="Strumenti campo" />
+        <text name="actionSetFieldCrop" text="Cambia il taglio del campo" />
+        <text name="actionSetFieldGround" text="Cambia il terreno del campo" />
+        <text name="showUIScaleMenu" text="Cambia la scala dell'interfaccia utente" />
+        <text name="uiScaleMenuTitle" text="Scala dell'interfaccia utente" />
+        <text name="uiScaleMenuInfo" text="Scegliere la nuova scala temporanea dell'IU (nota: per cambiare la scala in modo permanente, è necessario modificare questo parametro nelle impostazioni del gioco):" />
+        <text name="notAllowed_serverAdminsOnly" text="Non consentito! Questa funzione è disponibile solo per gli amministratori del server." />
+        
+    </texts>
+</l10n>
