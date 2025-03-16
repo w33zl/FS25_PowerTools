@@ -2,6 +2,8 @@
 
 [Download](https://www.farming-simulator.com/mod.php?mod_id=303451&title=fs2025)
 
+![alt text](FS25_PowerTools_WZLModding_Screenshot.JPG)
+
 With the PowerTools menu you have quick and easy access to some "quality of life" features. Especially useful if you are a modder or content creator.
 
 Using a single key/button (default F12) you activate the PowerTools menu. From there you can quickly navigate to the different functions without the need for a mouse or navigating through multiple menus.
