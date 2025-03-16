@@ -2,7 +2,7 @@
 
 FillType Manager Extesion (Weezls Mod Lib for FS22) - Simplifies the process of adding filltypes and heighttypes to mods for FS22
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    1.0
 Modified:   2022-02-27
 

@@ -6,9 +6,6 @@ Author:     w33zl
 Version:    1.0.0
 Modified:   2022-06-08
 
-Facebook:           https://www.facebook.com/w33zl
-Ko-fi:              https://ko-fi.com/w33zl
-Patreon:            https://www.patreon.com/wzlmodding
 Github:             https://github.com/w33zl
 
 Changelog:

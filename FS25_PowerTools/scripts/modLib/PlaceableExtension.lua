@@ -1,7 +1,9 @@
 --[[
 
+PLACEABLE EXTENSION (PART OF WEEZLS MOD LIB FOR FS25):
+- Adds additional events on nodes in the i3d scene to allow code to be executed when a placeable is finalized, rather than the i3d is loaded
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 
 COPYRIGHT:
 You may redistribute the script, in original or modified state. All I request in return is that you leave this header intact and let me (the author, w33zl) know that you have used the script. Contact me on Facebook let me know in which mod you used the script.

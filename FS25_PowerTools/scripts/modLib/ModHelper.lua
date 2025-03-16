@@ -458,7 +458,10 @@ function Mod:getCurrentPlayer()
 end
 
 
-
+function Mod:getCurrentFarm()
+    local farmId = g_localPlayer.farmId or FarmManager.SPECTATOR_FARM_ID
+    return g_farmManager:getFarmById(farmId)
+end
 
 function Mod:enableDebugMode()
     deprecated("enableDebugMode()", "Log class")

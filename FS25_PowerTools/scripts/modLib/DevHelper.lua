@@ -2,7 +2,7 @@
 
 DevHelper (Weezls Mod Lib for FS22) - A utility "class" to assist mod development
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    1.2
 Modified:   2023-08-10
 

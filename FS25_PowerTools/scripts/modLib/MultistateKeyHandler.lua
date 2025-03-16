@@ -4,7 +4,7 @@ MultiStateKeyHandler (Weezls Mod Lib for FS25_PowerTools) - Allows binding keys 
 
 Version:    2.0
 Modified:   2024-11-26
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 
 Changelog:
 v2.0        FS25 rewrite

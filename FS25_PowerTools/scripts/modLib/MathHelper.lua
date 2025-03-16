@@ -2,7 +2,7 @@
 
 MathHelper (Weezls Mod Lib for FS22) - Quality of life math utility functions for your mod
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    1.0
 Modified:   2023-07-17
 

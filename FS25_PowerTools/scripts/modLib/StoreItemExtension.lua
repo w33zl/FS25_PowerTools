@@ -2,7 +2,7 @@
 
 Store Item Extesion (Weezls Mod Lib for FS22) - Utility class to alter store items using fluent "filters"
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    1.0
 Modified:   2024-06-16
 

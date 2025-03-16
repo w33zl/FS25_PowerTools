@@ -6,7 +6,7 @@ The script adds a Log object with some convinient functions to use for loggind a
 
 Version:    1.1
 Modified:   2023-06-04
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 
 Changelog:
 v1.0        Initial public release

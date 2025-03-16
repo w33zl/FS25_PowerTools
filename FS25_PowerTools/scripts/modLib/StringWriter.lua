@@ -3,7 +3,7 @@
 
 StringWriter (Weezls Mod Lib for FS25) - A string writer optimized for a balance between speed, memory usage and ease of use
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    2.0
 Modified:   2024-11-13
 

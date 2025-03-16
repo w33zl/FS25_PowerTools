@@ -2,7 +2,7 @@
 
 DebugHelper (Weezls Mod Lib for FS22) - A extension "class" that improves the LogHelper by adding some additional features specifically for debugging
 
-Author:     w33zl (github.com/w33zl | facebook.com/w33zl)
+Author:     w33zl (github.com/w33zl)
 Version:    1.2
 Modified:   2023-08-10
 
