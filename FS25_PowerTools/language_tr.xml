@@ -37,6 +37,12 @@
         <text name="restartMode" text="Savegame'i yeniden başlat" />
         <text name="forcedRestartMode" text="Savegame'i yeniden başlat (hard reset)" />
         <text name="forcedExitMode" text="Menüden çık (sert sıfırlama)" />
-
+        <text name="flightActivated" text="Uçuş modu aktif" />
+        <text name="flightActivatedExtra" text="Q ve E tuşları ile irtifayı değiştirin" />
+        <text name="flightDeactivated" text="Uçuş modu artık aktif değil" />
+        <text name="flightDeactivatedExtra" text="İneceğin yere dikkat et!" />
+        <text name="superSpeed" text="Super Hız" />
+        <text name="superSpeedMode" text="Super Hızı Aç/Kapat" />
+        <text name="advancedMode" text="Gelişmiş Mod" />
     </texts>
 </l10n>
